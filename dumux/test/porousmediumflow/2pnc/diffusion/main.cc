@@ -99,7 +99,7 @@ int main(int argc, char** argv)
     // instantiate time loop
     auto timeLoop = std::make_shared<TimeLoop<Scalar>>(0, dt, tEnd);
     timeLoop->setMaxTimeStepSize(maxDt);
-
+    int time_test = 0;
     // the assembler with time loop for instationary problem
     using Assembler = FVAssembler<TypeTag, DiffMethod::numeric>;
     auto assembler = std::make_shared<Assembler>(problem, gridGeometry, gridVariables, timeLoop, xOld);

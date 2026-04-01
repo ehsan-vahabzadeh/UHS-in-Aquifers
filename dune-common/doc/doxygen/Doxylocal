@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightInfo: Copyright © DUNE Project contributors, see file LICENSE.md in module root
+# SPDX-License-Identifier: LicenseRef-GPL-2.0-only-with-DUNE-exception
+
+# Where to search and which files to use
+INPUT                 += @srcdir@/mainpage.txt \
+                         @srcdir@/modules.txt \
+                         @top_srcdir@/dune/common/modules.txt \
+                         @top_srcdir@/dune/common \
+                         @top_srcdir@/dune/common/test/testsuite.hh
+EXCLUDE               += @top_srcdir@/dune/common/simd/test.cc \
+                         @top_srcdir@/dune/common/debugallocator.cc
+

@@ -1,0 +1,41 @@
+{
+    "README.md" : [
+        "doc/_intro.md"
+    ],
+
+    "doc/problem.md" : [
+        "doc/problem_intro.md",
+        "properties.hh",
+        "problem.hh"
+    ],
+
+    "doc/main.md" : [
+        "doc/main_intro.md",
+        "main.cc"
+    ],
+
+    "doc/upscalinghelper.md" : [
+        "doc/upscalinghelper_intro.md",
+        "upscalinghelper.hh"
+    ],
+
+    "doc/postprocessing.md" : [
+        "doc/postprocessing_intro.md"
+    ],
+
+    "navigation" : {
+        "mainpage" : "README.md",
+        "subpages" : [
+            "doc/problem.md",
+            "doc/main.md",
+            "doc/upscalinghelper.md",
+            "doc/postprocessing.md"
+        ],
+        "subtitles" : [
+            "Permeability upscaling with a pore-network model",
+            "Main program flow",
+            "Upscaling",
+            "Postprocessing/Visualization of a pore-network model"
+        ]
+    }
+}

@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: Copyright © DUNE Project contributors, see file LICENSE.md in module root
+# SPDX-License-Identifier: LicenseRef-GPL-2.0-only-with-DUNE-exception
+
+---
+include:
+  - project: 'core/ci-config'
+    ref: master
+    file: 'config/common/releases/2.10.yml'
+  - project: 'core/ci-config'
+    ref: master
+    file: 'jobs/common/releases/2.10.yml'
+
+before_script:
+  - . /duneci/bin/duneci-init-job
+  - duneci-install-module https://gitlab.dune-project.org/core/dune-common.git
+  - duneci-install-module https://gitlab.dune-project.org/core/dune-geometry.git
+
+# Check for spelling mistakes in text
+code-spelling-check:
+  stage: .pre
+  # Avoid the global 'before_script'
+  before_script: ""
+  image: registry.dune-project.org/docker/ci/debian:11
+  tags: [duneci]
+  script:
+  - codespell
+    --ignore-words-list dorder,multline,ned,numer,wit
+
+reuse:
+  stage: .pre
+  image:
+    name: docker.io/fsfe/reuse:latest
+    entrypoint: [""]
+  tags: [duneci]
+  before_script: ""
+  script:
+    - reuse lint

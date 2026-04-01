@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: Copyright © DUNE Project contributors, see file COPYING in module root
+# SPDX-License-Identifier: LicenseRef-GPL-2.0-only-with-DUNE-exception
+
+*~
+/build*/
+# ignore files generated during python setup.py sdist
+MANIFEST
+_skbuild/
+dist
+*.egg-info/
+# ignore macOS filesystem
+.DS_Store

@@ -1,0 +1,28 @@
+[TimeLoop]
+DtInitial = 1e-5 # [s]
+TEnd = 1e2 # [s]
+
+[Grid]
+File = ./grids/1d_grid.dgf
+PoreGeometry = Cube
+ThroatCrossSectionShape = Square
+
+[Problem]
+Name = test_pnm_2pnc
+VtpOutputFrequency = 10 # Write every n-th time step. 0 only writes a file if an invasion / snap-off occurred. -1 writes every step
+EnableGravity = false
+
+[Vtk]
+AddVelocity = 1
+
+[Newton]
+MaxSteps = 10
+TargetSteps = 4
+MaxRelativeShift = 1e-5
+
+[InvasionState]
+Verbosity = true
+#AccuracyCriterion = 0.99
+
+[SpatialParams]
+HighSwRegularizationMethod = Spline

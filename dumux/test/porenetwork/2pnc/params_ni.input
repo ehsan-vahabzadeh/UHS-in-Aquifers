@@ -1,0 +1,29 @@
+[TimeLoop]
+DtInitial = 1e-5 # [s]
+TEnd = 1e2 # [s]
+
+[Grid]
+File = ./grids/1d_grid.dgf
+PoreGeometry = Cube
+ThroatCrossSectionShape = Square
+
+[Problem]
+Name = test_pnm_2pnc_ni
+VtpOutputFrequency = 10 # Write every n-th time step. 0 only writes a file if an invasion / snap-off occurred
+EnableGravity = false
+InletTemperature = 288.15
+OutletTemperature = 283.15
+Source = 1e-5
+
+[Vtk]
+AddVelocity = 1
+
+[Newton]
+MaxSteps = 10
+TargetSteps = 4
+MaxRelativeShift = 1e-5
+
+[Component]
+SolidHeatCapacity = 1.0 # for compatibility
+SolidDensity = 1.0 # for compatibility
+SolidThermalConductivity = 1.0 # for compatibility

@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightInfo: Copyright © DUNE Project contributors, see file LICENSE.md in module root
+# SPDX-License-Identifier: LicenseRef-GPL-2.0-only-with-DUNE-exception
+#
+# This file contains the list of predefined preprocessor macros required for running
+# Doxygen. It should be included automatically by the build system after
+# Doxystyle.
+#
+# The reason to have this separate is for building the website, where we
+# would otherwise have to maintain these definitions a second time.
+
+PREDEFINED             = DOXYGEN \
+                         HAVE_MPI:=1 \
+                         _DEBUG_ALLOCATOR_H:=1 \
+
+
+# marker - here to allow the last line continuation

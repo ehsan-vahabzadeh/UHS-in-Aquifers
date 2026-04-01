@@ -1,0 +1,242 @@
+.\" SPDX-FileCopyrightInfo: Copyright © 2013-2015 Oliver Sander
+.\" SPDX-License-Identifier: FSFAP
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH DUNECONTROL 1 "November 8, 2016"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+dunecontrol \- Control program for the Dune build system
+.SH SYNOPSIS
+.B dunecontrol
+[\fIOPTIONS\fP] \fICOMMANDS\fP [\fICOMMAND-OPTIONS\fP]
+.SH DESCRIPTION
+.B dunecontrol
+is the control program for the build system of the Dune libraries.
+
+The Dune libraries form a set of modules.  Each can be built independently using CMake.
+Additionally, though, there are dependencies between modules,
+which are expected to form a directed acyclic graph.  These dependencies are set in a
+file called
+.B dune.module
+contained in the main directory of each Dune module.
+
+The
+.B dunecontrol
+program helps to build sets of inter-dependent modules.  It allows to construct
+the entire dependency graph and obtain information about it.  Then it allows to run various build-related
+commands for all modules.  These are executed in the order mandated by the dependency graph.
+
+.SH COMMANDS
+Colon-separated list of commands. Available commands are:
+.HP
+.B help
+.IP
+Show a help message and exit
+.HP
+.B print
+.IP
+Print the list of modules sorted according to their dependency relations
+.HP
+.B info
+.IP
+Same as `print', but including whether it is a dependency or suggestion
+.HP
+.B printdeps
+.IP
+Print recursive dependencies of a module
+.HP
+.B vcsetup
+.IP
+Setup version control repository (Git etc.) or working copy (SVN)
+.HP
+.B update
+.IP
+Update all modules from the repository from their respective version control systems
+.HP
+.B configure
+.IP
+Run cmake for each module
+.HP
+.B make
+.IP
+Run make for each module
+.HP
+.B all
+.IP
+Run the 'configure' and 'make' commands for each module
+.HP
+.B exec
+.IP
+Execute an arbitrary command in each module source directory
+.HP
+.B bexec
+.IP
+Execute an arbitrary command in each module build directory
+.HP
+.B status
+.IP
+Show version control status for each module
+.HP
+.B svn
+.IP
+Run svn command for each svn-managed module
+.HP
+.B git
+.IP
+Run git command for each git-managed module
+.HP
+.B export
+.IP
+Run eval `dunecontrol export` to save the list of dune.module files to the DUNE_CONTROL_PATH variable
+.SH OPTIONS
+.HP
+\fB\-h\fP, \fB\-\-help\fP
+.IP
+Show this help
+.HP
+\fB--debug\fP
+.IP
+Run with debugging output enabled
+.HP
+\fB--module=\fP\fImod\fP
+.IP
+Apply the actions on module
+.I mod
+and all modules it depends on
+.HP
+\fB--only=\fP\fImod\fP
+.IP
+Only apply the actions on module
+.I mod
+, but not on the modules it depends on
+.HP
+\fB--current\fP
+.IP
+Only apply the actions on the current module, the one whose source tree we are in
+.HP
+\fB--current-dep\fP
+.IP
+Apply the actions on the current module, and all modules it depends on
+.HP
+\fB--resume\fP
+.IP
+Resume a previous run (only consider the modules not built successfully on the previous run)
+.HP
+\fB--skipfirst\fP
+.IP
+Skip the first module (use with --resume)
+.HP
+\fB--skipversioncheck\fP
+.IP
+When looking for Dune modules, do not check whether they have the required versions
+.HP
+\fB--opts=\fP\fIfile\fP
+.IP
+Load default options from \fIfile\fP, for details see the section
+below.
+
+Instead of a command line parameter, it is also possible to define an
+environment variable \fIDUNE_OPTS_FILE\fP.
+.HP
+\fB--builddir=\fP\fIname\fP
+.IP
+Make out-of-source builds in a subdir \fIname\fP.
+
+If \fIname\fP is a relative path, this directory is created inside each
+module, if it is an absolute path, a subdirectory for each
+module is created inside.
+
+Instead of a command line parameter, it is also possible to define an
+environment variable \fIDUNE_BUILDDIR\fP (see below) or to specify a
+\fIBUILDDIR\fP variable in the opts file.
+.HP
+\fB--[COMMAND]-opts=\fP\fIopts\fP
+.IP
+Set options for COMMAND (this is mainly useful for the 'all' COMMAND)
+
+.SH OPTS FILE
+
+The options file contains different entries to specify the build
+environment, e.g. which compiler to use, which options to pass to
+cmake, where to build DUNE, etc.
+
+Variables are
+
+.HP
+\fDUNE_CONTROL_PATH\fP
+.IP
+just as the environment variable DUNE_CONTROL_PATH, it is possible to
+define it in the options file. For details see the description below.
+
+.HP
+\fBBUILDDIR\fP=\Ifname\fP
+.IP
+to specify the build directory, just as via the command line.
+Defining the build directory in the opts file, allows to easily switch
+between different build directories for different DUNE configurations.
+
+.HP
+\fB[COMMAND]_FLAGS\fP=\fIopts\fP
+.IP
+Set options for \fICOMMAND\fP, e.g. CMAKE_FLAGS, to specify parameters
+passed to the specific command. In case of cmake this might look as
+follows
+
+CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=g++-11 -DCMAKE_CXX_FLAGS='-fPIC -g -O3' -DFOO_PREFIX=/path/to/libfoo"
+
+In case of make a common use case is to enable concurrency, e.g.
+
+MAKE_FLAGS="-j4"
+
+.SH ENVIRONMENT VARIABLES
+
+.HP
+.B DUNE_CONTROL_PATH
+.IP
+Colon-separated list to specify where 
+.B dunecontrol
+searches for Dune modules.
+Entries are either directories, which are then used recursively for
+.B dune.module
+files or the user can directly specify the full path to specific
+dune.module files.
+.IP
+.B default:
+The default for the case that DUNE_CONTROL_PATH is empty is to search
+the current directory, its subdirectories and a system-wide installation in /usr.
+
+.HP
+.B DUNE_OPTS_FILE
+.IP
+Specify a default value for an options file, if the user does not
+specify the --opts= parameter on the commandline.
+
+.HP
+.B DUNE_BUILDIR
+.IP
+Specify a default value for an build directory, if the user does not
+specify the --builddir= parameter on the commandline.
+
+.SH AUTHOR
+Dune was written by the Dune team (https://www.dune-project.org/community/people).
+.PP
+This manual page was written by Oliver Sander and Christian Engwer.
+
+.SH COPYRIGHT
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.

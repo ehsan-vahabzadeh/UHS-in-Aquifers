@@ -875,68 +875,54 @@ public:
         if (compIIdx > compJIdx)
             std::swap(compIIdx, compJIdx);
 
-        // auto mole_frac_H2O = fluidState.moleFraction(phaseIdx,H2OIdx);
-        // auto mole_frac_CH4 = fluidState.moleFraction(phaseIdx,CH4Idx);
-        // auto mole_frac_H2 = fluidState.moleFraction(phaseIdx,H2Idx);
-        // auto mole_frac_CO2 = fluidState.moleFraction(phaseIdx,CO2Idx);
-        // auto mole_frac_N2 = fluidState.moleFraction(phaseIdx,N2Idx);
-        switch (phaseIdx) {
-        case liquidPhaseIdx:
-            switch (compIIdx) {
-            case H2OIdx:
+        if (phaseIdx == liquidPhaseIdx)
+        {
+            if (compIIdx == H2OIdx)
+            {
                 switch (compJIdx) {
                     case H2Idx:     return BinaryCoeff::H2O_H2::liquidDiffCoeff(temperature, pressure);
                     case CH4Idx:    return BinaryCoeff::H2O_CH4::liquidDiffCoeff(temperature, pressure);
                     case CO2Idx:    return BinaryCoeff::H2O_CO2::liquidDiffCoeff(temperature, pressure);
                     case N2Idx:     return BinaryCoeff::H2O_N2::liquidDiffCoeff(temperature, pressure);
                 }
-            default: return 1e-10;
             }
-        case gasPhaseIdx:
-                switch (compIIdx) {
-                case H2OIdx:
-                    switch (compJIdx) {
-                        case H2Idx:     return BinaryCoeff::H2O_H2::gasDiffCoeff(temperature, pressure);
-                        case CH4Idx:    return BinaryCoeff::H2O_CH4::gasDiffCoeff(temperature, pressure);
-                        case CO2Idx:    return BinaryCoeff::H2O_CO2::gasDiffCoeff(temperature, pressure);
-                        case N2Idx:     return BinaryCoeff::H2O_N2::gasDiffCoeff(temperature, pressure);
-                        
-                    }
-
-
-                case CH4Idx:
-                    switch (compJIdx) {
-                        case CO2Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
-                        // case H2Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
-                        case N2Idx:     return BinaryCoeff::CH4_N2::gasDiffCoeff(temperature, pressure);
-                    }
-
-                case H2Idx:
-                    switch (compJIdx) {
-                        // case CH4Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
-                        // case CO2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
-                        case CO2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
-                        case N2Idx:     return BinaryCoeff::H2_N2::gasDiffCoeff(temperature, pressure);
-                    }
-
-
-                case CO2Idx:
-                    switch (compJIdx) {
-                        case N2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
-                        case CH4Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
-                        // case H2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
-                        case H2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
-                    }
-                case N2Idx:
-                    switch (compJIdx) {
-                        case CO2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
-                        case H2Idx:     return BinaryCoeff::H2_N2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_N2, Policy::useIdealGasDensity());
-                        case CH4Idx:    return BinaryCoeff::CH4_N2::gasDiffCoeff(temperature, pressure);
-                    }    
-                default: return 1e-9;
+            return 1e-10;
+        }
+        else // gasPhaseIdx
+        {
+            if (compIIdx == H2OIdx)
+            {
+                switch (compJIdx) {
+                    case H2Idx:     return BinaryCoeff::H2O_H2::gasDiffCoeff(temperature, pressure);
+                    case CH4Idx:    return BinaryCoeff::H2O_CH4::gasDiffCoeff(temperature, pressure);
+                    case CO2Idx:    return BinaryCoeff::H2O_CO2::gasDiffCoeff(temperature, pressure);
+                    case N2Idx:     return BinaryCoeff::H2O_N2::gasDiffCoeff(temperature, pressure);
                 }
-                
-            
+            }
+            else if (compIIdx == N2Idx)
+            {
+                switch (compJIdx) {
+                    case H2Idx:     return BinaryCoeff::H2_N2::gasDiffCoeff(temperature, pressure);
+                    case CO2Idx:    return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
+                    case CH4Idx:    return BinaryCoeff::CH4_N2::gasDiffCoeff(temperature, pressure);
+                }
+            }
+            else if (compIIdx == H2Idx)
+            {
+                switch (compJIdx) {
+                    case CO2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
+                    case CH4Idx:    return BinaryCoeff::H2_CH4::gasDiffCoeff(temperature, pressure);
+                    case N2Idx:     return BinaryCoeff::H2_N2::gasDiffCoeff(temperature, pressure);
+                }
+            }
+            else if (compIIdx == CO2Idx)
+            {
+                switch (compJIdx) {
+                    case CH4Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
+                    case N2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
+                }
+            }
+            return 1e-9;
         }
 
         DUNE_THROW(Dune::InvalidStateException,

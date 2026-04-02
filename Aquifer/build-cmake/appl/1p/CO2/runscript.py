@@ -1,0 +1,1 @@
+/home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/CO2/runscript.py

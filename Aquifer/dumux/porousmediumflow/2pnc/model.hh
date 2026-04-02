@@ -304,7 +304,7 @@ struct ThermalConductivityModel<TypeTag, TTag::TwoPNCNI>
 private:
     using Scalar = GetPropType<TypeTag, Properties::Scalar>;
 public:
-    using type = ThermalConductivitySomerton<Scalar>;
+    using type = ThermalConductivitySomertonTwoP<Scalar>;
 };
 
 } // end namespace Properties

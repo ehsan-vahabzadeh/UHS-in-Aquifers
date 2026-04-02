@@ -111,7 +111,6 @@ public:
     static constexpr int CO2Idx = 3;
     static constexpr int N2Idx = 4;
 
-
     static constexpr int comp0Idx = H2OIdx; //!< index of the first component
     static constexpr int comp1Idx = CH4Idx; //!< index of the second component
     static constexpr int comp2Idx = CO2Idx; // secondary component
@@ -178,7 +177,7 @@ public:
         // we assume Henry's and Raoult's laws for the water phase and
         // and no interaction between gas molecules of different
         // components, so all phases are ideal mixtures!
-        return false;
+        return true;
     }
 
     /*!
@@ -876,11 +875,11 @@ public:
         if (compIIdx > compJIdx)
             std::swap(compIIdx, compJIdx);
 
-         auto mole_frac_H2O = fluidState.moleFraction(phaseIdx,H2OIdx);
-         auto mole_frac_CH4 = fluidState.moleFraction(phaseIdx,CH4Idx);
-         auto mole_frac_H2 = fluidState.moleFraction(phaseIdx,H2Idx);
-         auto mole_frac_CO2 = fluidState.moleFraction(phaseIdx,CO2Idx);
-         auto mole_frac_N2 = fluidState.moleFraction(phaseIdx,N2Idx);
+         auto mole_frac_H2O = std::max(fluidState.moleFraction(phaseIdx, H2OIdx), 1e-9);
+         auto mole_frac_CH4 = std::max(fluidState.moleFraction(phaseIdx,CH4Idx), 1e-9);
+         auto mole_frac_H2 = std::max(fluidState.moleFraction(phaseIdx,H2Idx), 1e-9);
+         auto mole_frac_CO2 = std::max(fluidState.moleFraction(phaseIdx,CO2Idx), 1e-9);
+         auto mole_frac_N2 = std::max(fluidState.moleFraction(phaseIdx,N2Idx), 1e-9);
         switch (phaseIdx) {
         case liquidPhaseIdx:
             switch (compIIdx) {
@@ -895,7 +894,7 @@ public:
             }
         case gasPhaseIdx:
                 // if (fluidState.moleFraction(phaseIdx,compIIdx) < 1e-10 && fluidState.moleFraction(phaseIdx,compJIdx) < 1e-10)
-                //     return 1e-6; // no diffusion if one component is not present
+                    // return 1e-6; // no diffusion if one component is not present
                 switch (compIIdx) {
                 case H2OIdx:
                     switch (compJIdx) {
@@ -909,28 +908,34 @@ public:
 
                 case CH4Idx:
                     switch (compJIdx) {
-                        case CO2Idx:    return BinaryCoeff::CH4_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_CH4, mole_frac_CO2, Policy::useIdealGasDensity());
-                        // case CO2Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
-                        case H2Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
-                        // case H2Idx:    return BinaryCoeff::H2_CH4::gasDiffCoeff(temperature, pressure);
-                        case N2Idx:     return BinaryCoeff::CH4_N2::HighPgasDiffCoeff(temperature, pressure, mole_frac_CH4, mole_frac_N2, Policy::useIdealGasDensity());
+                        // case CO2Idx:    return BinaryCoeff::CH4_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_CH4, mole_frac_CO2);
+                        // case H2Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
+                        // case N2Idx:     return BinaryCoeff::CH4_N2::HighPgasDiffCoeff(temperature, pressure, mole_frac_CH4, mole_frac_N2);
+                            case CO2Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
+                            case H2Idx:    return BinaryCoeff::H2_CH4::gasDiffCoeff(temperature, pressure);
+                            case N2Idx:     return BinaryCoeff::CH4_N2::gasDiffCoeff(temperature, pressure);
                     }
 
                 case H2Idx:
                     switch (compJIdx) {
-                        case CH4Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
-                        case CO2Idx:    return BinaryCoeff::H2_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CO2, Policy::useIdealGasDensity());
-                        // case CO2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
-                        case N2Idx:     return BinaryCoeff::H2_N2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_N2, Policy::useIdealGasDensity());
+                        // case CH4Idx:    return BinaryCoeff::H2_CH4::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CH4, Policy::useIdealGasDensity());
+                        // case CO2Idx:    return BinaryCoeff::H2_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CO2, Policy::useIdealGasDensity());
+                        // case N2Idx:     return BinaryCoeff::H2_N2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_N2, Policy::useIdealGasDensity());
+                        case CH4Idx:    return BinaryCoeff::H2_CH4::gasDiffCoeff(temperature, pressure);
+                        case CO2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
+                        case N2Idx:     return BinaryCoeff::H2_N2::gasDiffCoeff(temperature, pressure);
                     }
 
 
                 case CO2Idx:
                     switch (compJIdx) {
-                        case N2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
+                        // case N2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
                         // case CH4Idx:    return BinaryCoeff::CH4_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_CH4, mole_frac_CO2, Policy::useIdealGasDensity());
-                         case H2Idx:    return BinaryCoeff::H2_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CO2, Policy::useIdealGasDensity());
+                        //  case H2Idx:    return BinaryCoeff::H2_CO2::HighPgasDiffCoeff(temperature, pressure, mole_frac_H2, mole_frac_CO2, Policy::useIdealGasDensity());
                         // case H2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
+                         case N2Idx:     return BinaryCoeff::CO2_N2::gasDiffCoeff(temperature, pressure);
+                         case CH4Idx:    return BinaryCoeff::CH4_CO2::gasDiffCoeff(temperature, pressure);
+                         case H2Idx:    return BinaryCoeff::H2_CO2::gasDiffCoeff(temperature, pressure);
                     }
                 case N2Idx:
                     switch (compJIdx) {

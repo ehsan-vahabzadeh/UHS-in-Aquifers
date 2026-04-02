@@ -1,18 +1,17 @@
 // -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
 // vi: set et ts=4 sw=4 sts=4:
 //
-// SPDX-FileCopyrightInfo: Copyright � DuMux Project contributors, see AUTHORS.md in root folder
+// SPDX-FileCopyrightInfo: Copyright © DuMux Project contributors, see AUTHORS.md in root folder
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 /**
  * \file
- * \ingroup OnePNCTests
- * \brief Definition of a problem for the 1pnc problem:
- * Component transport of nitrogen dissolved in the water phase.
+ * \ingroup TwoPNCTests
+ * \brief Definition of a problem for the 2pnc saline aquifer gas storage problem.
  */
 
-#ifndef DUMUX_1P2C_TEST_PROBLEM_HH
-#define DUMUX_1P2C_TEST_PROBLEM_HH
+#ifndef DUMUX_2PNC_TEST_PROBLEM_HH
+#define DUMUX_2PNC_TEST_PROBLEM_HH
 
 #include <dumux/common/properties.hh>
 #include <dumux/common/parameters.hh>
@@ -32,24 +31,27 @@
 namespace Dumux {
 
 /*!
- * \ingroup OnePNCTests
- * \brief Definition of a problem for the 1pnc problem:
- *  Component transport of nitrogen dissolved in the water phase.
+ * \ingroup TwoPNCTests
+ * \brief Two-phase n-component saline aquifer gas storage problem.
  *
- * Nitrogen is dissolved in the water phase and is transported with the
- * water flow from the left side to the right.
+ *  Migration note (1pnc to 2pnc):
  *
- * The model domain is specified in the input file and
- * we use homogeneous soil properties.
- * Initially, the domain is filled with pure water.
+ *  Primary variables (TwoPNC, p_w-S_n formulation):
+ *    [0] pressureIdx  - wetting-phase (water) pressure  p_w
+ *    [1] switchIdx    - nonwetting-phase saturation S_n (when both phases
+ *                       present) OR dissolved mole fraction (single-phase)
+ *    [2..N-1]         - additional component mole fractions in wetting phase
  *
- * At the left side, a Dirichlet condition defines the nitrogen mole fraction.
- * The water phase flows from the left side to the right if the applied pressure
- * gradient is >0. The nitrogen is transported with the water flow
- * and leaves the domain at the boundary, where again Dirichlet boundary
- * conditions are applied.
+ *  Initial fully-saturated setup:
+ *    S_w = 1 - eps,  S_n = eps  (eps = 1e-6 for numerical safety)
+ *    Dissolved gas species initialised to zero (pure brine)
+ *    Pressure initialised hydrostatically from Pressure_TOP / PressureGWC
  *
- * This problem uses the \ref OnePNCModel model.
+ *  Two-phase BC flux partitioning (production):
+ *    Total component flux = Rate * sum_alpha [ x_alpha^kappa * lambda_alpha / sum lambda_alpha ]
+ *    where alpha in {liquid, gas}, lambda_alpha = kr_alpha / mu_alpha (mobility),
+ *    x_alpha^kappa = mole fraction of component kappa in phase alpha.
+ *    This correctly weights both phases by their mobility.
  */
 template <class TypeTag>
 class OnePTwoCTestProblem : public PorousMediumFlowProblem<TypeTag>
@@ -88,30 +90,32 @@ class OnePTwoCTestProblem : public PorousMediumFlowProblem<TypeTag>
         enum
         {
             pressureIdx = Indices::pressureIdx,
+            switchIdx = Indices::switchIdx,
         };
 
         // phase indices
         enum
         {
-            gasPhaseIdx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::gasPhaseIdx),
-            liquidPhaseIdx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::liquidPhaseIdx),
-            H2OIdx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::H2OIdx),
-            N2Idx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::N2Idx),
-            CO2Idx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::CO2Idx),
-            H2Idx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::H2Idx),
-            CH4Idx = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::CH4Idx),
-
+            gasPhaseIdx = FluidSystem::gasPhaseIdx,
+            liquidPhaseIdx = FluidSystem::liquidPhaseIdx,
+            H2OIdx = FluidSystem::H2OIdx,
+            N2Idx = FluidSystem::N2Idx,
+            CO2Idx = FluidSystem::CO2Idx,
+            H2Idx = FluidSystem::H2Idx,
+            CH4Idx = FluidSystem::CH4Idx,
         };
         // equation indices
         enum
         {
-            numComponents = FluidSystem::compIdx(FluidSystem::MultiPhaseFluidSystem::numComponents),
+            numComponents = FluidSystem::numComponents,
             contiH2OEqIdx = Indices::conti0EqIdx + H2OIdx,
             contiN2EqIdx = Indices::conti0EqIdx + N2Idx,
             contiCO2EqIdx = Indices::conti0EqIdx + CO2Idx,
             contiH2EqIdx = Indices::conti0EqIdx + H2Idx,
             contiCH4EqIdx = Indices::conti0EqIdx + CH4Idx,
         };
+        // number of fluid phases
+        enum { numPhases = FluidSystem::numPhases };
 
     //! Property that defines whether mole or mass fractions are used
     static constexpr bool useMoles = getPropValue<TypeTag, Properties::UseMoles>();
@@ -264,12 +268,18 @@ public:
                 }
             }
             if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
+                // Two-phase production: weight component flux by phase mobilities
+                const Scalar mobLiq = volVars.mobility(liquidPhaseIdx);
+                const Scalar mobGas = volVars.mobility(gasPhaseIdx);
+                const Scalar totalMob = mobLiq + mobGas;
                 for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                 {
-                    Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
-                    // values[compIdx] = ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])));
-                    values[compIdx] = (Extractionrate_)*X_GAS;
-                    // values[compIdx] = (Extractionrate_/(MW[gasPhaseIdx]))*(Mobility_Gas[compIdx]/(Total_Mobility_Liq+Total_Mobility_Gas));
+                    const Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
+                    const Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
+                    if (totalMob > 0.0)
+                        values[compIdx] = Extractionrate_ * (X_LIQ * mobLiq / totalMob + X_GAS * mobGas / totalMob);
+                    else
+                        values[compIdx] = 0.0;
                 }
             }
 
@@ -285,22 +295,20 @@ public:
             auto d = ipGlobal - element.geometry().center();
             d /= d.two_norm2();
 
-            auto upwindTerm = useMoles ? volVars.molarDensity() : volVars.density();
-            upwindTerm *= volVars.mobility();
-
             const auto tij = vtmv(scvf.unitOuterNormal(), volVars.permeability(), d);
-            const auto phaseFlux = -1.0*upwindTerm*tij*(dirichletPressure - volVars.pressure());
 
-            // set Neumann bc values
-            // values[contiH2OEqIdx] = phaseFlux;
-            // emulate an outflow condition for the component transport on the right side
-            // values[contiN2EqIdx] = phaseFlux * (useMoles ? volVars.moleFraction(0, N2Idx) : volVars.massFraction(0, N2Idx));
-
+            // Two-phase outflow: sum over both phases
             for (int compIdx = 0; compIdx < numComponents; ++compIdx)
             {
-                values[compIdx] = ((phaseFlux * volVars.moleFraction(0, compIdx)));
-                // values[compIdx] = ((phaseFluxn*volVars.moleFraction(gasPhaseIdx, compIdx))+
-                // (phaseFlux*volVars.moleFraction(liquidPhaseIdx, compIdx))) / (volVars.mobility(0)+volVars.mobility(1));
+                Scalar compFlux = 0.0;
+                for (int phaseIdx = 0; phaseIdx < numPhases; ++phaseIdx)
+                {
+                    auto upwindTerm = useMoles ? volVars.molarDensity(phaseIdx) : volVars.density(phaseIdx);
+                    upwindTerm *= volVars.mobility(phaseIdx);
+                    const auto phaseFlux = -1.0 * upwindTerm * tij * (dirichletPressure - volVars.pressure(phaseIdx));
+                    compFlux += phaseFlux * volVars.moleFraction(phaseIdx, compIdx);
+                }
+                values[compIdx] = compFlux;
             }
         }
 
@@ -389,12 +397,18 @@ public:
                 values[H2Idx] = inj_rate_Op;  
             }
             if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
+                // Two-phase production: weight component flux by phase mobilities
+                const Scalar mobLiq = volVars.mobility(liquidPhaseIdx);
+                const Scalar mobGas = volVars.mobility(gasPhaseIdx);
+                const Scalar totalMob = mobLiq + mobGas;
                 for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                 {
-                    Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
-                    // values[compIdx] = ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])));
-                    values[compIdx] = (Extractionrate_)*X_GAS;
-                    // values[compIdx] = (Extractionrate_/(MW[gasPhaseIdx]))*(Mobility_Gas[compIdx]/(Total_Mobility_Liq+Total_Mobility_Gas));
+                    const Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
+                    const Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
+                    if (totalMob > 0.0)
+                        values[compIdx] = Extractionrate_ * (X_LIQ * mobLiq / totalMob + X_GAS * mobGas / totalMob);
+                    else
+                        values[compIdx] = 0.0;
                 }
             }
 
@@ -407,30 +421,30 @@ public:
             const auto &volVars = elemVolVars[scvf.insideScvIdx()];
             const auto &fluxVarsCache = elemFluxVarsCache[scvf];
             dirichletPressure = init_val[0];
-            // evaluate the pressure gradient
-            GlobalPosition gradP(0.0);
-                for (const auto &scv : scvs(fvGeometry))
-                {
-                    const auto xIp = scv.dofPosition()[0];
-                    auto tmp = fluxVarsCache.gradN(scv.localDofIndex());
-                    tmp *= xIp > X_max - eps_ ? dirichletPressure
-                                                : elemVolVars[scv].pressure();
 
-                        gradP += tmp;
-
-
-                }
-
-            auto phaseFlux = vtmv(scvf.unitOuterNormal(), volVars.permeability(), gradP);
-        
-            phaseFlux *= -1*volVars.mobility();
-            phaseFlux *= useMoles ? volVars.molarDensity() : volVars.density();
-
+            // Two-phase outflow: sum contributions from both phases
             for (int compIdx = 0; compIdx < numComponents; ++compIdx)
             {
-                values[compIdx] = ((phaseFlux * volVars.moleFraction(0, compIdx)));
-                // values[compIdx] = ((phaseFluxn*volVars.moleFraction(gasPhaseIdx, compIdx))+
-                // (phaseFlux*volVars.moleFraction(liquidPhaseIdx, compIdx))) / (volVars.mobility(0)+volVars.mobility(1));
+                Scalar compFlux = 0.0;
+                for (int phaseIdx = 0; phaseIdx < numPhases; ++phaseIdx)
+                {
+                    // evaluate the pressure gradient for this phase
+                    GlobalPosition gradP(0.0);
+                    for (const auto &scv : scvs(fvGeometry))
+                    {
+                        const auto xIp = scv.dofPosition()[0];
+                        auto tmp = fluxVarsCache.gradN(scv.localDofIndex());
+                        tmp *= xIp > X_max - eps_ ? dirichletPressure
+                                                    : elemVolVars[scv].pressure(phaseIdx);
+                        gradP += tmp;
+                    }
+
+                    auto phaseFlux = vtmv(scvf.unitOuterNormal(), volVars.permeability(), gradP);
+                    phaseFlux *= -1.0 * volVars.mobility(phaseIdx);
+                    phaseFlux *= useMoles ? volVars.molarDensity(phaseIdx) : volVars.density(phaseIdx);
+                    compFlux += phaseFlux * volVars.moleFraction(phaseIdx, compIdx);
+                }
+                values[compIdx] = compFlux;
             }
         }
 
@@ -562,18 +576,16 @@ public:
 
                         }
                         if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
+                            // Two-phase production accounting
+                            const Scalar mobLiq = volVars.mobility(liquidPhaseIdx);
+                            const Scalar mobGas = volVars.mobility(gasPhaseIdx);
+                            const Scalar totalMob = mobLiq + mobGas;
                             for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                             {
-                                Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
-                                // Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
-                                // Mobility [gasPhaseIdx] = volVars.mobility(gasPhaseIdx);
-                                // Mobility [liquidPhaseIdx] = volVars.mobility(liquidPhaseIdx);
-                                // values_prod[compIdx] += Delta_y* ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])));
-                                // values_prod[compIdx] +=  extrusion_ * ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])));
-                                values_prod[compIdx] +=  extrusion_ *(Extractionrate_)*X_GAS;
-                                // values_prod[compIdx] +=  Delta_y* 
-                                //                         ((Extractionrate_/(MW[liquidPhaseIdx]))*(X_LIQ*Mobility[liquidPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])) + 
-                                //                         (Extractionrate_/(MW[gasPhaseIdx]))*(X_GAS*Mobility[gasPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])));
+                                const Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
+                                const Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
+                                if (totalMob > 0.0)
+                                    values_prod[compIdx] += extrusion_ * Extractionrate_ * (X_LIQ * mobLiq / totalMob + X_GAS * mobGas / totalMob);
                             }
                         }
                     }
@@ -676,23 +688,38 @@ public:
         GlobalPosition gravity_;
 private:
     // the internal method for the initial condition
+    // Fully water-saturated saline aquifer: Sw ≈ 1, Sg ≈ 0
     PrimaryVariables initial_(const GlobalPosition &globalPos) const
     {
-        PrimaryVariables priVars;
-        Scalar pressure_TOP = getParam<Scalar>("BoundaryConditions.Pressure_TOP", 100e5);
-        FluidState fs;
-        fs.setMoleFraction(gasPhaseIdx, CO2Idx, 0.0); fs.setMoleFraction(gasPhaseIdx, CH4Idx, 1.0);
-        fs.setPressure(gasPhaseIdx, pressure_TOP);
-        // fs.density(liquidPhaseIdx); fs.density(gasPhaseIdx);
-        fs.setTemperature(this->spatialParams().temperatureAtPos(globalPos));     
+        PrimaryVariables priVars(0.0);
+        Scalar pressure_TOP = getParam<Scalar>("BoundaryConditions.Pressure_TOP",
+                              getParam<Scalar>("Initialization.PressureGWC", 60e5));
 
-        // Scalar pw = 0.0;
-        // Scalar check = 1.0;
-        // Scalar z = globalPos[dimWorld - 1];
-        Scalar densityG = FluidSystem::density(fs, gasPhaseIdx);
-        // priVars[pressureIdx] = 75e5; // initial condition for the pressure
-        // priVars[contiCH4EqIdx] = 1.0;  // initial condition for the N2 molefraction
-        priVars[pressureIdx]  = (pressure_TOP - (densityG * gravity()[dimWorld - 1] * (Y_max - (globalPos)[dimWorld - 1])));
+        // Compute hydrostatic pressure from top using water density
+        FluidState fs;
+        fs.setTemperature(this->spatialParams().temperatureAtPos(globalPos));
+        fs.setPressure(liquidPhaseIdx, pressure_TOP);
+        // Set a pure-water composition to compute liquid density
+        fs.setMoleFraction(liquidPhaseIdx, H2OIdx, 1.0);
+        for (int compIdx = 0; compIdx < numComponents; ++compIdx)
+            if (compIdx != H2OIdx)
+                fs.setMoleFraction(liquidPhaseIdx, compIdx, 0.0);
+
+        const Scalar densityW = FluidSystem::density(fs, liquidPhaseIdx);
+
+        // Hydrostatic pressure initialisation (water column)
+        priVars[pressureIdx] = pressure_TOP - densityW * gravity()[dimWorld - 1]
+                               * (Y_max - globalPos[dimWorld - 1]);
+
+        // TwoPNC: switchIdx = Sn (gas saturation) when both phases present
+        // Start fully water-saturated with a numerically safe epsilon gas
+        priVars[switchIdx] = 1e-6;
+
+        // Set phase presence state: both phases present (required by primary variable switch)
+        priVars.setState(Indices::bothPhases);
+
+        // Remaining primary variables (dissolved component mole fractions)
+        // initialised to zero by the priVars(0.0) constructor - pure brine
         return priVars;
     }
     void initializeOutput()

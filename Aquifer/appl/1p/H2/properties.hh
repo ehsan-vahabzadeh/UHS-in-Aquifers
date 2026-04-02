@@ -6,7 +6,7 @@
 //
 /**
  * \file
- * \ingroup OnePNCTests
+ * \ingroup TwoPNCTests
  * \brief Definition of a problem for the 1pnc problem:
  * Component transport of nitrogen dissolved in the water phase.
  */
@@ -26,12 +26,18 @@
 #include <dumux/discretization/box.hh>
 #include <dumux/discretization/evalsolution.hh>
 #include <dumux/discretization/evalgradients.hh>
-#include <dumux/porousmediumflow/1pnc/model.hh>
+#include <dumux/discretization/extrusion.hh>
+#include <dumux/porousmediumflow/2pnc/model.hh>
 
-
-#include <dumux/material/fluidsystems/h2on2.hh>
-#include <dumux/material/fluidsystems/1padapter.hh>
+#include <dumux/flux/maxwellstefanslaw.hh>
+#include <dumux/material/fluidmatrixinteractions/dispersiontensors/fulltensor.hh>
+#include <dumux/material/fluidmatrixinteractions/dispersiontensors/scheidegger.hh>
 #include "fluidsystems/mixture.hh"
+
+#ifndef ENABLECACHING
+#define ENABLECACHING 0
+#endif
+
 #include "problem.hh"
 #include "spatialparams.hh"
 
@@ -39,7 +45,7 @@ namespace Dumux::Properties {
 
 // Create new type tags
 namespace TTag {
-struct OnePTwoCTest { using InheritsFrom = std::tuple<OnePNC>; };
+struct OnePTwoCTest { using InheritsFrom = std::tuple<TwoPNC>; };
 struct OnePTwoCTestBox { using InheritsFrom = std::tuple<OnePTwoCTest, BoxModel>; };
 struct OnePTwoCTestCCTpfa { using InheritsFrom = std::tuple<OnePTwoCTest, CCTpfaModel>; };
 struct OnePTwoCTestCCMpfa { using InheritsFrom = std::tuple<OnePTwoCTest, CCMpfaModel>; };
@@ -66,9 +72,8 @@ struct Problem<TypeTag, TTag::OnePTwoCTest> { using type = OnePTwoCTestProblem<T
 template<class TypeTag>
 struct FluidSystem<TypeTag, TTag::OnePTwoCTest>
 {
-        using MixingFluidSystem = FluidSystems::MixingFluidSystem<GetPropType<TypeTag, Properties::Scalar>,
-                                        FluidSystems::MixingFluidSystemDefaultPolicy</*fastButSimplifiedRelations=*/false>>;
-        using type = FluidSystems::OnePAdapter<MixingFluidSystem, MixingFluidSystem::gasPhaseIdx>;
+    using type = FluidSystems::MixingFluidSystem<GetPropType<TypeTag, Properties::Scalar>,
+                                    FluidSystems::MixingFluidSystemDefaultPolicy</*fastButSimplifiedRelations=*/false>>;
 };
 // rotation-symmetric grid geometry forming a cylinder channel
 template<class TypeTag>
@@ -96,7 +101,7 @@ struct SpatialParams<TypeTag, TTag::OnePTwoCTest>
 {
     using GridGeometry = GetPropType<TypeTag, Properties::GridGeometry>;
     using Scalar = GetPropType<TypeTag, Properties::Scalar>;
-    using type = OnePNCTestSpatialParams<GridGeometry, Scalar>;
+    using type = TwoPNCTestSpatialParams<GridGeometry, Scalar>;
 };
 
 template<class TypeTag>
@@ -105,7 +110,11 @@ struct EnableCompositionalDispersion<TypeTag, TTag::OnePTwoCTest> { static const
 template<class TypeTag>
 struct CompositionalDispersionModel<TypeTag, TTag::OnePTwoCTest>
 {
-using type = ScheideggersDispersionTensor<TypeTag>;
+    #if SCHEIDEGGER
+    using type = ScheideggersDispersionTensor<TypeTag>;
+    #else
+    using type = FullDispersionTensor<TypeTag>;
+    #endif
 };
 template<class TypeTag>
 struct MolecularDiffusionType<TypeTag, TTag::OnePTwoCTest> { using type = FicksLaw<TypeTag>; };
@@ -119,6 +128,9 @@ struct EnableGridFluxVariablesCache<TypeTag, TTag::OnePTwoCTest> { static conste
 // Define whether mole(true) or mass (false) fractions are used
 template<class TypeTag>
 struct UseMoles<TypeTag, TTag::OnePTwoCTest> { static constexpr bool value = true; };
+
+template<class TypeTag>
+struct EffectiveDiffusivityModel<TypeTag, TTag::OnePTwoCTest> { using type = DiffusivityMillingtonQuirk<GetPropType<TypeTag, Properties::Scalar>>; };
 } // end namespace Dumux::Properties
 
 #endif

@@ -35,7 +35,7 @@
 #include "fluidsystems/mixture.hh"
 
 #ifndef ENABLECACHING
-#define ENABLECACHING 0
+#define ENABLECACHING 1
 #endif
 
 #include "problem.hh"

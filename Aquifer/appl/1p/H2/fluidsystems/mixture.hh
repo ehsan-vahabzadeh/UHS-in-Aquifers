@@ -21,6 +21,7 @@
  * \ingroup Fluidsystems
  * \brief @copydoc Dumux::FluidSystems::H2OH2CH4CO2N2
  */
+#include <array>
 #include <cassert>
 #include <iomanip>
 
@@ -488,50 +489,38 @@ public:
 
 
     template <class FluidState>
-    static std::vector<double> Fugacity_Coefficient(const FluidState &fluidState)
+    static std::array<Scalar, numComponents> Fugacity_Coefficient(const FluidState &fluidState)
     {
-        // Scalar PHI[numComponents]; 
         Scalar temperature = fluidState.temperature(gasPhaseIdx);
-        Scalar pressure = fluidState.pressure(gasPhaseIdx); 
-        std::vector<double> PHI(numComponents);  
-        for (int i=0; i<numComponents; ++i)
-            PHI[i]=0;
+        Scalar pressure = fluidState.pressure(gasPhaseIdx);
+        std::array<Scalar, numComponents> PHI;
         if (Policy::useIdealGasDensity()){
-            for (int i=0; i<numComponents; ++i)
-                PHI[i]=1;
-            return PHI;
-        }        
-        else {
-            PHI[H2OIdx] = H2O::PR(temperature,pressure);
-            PHI[CH4Idx] = CH4::PR(temperature,pressure);
-            PHI[CO2Idx] = CO2::PR(temperature,pressure);
-            PHI[N2Idx] = N2::PR(temperature,pressure);
-            PHI[H2Idx] = H2::PR(temperature,pressure);
+            PHI.fill(1.0);
             return PHI;
         }
+        PHI[H2OIdx] = H2O::PR(temperature,pressure);
+        PHI[CH4Idx] = CH4::PR(temperature,pressure);
+        PHI[CO2Idx] = CO2::PR(temperature,pressure);
+        PHI[N2Idx] = N2::PR(temperature,pressure);
+        PHI[H2Idx] = H2::PR(temperature,pressure);
+        return PHI;
     }
     template <class FluidState>
-    static std::vector<double> Z_factor(const FluidState &fluidState)
+    static std::array<Scalar, numComponents> Z_factor(const FluidState &fluidState)
     {
-        // Scalar PHI[numComponents]; 
         Scalar temperature = fluidState.temperature(gasPhaseIdx);
-        Scalar pressure = fluidState.pressure(gasPhaseIdx); 
-        std::vector<double> Z(numComponents);  
-        for (int i=0; i<numComponents; ++i)
-            Z[i]=0;
+        Scalar pressure = fluidState.pressure(gasPhaseIdx);
+        std::array<Scalar, numComponents> Z;
         if (Policy::useIdealGasDensity()){
-            for (int i=0; i<numComponents; ++i)
-                Z[i]=1;
-            return Z;
-        }        
-        else {
-            Z[H2OIdx] = H2O::z_factor(temperature,pressure);
-            Z[CH4Idx] = CH4::z_factor(temperature,pressure);
-            Z[CO2Idx] = CO2::z_factor(temperature,pressure);
-            Z[N2Idx] = N2::z_factor(temperature,pressure);
-            Z[H2Idx] = H2::z_factor(temperature,pressure);
+            Z.fill(1.0);
             return Z;
         }
+        Z[H2OIdx] = H2O::z_factor(temperature,pressure);
+        Z[CH4Idx] = CH4::z_factor(temperature,pressure);
+        Z[CO2Idx] = CO2::z_factor(temperature,pressure);
+        Z[N2Idx] = N2::z_factor(temperature,pressure);
+        Z[H2Idx] = H2::z_factor(temperature,pressure);
+        return Z;
     }
 
     using Base::density;
@@ -764,26 +753,16 @@ public:
     {
         Scalar temperature = fluidState.temperature(phaseIdx);
         Scalar pressure = fluidState.pressure(phaseIdx);
-        std::vector<double> PHI(numComponents);
         if (phaseIdx == gasPhaseIdx) {
-            PHI = Fugacity_Coefficient(fluidState);
-            Scalar fugacityCoeff = PHI[compIdx];
-            // Scalar fugacityCoeff = 1.0;
-            // if (compIdx == H2OIdx)
-            //     // For water, the fugacity coefficient is the ratio
-            //     // between the density of an ideal gas and the real
-            //     // density. (all other components are assumed to be an
-            //     // ideal gas here.)
-            //     return H2O::vaporPressure(temperature)/pressure;
-            //     fugacityCoeff =
-            //         IdealGas::density(H2O::molarMass(),
-            //                           temperature,
-            //                           pressure)
-            //         /
-            //         H2O::gasDensity(temperature, pressure);
-
-            return fugacityCoeff;
-            // return 0;
+            if (Policy::useIdealGasDensity())
+                return 1.0;
+            switch (compIdx) {
+                case H2OIdx: return H2O::PR(temperature, pressure);
+                case CH4Idx: return CH4::PR(temperature, pressure);
+                case H2Idx:  return H2::PR(temperature, pressure);
+                case CO2Idx: return CO2::PR(temperature, pressure);
+                case N2Idx:  return N2::PR(temperature, pressure);
+            }
         }
 
         switch (compIdx) {

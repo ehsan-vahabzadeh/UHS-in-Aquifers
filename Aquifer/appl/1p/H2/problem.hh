@@ -27,6 +27,15 @@
 #include <dumux/discretization/evalgradients.hh>
 #include <dumux/io/json/json.hpp>
 
+#include <stdexcept>
+
+//! Exception thrown when a well pressure safety limit is violated
+struct PressureLimitException : public std::runtime_error
+{
+    int exitCode;
+    PressureLimitException(const std::string& msg, int code = 3)
+        : std::runtime_error(msg), exitCode(code) {}
+};
 
 namespace Dumux {
 
@@ -160,6 +169,13 @@ public:
             std::cout<<"problem uses mole fractions"<<std::endl;
         else
             std::cout<<"problem uses mass fractions"<<std::endl;
+
+        // Pressure safety cutoff parameters
+        enablePressureCutoff_ = getParam<bool>("Safety.EnablePressureCutoff", true);
+        injPressureMultiplier_ = getParam<Scalar>("Safety.InjectionPressureMultiplier", 1.7);
+        minProdPressure_ = getParam<Scalar>("Safety.MinProductionPressure", 1e5);
+        pressureInitRef_ = getParam<Scalar>("BoundaryConditions.Pressure_TOP",
+                           getParam<Scalar>("Initialization.PressureGWC", 60e5));
     }
 
     const std::string &name() const
@@ -632,6 +648,76 @@ public:
             }
             
             Dumux::MetaData::writeJsonFile(collector, name());
+
+            // ---- Pressure safety checks ----
+            if (enablePressureCutoff_)
+            {
+                double inj_interval = getParam<double>("BoundaryConditions.Well_Height", 0.0);
+
+                Scalar pInjSum = 0.0, pProdSum = 0.0;
+                int nInj = 0, nProd = 0;
+
+                for (const auto &elem : elements(this->gridGeometry().gridView(), Dune::Partitions::interior))
+                {
+                    auto fvGeo = localView(*fvGridGeometry);
+                    fvGeo.bindElement(elem);
+                    auto evv = localView(gridVariables.curGridVolVars());
+                    evv.bindElement(elem, fvGeo, curSol);
+
+                    for (auto&& scv : scvs(fvGeo))
+                    {
+                        const auto& pos = scv.dofPosition();
+                        if (pos[0] < X_min + Delta_x && pos[1] - Y_min >= Y_max - inj_interval)
+                        {
+                            const auto& vv = evv[scv];
+                            Scalar p = vv.pressure(liquidPhaseIdx);
+                            pInjSum += p;
+                            pProdSum += p;
+                            nInj++;
+                            nProd++;
+                        }
+                    }
+                }
+
+                Scalar pInjMonitored = (nInj > 0) ? pInjSum / nInj : 0.0;
+                Scalar pProdMonitored = (nProd > 0) ? pProdSum / nProd : 0.0;
+
+                const Scalar maxInjPressure = injPressureMultiplier_ * pressureInitRef_;
+
+                auto writeFailure = [&](const std::string& reason)
+                {
+                    Dumux::MetaData::Collector fc;
+                    if (Dumux::MetaData::jsonFileExists(name()))
+                        Dumux::MetaData::readJsonFile(fc, name());
+                    fc["runStatus"] = "failed_pressure_limit";
+                    fc["failureReason"] = reason;
+                    fc["failureTime"] = t;
+                    fc["pInjMonitored"] = pInjMonitored;
+                    fc["pProdMonitored"] = pProdMonitored;
+                    fc["pressureInitRef"] = pressureInitRef_;
+                    Dumux::MetaData::writeJsonFile(fc, name());
+                };
+
+                if (pInjMonitored > maxInjPressure)
+                {
+                    std::cout << "\n*** PRESSURE SAFETY: Injection pressure "
+                              << pInjMonitored << " Pa exceeds limit "
+                              << maxInjPressure << " Pa (= "
+                              << injPressureMultiplier_ << " * " << pressureInitRef_
+                              << ") at time " << t << " s ***\n" << std::endl;
+                    writeFailure("inj_pressure_exceeded");
+                    throw PressureLimitException("Injection pressure exceeded safety limit", 3);
+                }
+
+                if (pProdMonitored < minProdPressure_ && pProdMonitored > 0.0)
+                {
+                    std::cout << "\n*** PRESSURE SAFETY: Production pressure "
+                              << pProdMonitored << " Pa below minimum "
+                              << minProdPressure_ << " Pa at time " << t << " s ***\n" << std::endl;
+                    writeFailure("prod_pressure_too_low");
+                    throw PressureLimitException("Production pressure below safety limit", 4);
+                }
+            }
     }
 
     /*!
@@ -727,6 +813,10 @@ private:
         Dumux::MetaData::Collector collector;
         Dumux::MetaData::writeJsonFile(collector, name());
     }
+        bool enablePressureCutoff_ = true;
+        Scalar injPressureMultiplier_ = 1.7;
+        Scalar minProdPressure_ = 1e5;
+        Scalar pressureInitRef_ = 60e5;
         TimeLoopPtr timeLoop_;
         static constexpr Scalar eps_ = 1e-6;
         bool useNitscheTypeBc_;

@@ -3620,3 +3620,142 @@ events:
         
       exitCode: 2
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:36 (try_compile)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:85 (dune_check_cxx_source_compiles)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneProject.cmake:163 (include)"
+      - "CMakeLists.txt:37 (dune_project)"
+    directories:
+      source: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+      binary: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/n71743ev/DUMUX/dumux/Aquifer/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_45b28/fast
+        gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_45b28.dir/build.make CMakeFiles/cmTC_45b28.dir/build
+        gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+        /usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+        Linking CXX executable cmTC_45b28
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45b28.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_45b28 
+        gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:36 (try_compile)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:92 (dune_check_cxx_source_compiles)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneProject.cmake:163 (include)"
+      - "CMakeLists.txt:37 (dune_project)"
+    directories:
+      source: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+      binary: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/n71743ev/DUMUX/dumux/Aquifer/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA"
+      cached: true
+      stdout: |
+        Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_209d4/fast
+        gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_209d4.dir/build.make CMakeFiles/cmTC_209d4.dir/build
+        gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+        /usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+        /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+            1 | using F = decltype([](){}); int main() {return 0;}
+              |                    ^
+        gmake[3]: *** [CMakeFiles/cmTC_209d4.dir/build.make:78: CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+        gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        gmake[2]: *** [Makefile:127: cmTC_209d4/fast] Error 2
+        gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:36 (try_compile)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/CheckCXXFeatures.cmake:95 (dune_check_cxx_source_compiles)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneProject.cmake:163 (include)"
+      - "CMakeLists.txt:37 (dune_project)"
+    directories:
+      source: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+      binary: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/n71743ev/DUMUX/dumux/Aquifer/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "DUNE_HAVE_CXX_STD_IDENTITY"
+      cached: true
+      stdout: |
+        Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_28309/fast
+        gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_28309.dir/build.make CMakeFiles/cmTC_28309.dir/build
+        gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        Building CXX object CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+        /usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+        /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+        /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+            3 |   int main() { std::identity{}; }
+              |                     ^~~~~~~~
+        gmake[3]: *** [CMakeFiles/cmTC_28309.dir/build.make:78: CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+        gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        gmake[2]: *** [Makefile:127: cmTC_28309/fast] Error 2
+        gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/usr/share/cmake-3.28/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneCommonMacros.cmake:25 (find_package)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneModuleDependencies.cmake:176 (include)"
+      - "/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneProject.cmake:183 (dune_process_dependency_macros)"
+      - "CMakeLists.txt:37 (dune_project)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeScratch/TryCompile-efWjrN"
+      binary: "/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeScratch/TryCompile-efWjrN"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/n71743ev/DUMUX/dumux/dumux/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-istl/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-localfunctions/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-grid/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-geometry/cmake/modules;/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules;/home/n71743ev/DUMUX/dumux/Aquifer/cmake/modules"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+      exitCode: 1
+...

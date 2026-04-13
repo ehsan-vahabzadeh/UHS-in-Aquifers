@@ -633,7 +633,7 @@ METIS_LIBRARY:FILEPATH=METIS_LIBRARY-NOTFOUND
 MINIMAL_DEBUG_LEVEL:STRING=warn
 
 //Executable for running MPI programs.
-MPIEXEC_EXECUTABLE:FILEPATH=MPIEXEC_EXECUTABLE-NOTFOUND
+MPIEXEC_EXECUTABLE:FILEPATH=/usr/bin/mpiexec
 
 //Maximum number of processors available to run MPI applications.
 MPIEXEC_MAX_NUMPROCS:STRING=8
@@ -680,25 +680,49 @@ MPI_CXX_SKIP_MPICXX:BOOL=OFF
 MPI_C_ADDITIONAL_INCLUDE_DIRS:STRING=
 
 //MPI compiler for C
-MPI_C_COMPILER:FILEPATH=MPI_C_COMPILER-NOTFOUND
+MPI_C_COMPILER:FILEPATH=/usr/bin/mpicc
 
 //MPI C compiler wrapper include directories
-MPI_C_COMPILER_INCLUDE_DIRS:STRING=
+MPI_C_COMPILER_INCLUDE_DIRS:STRING=/usr/lib/x86_64-linux-gnu/openmpi/include;/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi
 
 //MPI C compilation definitions
 MPI_C_COMPILE_DEFINITIONS:STRING=
 
-//MPI C compilation flags
+//MPI C compilation options
 MPI_C_COMPILE_OPTIONS:STRING=
 
 //Path to a file.
 MPI_C_HEADER_DIR:PATH=MPI_C_HEADER_DIR-NOTFOUND
 
 //MPI C libraries to link against
-MPI_C_LIB_NAMES:STRING=
+MPI_C_LIB_NAMES:STRING=mpi;open-rte;open-pal;hwloc;event_core;event_pthreads;m;z
 
 //MPI C linker flags
-MPI_C_LINK_FLAGS:STRING=
+MPI_C_LINK_FLAGS:STRING=-L/usr/lib/x86_64-linux-gnu/openmpi/lib
+
+//Location of the event_core library for MPI
+MPI_event_core_LIBRARY:FILEPATH=MPI_event_core_LIBRARY-NOTFOUND
+
+//Location of the event_pthreads library for MPI
+MPI_event_pthreads_LIBRARY:FILEPATH=MPI_event_pthreads_LIBRARY-NOTFOUND
+
+//Location of the hwloc library for MPI
+MPI_hwloc_LIBRARY:FILEPATH=MPI_hwloc_LIBRARY-NOTFOUND
+
+//Location of the m library for MPI
+MPI_m_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libm.so
+
+//Location of the mpi library for MPI
+MPI_mpi_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libmpi.so
+
+//Location of the open-pal library for MPI
+MPI_open-pal_LIBRARY:FILEPATH=MPI_open-pal_LIBRARY-NOTFOUND
+
+//Location of the open-rte library for MPI
+MPI_open-rte_LIBRARY:FILEPATH=MPI_open-rte_LIBRARY-NOTFOUND
+
+//Location of the z library for MPI
+MPI_z_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
 
 //Path to a program.
 MV:FILEPATH=/usr/bin/mv
@@ -823,7 +847,7 @@ XELATEX_COMPILER:FILEPATH=XELATEX_COMPILER-NOTFOUND
 XINDY_COMPILER:FILEPATH=XINDY_COMPILER-NOTFOUND
 
 //Path to a file.
-_mod_cmake:FILEPATH=_mod_cmake-NOTFOUND
+_mod_cmake:FILEPATH=/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneCommonMacros.cmake
 
 //Value Computed by CMake
 dumux-Mixing_BINARY_DIR:STATIC=/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake
@@ -1191,7 +1215,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=43
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1287,9 +1311,9 @@ FIND_PACKAGE_MESSAGE_DETAILS_LAPACK:INTERNAL=[/usr/lib/x86_64-linux-gnu/liblapac
 //Details about finding OpenMP
 FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v4.5()]
 //Details about finding OpenMP_C
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding OpenMP_CXX
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 //Details about finding Python3
@@ -1472,6 +1496,22 @@ MPI_C_PKG_mpi-c_VERSION:INTERNAL=
 MPI_RESULT_CXX_test_mpi_normal:INTERNAL=FALSE
 //Result of TRY_COMPILE
 MPI_RESULT_C_test_mpi_normal:INTERNAL=FALSE
+//ADVANCED property for variable: MPI_event_core_LIBRARY
+MPI_event_core_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_event_pthreads_LIBRARY
+MPI_event_pthreads_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_hwloc_LIBRARY
+MPI_hwloc_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_m_LIBRARY
+MPI_m_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_mpi_LIBRARY
+MPI_mpi_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_open-pal_LIBRARY
+MPI_open-pal_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_open-rte_LIBRARY
+MPI_open-rte_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_z_LIBRARY
+MPI_z_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MV
 MV-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE

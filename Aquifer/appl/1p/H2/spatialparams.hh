@@ -52,7 +52,7 @@ public:
       PcKrSwCurve_("SpatialParams.Material")
     {
         referencePorosity_     = getParam<Scalar>("SpatialParams.ReferencePorosity", 0.2);
-        referencePermeability_ = getParam<Scalar>("SpatialParams.ReferencePermeability", 100 * 9.86923e-16);
+        referencePermeability_ = getParam<Scalar>("SpatialParams.ReferencePermeability",100) * 9.86923e-16;
         temperature_           = getParam<Scalar>("Problem.InitialTemperature");
         DispersionMode         = getParam<int>("Problem.DispersionMode", 0);
         CELLS_VEC = getParam<Dimension_vector>("Grid.Cells");

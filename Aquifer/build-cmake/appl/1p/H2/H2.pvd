@@ -2,27 +2,5 @@
 <VTKFile type="Collection" version="0.1" byte_order="LittleEndian"> 
 <Collection> 
 <DataSet timestep="0" group="" part="0" name="" file="H2-00000.vtu"/> 
-<DataSet timestep="1038.3" group="" part="0" name="" file="H2-00001.vtu"/> 
-<DataSet timestep="1958.31" group="" part="0" name="" file="H2-00002.vtu"/> 
-<DataSet timestep="3535.45" group="" part="0" name="" file="H2-00003.vtu"/> 
-<DataSet timestep="4557.68" group="" part="0" name="" file="H2-00004.vtu"/> 
-<DataSet timestep="5835.46" group="" part="0" name="" file="H2-00005.vtu"/> 
-<DataSet timestep="7326.21" group="" part="0" name="" file="H2-00006.vtu"/> 
-<DataSet timestep="9065.41" group="" part="0" name="" file="H2-00007.vtu"/> 
-<DataSet timestep="11094.5" group="" part="0" name="" file="H2-00008.vtu"/> 
-<DataSet timestep="13461.7" group="" part="0" name="" file="H2-00009.vtu"/> 
-<DataSet timestep="16223.5" group="" part="0" name="" file="H2-00010.vtu"/> 
-<DataSet timestep="17719.5" group="" part="0" name="" file="H2-00011.vtu"/> 
-<DataSet timestep="19963.4" group="" part="0" name="" file="H2-00012.vtu"/> 
-<DataSet timestep="22768.4" group="" part="0" name="" file="H2-00013.vtu"/> 
-<DataSet timestep="26274.6" group="" part="0" name="" file="H2-00014.vtu"/> 
-<DataSet timestep="30365.1" group="" part="0" name="" file="H2-00015.vtu"/> 
-<DataSet timestep="35137.4" group="" part="0" name="" file="H2-00016.vtu"/> 
-<DataSet timestep="39909.7" group="" part="0" name="" file="H2-00017.vtu"/> 
-<DataSet timestep="45477.4" group="" part="0" name="" file="H2-00018.vtu"/> 
-<DataSet timestep="51509.1" group="" part="0" name="" file="H2-00019.vtu"/> 
-<DataSet timestep="58043.4" group="" part="0" name="" file="H2-00020.vtu"/> 
-<DataSet timestep="64577.7" group="" part="0" name="" file="H2-00021.vtu"/> 
-<DataSet timestep="71656.5" group="" part="0" name="" file="H2-00022.vtu"/> 
 </Collection> 
 </VTKFile> 

@@ -36,6 +36,7 @@
 #include <dumux/io/grid/gridmanager_ug.hh>
 
 #include "properties.hh"
+#include <dumux/common/metadata.hh>
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -144,6 +145,7 @@ int main(int argc, char** argv)
     NewtonSolver<Assembler, LinearSolver> nonLinearSolver(assembler, linearSolver);
     int qq = 1, vv = 1;
     // time loop
+    try {
     timeLoop->start(); do
     {
         // solve the non-linear system with time step control
@@ -180,6 +182,25 @@ int main(int argc, char** argv)
     } while (!timeLoop->finished());
 
     timeLoop->finalize(leafGridView.comm());
+
+    } catch (const PressureLimitException& e) {
+        std::cerr << "\n[PressureLimitAbort] " << e.what() << std::endl;
+        if (mpiHelper.rank() == 0)
+        {
+            // Ensure failure metadata is flushed (already written by postTimeStep before throw)
+            Dumux::MetaData::Collector fc;
+            if (Dumux::MetaData::jsonFileExists(problem_name))
+                Dumux::MetaData::readJsonFile(fc, problem_name);
+            if (!fc.getTree().count("runStatus"))
+            {
+                fc["runStatus"] = "failed_pressure_limit";
+                fc["failureReason"] = "unknown";
+                Dumux::MetaData::writeJsonFile(fc, problem_name);
+            }
+            DumuxMessage::print(/*firstCall=*/false);
+        }
+        return e.exitCode;
+    }
 
     ////////////////////////////////////////////////////////////
     // finalize, print dumux message to say goodbye

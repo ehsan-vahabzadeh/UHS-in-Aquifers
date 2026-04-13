@@ -1,6 +1,6 @@
 [TimeLoop]
 DtInitial = 1000                   # [s] initial timestep size
-TEnd = 24               # [d] simulation end time 
+TEnd = 3               # [d] simulation end time 
 MaxTimeStepSize = 86400
 [Grid]
 LowerLeft = 0.2 0 
@@ -15,17 +15,17 @@ DispersionMode = 0
 InitialTemperature = 333.15
 
 [BoundaryConditions]
-Pressure_TOP = 60e5
+Pressure_TOP = 200e5
 CyclesDev = 1   		  # [-] number of cycles during development period
-InjectionDurationDev = 8	  # [days] injection time during development period
+InjectionDurationDev = 1	  # [days] injection time during development period
 IdleDurationDev = 0		  # [day] idle time during development period
-InjectionDurationOp = 8	  # [day] injection time during operational period
-ExtractionDurationOp = 8	  # [day] production time during operational period
+InjectionDurationOp = 1	  # [day] injection time during operational period
+ExtractionDurationOp = 1	  # [day] production time during operational period
 IdleDurationOp = 0.0	  # [day] idle time during operational period
-CushionGasType = CO2
-InjectionRateDev = -100	  # [mol.m-2.s] injection rate during development period
-InjectionRateOp = -100 # [mol.m-2.s] injection rate during operational period
-ProductionRate = 100 # [mol.m-2.s] production rate during operational period
+CushionGasType = CH4
+InjectionRateDev = -30	  # [mol.m-2.s] injection rate during development period
+InjectionRateOp = -30 # [mol.m-2.s] injection rate during operational period
+ProductionRate = 30 # [mol.m-2.s] production rate during operational period
 Well_Height = 10		  # [m] Height of the injection/withdrawal interval
 HydrogenInjectionConcentration = 1
 [Initialization]
@@ -34,7 +34,7 @@ DepthGWC = -10
 
 [SpatialParams]
 ReferencePorosity = 0.3
-ReferencePermeability = 4.9346165e-13
+ReferencePermeability = 100
 Material.Swr = 0.26
 Material.Snr = 0.0
 Material.BrooksCoreyPcEntry = 5e3
@@ -51,3 +51,8 @@ Multithreading = true
 
 [Vtk]
 AddVelocity = true
+
+[Safety]
+EnablePressureCutoff = true
+InjectionPressureMultiplier = 2
+MinProductionPressure = 1e5

@@ -160,13 +160,13 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_BUILD_TYPE:STRING=
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+CMAKE_CXX_COMPILER:STRING=/home/n71743ev/opt/openmpi-5/bin/mpicxx
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -192,7 +192,7 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+CMAKE_C_COMPILER:STRING=/home/n71743ev/opt/openmpi-5/bin/mpicc
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -329,6 +329,9 @@ CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Build position independent code
 CMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+
+//No help, variable specified on the command line.
+CMAKE_PREFIX_PATH:UNINITIALIZED=../dune-common/build-cmake;../dune-geometry/build-cmake;../dune-grid/build-cmake;../dune-localfunctions/build-cmake;../dune-istl/build-cmake;../dumux/build-cmake
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -517,16 +520,16 @@ DVIPDF_CONVERTER:FILEPATH=DVIPDF_CONVERTER-NOTFOUND
 DVIPS_CONVERTER:FILEPATH=DVIPS_CONVERTER-NOTFOUND
 
 //Path to a file.
-GMPXX_INCLUDE_DIR:PATH=GMPXX_INCLUDE_DIR-NOTFOUND
+GMPXX_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-GMPXX_LIB:FILEPATH=GMPXX_LIB-NOTFOUND
+GMPXX_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libgmpxx.so
 
 //Path to a file.
-GMP_INCLUDE_DIR:PATH=GMP_INCLUDE_DIR-NOTFOUND
+GMP_INCLUDE_DIR:PATH=/usr/include/x86_64-linux-gnu
 
 //Path to a library.
-GMP_LIB:FILEPATH=GMP_LIB-NOTFOUND
+GMP_LIB:FILEPATH=/usr/lib/x86_64-linux-gnu/libgmp.so
 
 //Path to a program.
 GMSH_EXECUTABLE:FILEPATH=GMSH_EXECUTABLE-NOTFOUND
@@ -633,7 +636,7 @@ METIS_LIBRARY:FILEPATH=METIS_LIBRARY-NOTFOUND
 MINIMAL_DEBUG_LEVEL:STRING=warn
 
 //Executable for running MPI programs.
-MPIEXEC_EXECUTABLE:FILEPATH=/usr/bin/mpiexec
+MPIEXEC_EXECUTABLE:FILEPATH=/home/n71743ev/opt/openmpi-5/bin/mpiexec
 
 //Maximum number of processors available to run MPI applications.
 MPIEXEC_MAX_NUMPROCS:STRING=8
@@ -653,7 +656,7 @@ MPIEXEC_PREFLAGS:STRING=
 MPI_CXX_ADDITIONAL_INCLUDE_DIRS:STRING=
 
 //MPI compiler for CXX
-MPI_CXX_COMPILER:FILEPATH=MPI_CXX_COMPILER-NOTFOUND
+MPI_CXX_COMPILER:FILEPATH=/home/n71743ev/opt/openmpi-5/bin/mpicxx
 
 //MPI CXX compiler wrapper include directories
 MPI_CXX_COMPILER_INCLUDE_DIRS:STRING=
@@ -663,12 +666,6 @@ MPI_CXX_COMPILE_DEFINITIONS:STRING=
 
 //MPI CXX compilation flags
 MPI_CXX_COMPILE_OPTIONS:STRING=
-
-//Path to a file.
-MPI_CXX_HEADER_DIR:PATH=MPI_CXX_HEADER_DIR-NOTFOUND
-
-//MPI CXX libraries to link against
-MPI_CXX_LIB_NAMES:STRING=
 
 //MPI CXX linker flags
 MPI_CXX_LINK_FLAGS:STRING=
@@ -680,49 +677,19 @@ MPI_CXX_SKIP_MPICXX:BOOL=OFF
 MPI_C_ADDITIONAL_INCLUDE_DIRS:STRING=
 
 //MPI compiler for C
-MPI_C_COMPILER:FILEPATH=/usr/bin/mpicc
+MPI_C_COMPILER:FILEPATH=/home/n71743ev/opt/openmpi-5/bin/mpicc
 
 //MPI C compiler wrapper include directories
-MPI_C_COMPILER_INCLUDE_DIRS:STRING=/usr/lib/x86_64-linux-gnu/openmpi/include;/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi
+MPI_C_COMPILER_INCLUDE_DIRS:STRING=
 
 //MPI C compilation definitions
 MPI_C_COMPILE_DEFINITIONS:STRING=
 
-//MPI C compilation options
+//MPI C compilation flags
 MPI_C_COMPILE_OPTIONS:STRING=
 
-//Path to a file.
-MPI_C_HEADER_DIR:PATH=MPI_C_HEADER_DIR-NOTFOUND
-
-//MPI C libraries to link against
-MPI_C_LIB_NAMES:STRING=mpi;open-rte;open-pal;hwloc;event_core;event_pthreads;m;z
-
 //MPI C linker flags
-MPI_C_LINK_FLAGS:STRING=-L/usr/lib/x86_64-linux-gnu/openmpi/lib
-
-//Location of the event_core library for MPI
-MPI_event_core_LIBRARY:FILEPATH=MPI_event_core_LIBRARY-NOTFOUND
-
-//Location of the event_pthreads library for MPI
-MPI_event_pthreads_LIBRARY:FILEPATH=MPI_event_pthreads_LIBRARY-NOTFOUND
-
-//Location of the hwloc library for MPI
-MPI_hwloc_LIBRARY:FILEPATH=MPI_hwloc_LIBRARY-NOTFOUND
-
-//Location of the m library for MPI
-MPI_m_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libm.so
-
-//Location of the mpi library for MPI
-MPI_mpi_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libmpi.so
-
-//Location of the open-pal library for MPI
-MPI_open-pal_LIBRARY:FILEPATH=MPI_open-pal_LIBRARY-NOTFOUND
-
-//Location of the open-rte library for MPI
-MPI_open-rte_LIBRARY:FILEPATH=MPI_open-rte_LIBRARY-NOTFOUND
-
-//Location of the z library for MPI
-MPI_z_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
+MPI_C_LINK_FLAGS:STRING=
 
 //Path to a program.
 MV:FILEPATH=/usr/bin/mv
@@ -847,7 +814,7 @@ XELATEX_COMPILER:FILEPATH=XELATEX_COMPILER-NOTFOUND
 XINDY_COMPILER:FILEPATH=XINDY_COMPILER-NOTFOUND
 
 //Path to a file.
-_mod_cmake:FILEPATH=/home/n71743ev/DUMUX/dumux/dune-common/cmake/modules/DuneCommonMacros.cmake
+_mod_cmake:FILEPATH=_mod_cmake-NOTFOUND
 
 //Value Computed by CMake
 dumux-Mixing_BINARY_DIR:STATIC=/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake
@@ -866,14 +833,14 @@ dumux-Mixing_POLICY_UNSCOPED_EXPORTED_TARGET_VISIBILITY:BOOL=TRUE
 //Value Computed by CMake
 dumux-Mixing_SOURCE_DIR:STATIC=/home/n71743ev/DUMUX/dumux/Aquifer
 
-//No help, variable specified on the command line.
-dumux_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dumux/build-cmake
+//The directory containing a CMake configuration file for dumux.
+dumux_DIR:PATH=/home/n71743ev/DUMUX/dumux/dumux/build-cmake
 
 //The directory containing a CMake configuration file for dune-alugrid.
 dune-alugrid_DIR:PATH=dune-alugrid_DIR-NOTFOUND
 
-//No help, variable specified on the command line.
-dune-common_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-common/build-cmake
+//The directory containing a CMake configuration file for dune-common.
+dune-common_DIR:PATH=/home/n71743ev/DUMUX/dumux/dune-common/build-cmake
 
 //The directory containing a CMake configuration file for dune-foamgrid.
 dune-foamgrid_DIR:PATH=dune-foamgrid_DIR-NOTFOUND
@@ -881,17 +848,17 @@ dune-foamgrid_DIR:PATH=dune-foamgrid_DIR-NOTFOUND
 //The directory containing a CMake configuration file for dune-functions.
 dune-functions_DIR:PATH=dune-functions_DIR-NOTFOUND
 
-//No help, variable specified on the command line.
-dune-geometry_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake
+//The directory containing a CMake configuration file for dune-geometry.
+dune-geometry_DIR:PATH=/home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake
 
-//No help, variable specified on the command line.
-dune-grid_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-grid/build-cmake
+//The directory containing a CMake configuration file for dune-grid.
+dune-grid_DIR:PATH=/home/n71743ev/DUMUX/dumux/dune-grid/build-cmake
 
-//No help, variable specified on the command line.
-dune-istl_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-istl/build-cmake
+//The directory containing a CMake configuration file for dune-istl.
+dune-istl_DIR:PATH=/home/n71743ev/DUMUX/dumux/dune-istl/build-cmake
 
-//No help, variable specified on the command line.
-dune-localfunctions_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-localfunctions/build-cmake
+//The directory containing a CMake configuration file for dune-localfunctions.
+dune-localfunctions_DIR:PATH=/home/n71743ev/DUMUX/dumux/dune-localfunctions/build-cmake
 
 //The directory containing a CMake configuration file for dune-mmesh.
 dune-mmesh_DIR:PATH=dune-mmesh_DIR-NOTFOUND
@@ -902,14 +869,20 @@ dune-spgrid_DIR:PATH=dune-spgrid_DIR-NOTFOUND
 //The directory containing a CMake configuration file for dune-subgrid.
 dune-subgrid_DIR:PATH=dune-subgrid_DIR-NOTFOUND
 
-//The directory containing a CMake configuration file for dune-uggrid.
-dune-uggrid_DIR:PATH=dune-uggrid_DIR-NOTFOUND
+//No help, variable specified on the command line.
+dune-uggrid_DIR:UNINITIALIZED=/home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake
 
 //The directory containing a CMake configuration file for opm-common.
 opm-common_DIR:PATH=opm-common_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for opm-grid.
 opm-grid_DIR:PATH=opm-grid_DIR-NOTFOUND
+
+//Path to a library.
+pkgcfg_lib_PKG_gmp:FILEPATH=/usr/lib/x86_64-linux-gnu/libgmp.so
+
+//Path to a library.
+pkgcfg_lib_PKG_gmpxx:FILEPATH=/usr/lib/x86_64-linux-gnu/libgmpxx.so
 
 
 ########################
@@ -1215,7 +1188,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=43
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1298,22 +1271,28 @@ DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA:INTERNAL=
 DUNE_POLICY_DEFAULT-STRINGS:INTERNAL=OLD;NEW
 //Python virtual environment executable used by Dune
 DUNE_PYTHON_VIRTUALENV_EXECUTABLE:INTERNAL=/home/n71743ev/DUMUX/dumux/dune-common/build-cmake/dune-env/bin/python
-//Whether dune has found python pip
-DUNE_PYTHON_pip_FOUND:INTERNAL=ON
 //ADVANCED property for variable: DVIPDF_CONVERTER
 DVIPDF_CONVERTER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: DVIPS_CONVERTER
 DVIPS_CONVERTER-ADVANCED:INTERNAL=1
 //Details about finding BLAS
 FIND_PACKAGE_MESSAGE_DETAILS_BLAS:INTERNAL=[/usr/lib/x86_64-linux-gnu/libblas.so][v()]
+//Details about finding GMP
+FIND_PACKAGE_MESSAGE_DETAILS_GMP:INTERNAL=[/usr/lib/x86_64-linux-gnu/libgmpxx.so][/usr/include][/usr/include/x86_64-linux-gnu][/usr/lib/x86_64-linux-gnu/libgmp.so][v()]
 //Details about finding LAPACK
 FIND_PACKAGE_MESSAGE_DETAILS_LAPACK:INTERNAL=[/usr/lib/x86_64-linux-gnu/liblapack.so;/usr/lib/x86_64-linux-gnu/libblas.so][v()]
+//Details about finding MPI
+FIND_PACKAGE_MESSAGE_DETAILS_MPI:INTERNAL=[TRUE][cfound components: C ][v3.1()]
+//Details about finding MPI_C
+FIND_PACKAGE_MESSAGE_DETAILS_MPI_C:INTERNAL=[/home/n71743ev/opt/openmpi-5/bin/mpicc][TRUE][v3.1()]
+//Details about finding MPI_CXX
+FIND_PACKAGE_MESSAGE_DETAILS_MPI_CXX:INTERNAL=[/home/n71743ev/opt/openmpi-5/bin/mpicxx][TRUE][v3.1()]
 //Details about finding OpenMP
 FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v4.5()]
 //Details about finding OpenMP_C
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding OpenMP_CXX
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 //Details about finding Python3
@@ -1324,8 +1303,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_QuadMath:INTERNAL=[(Supported by compiler)][1][v()]
 FIND_PACKAGE_MESSAGE_DETAILS_SuiteSparse:INTERNAL=[/usr/lib/x86_64-linux-gnu/libsuitesparseconfig.so][/usr/include/suitesparse][TRUE][cfound components: CHOLMOD LDL SPQR UMFPACK ][v7.6.1()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
-//Details about finding pip_/home/n71743ev/DUMUX/dumux/dune-common/build-cmake/dune-env/bin/python
-FIND_PACKAGE_MESSAGE_DETAILS_pip_/home/n71743ev/DUMUX/dumux/dune-common/build-cmake/dune-env/bin/python:INTERNAL=[TRUE][v()]
+//Details about finding pip_/usr/bin/python3
+FIND_PACKAGE_MESSAGE_DETAILS_pip_/usr/bin/python3:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: GMPXX_INCLUDE_DIR
 GMPXX_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GMPXX_LIB
@@ -1418,37 +1397,8 @@ MPI_CXX_COMPILER_INCLUDE_DIRS-ADVANCED:INTERNAL=1
 MPI_CXX_COMPILE_DEFINITIONS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPI_CXX_COMPILE_OPTIONS
 MPI_CXX_COMPILE_OPTIONS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_CXX_HEADER_DIR
-MPI_CXX_HEADER_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_CXX_LIB_NAMES
-MPI_CXX_LIB_NAMES-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPI_CXX_LINK_FLAGS
 MPI_CXX_LINK_FLAGS-ADVANCED:INTERNAL=1
-MPI_CXX_PKG_CFLAGS:INTERNAL=
-MPI_CXX_PKG_CFLAGS_I:INTERNAL=
-MPI_CXX_PKG_CFLAGS_OTHER:INTERNAL=
-MPI_CXX_PKG_FOUND:INTERNAL=
-MPI_CXX_PKG_INCLUDEDIR:INTERNAL=
-MPI_CXX_PKG_LIBDIR:INTERNAL=
-MPI_CXX_PKG_LIBS:INTERNAL=
-MPI_CXX_PKG_LIBS_L:INTERNAL=
-MPI_CXX_PKG_LIBS_OTHER:INTERNAL=
-MPI_CXX_PKG_LIBS_PATHS:INTERNAL=
-MPI_CXX_PKG_MODULE_NAME:INTERNAL=
-MPI_CXX_PKG_PREFIX:INTERNAL=
-MPI_CXX_PKG_STATIC_CFLAGS:INTERNAL=
-MPI_CXX_PKG_STATIC_CFLAGS_I:INTERNAL=
-MPI_CXX_PKG_STATIC_CFLAGS_OTHER:INTERNAL=
-MPI_CXX_PKG_STATIC_LIBDIR:INTERNAL=
-MPI_CXX_PKG_STATIC_LIBS:INTERNAL=
-MPI_CXX_PKG_STATIC_LIBS_L:INTERNAL=
-MPI_CXX_PKG_STATIC_LIBS_OTHER:INTERNAL=
-MPI_CXX_PKG_STATIC_LIBS_PATHS:INTERNAL=
-MPI_CXX_PKG_VERSION:INTERNAL=
-MPI_CXX_PKG_mpi-cxx_INCLUDEDIR:INTERNAL=
-MPI_CXX_PKG_mpi-cxx_LIBDIR:INTERNAL=
-MPI_CXX_PKG_mpi-cxx_PREFIX:INTERNAL=
-MPI_CXX_PKG_mpi-cxx_VERSION:INTERNAL=
 //ADVANCED property for variable: MPI_CXX_SKIP_MPICXX
 MPI_CXX_SKIP_MPICXX-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPI_C_ADDITIONAL_INCLUDE_DIRS
@@ -1461,57 +1411,14 @@ MPI_C_COMPILER_INCLUDE_DIRS-ADVANCED:INTERNAL=1
 MPI_C_COMPILE_DEFINITIONS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPI_C_COMPILE_OPTIONS
 MPI_C_COMPILE_OPTIONS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_C_HEADER_DIR
-MPI_C_HEADER_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_C_LIB_NAMES
-MPI_C_LIB_NAMES-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPI_C_LINK_FLAGS
 MPI_C_LINK_FLAGS-ADVANCED:INTERNAL=1
-MPI_C_PKG_CFLAGS:INTERNAL=
-MPI_C_PKG_CFLAGS_I:INTERNAL=
-MPI_C_PKG_CFLAGS_OTHER:INTERNAL=
-MPI_C_PKG_FOUND:INTERNAL=
-MPI_C_PKG_INCLUDEDIR:INTERNAL=
-MPI_C_PKG_LIBDIR:INTERNAL=
-MPI_C_PKG_LIBS:INTERNAL=
-MPI_C_PKG_LIBS_L:INTERNAL=
-MPI_C_PKG_LIBS_OTHER:INTERNAL=
-MPI_C_PKG_LIBS_PATHS:INTERNAL=
-MPI_C_PKG_MODULE_NAME:INTERNAL=
-MPI_C_PKG_PREFIX:INTERNAL=
-MPI_C_PKG_STATIC_CFLAGS:INTERNAL=
-MPI_C_PKG_STATIC_CFLAGS_I:INTERNAL=
-MPI_C_PKG_STATIC_CFLAGS_OTHER:INTERNAL=
-MPI_C_PKG_STATIC_LIBDIR:INTERNAL=
-MPI_C_PKG_STATIC_LIBS:INTERNAL=
-MPI_C_PKG_STATIC_LIBS_L:INTERNAL=
-MPI_C_PKG_STATIC_LIBS_OTHER:INTERNAL=
-MPI_C_PKG_STATIC_LIBS_PATHS:INTERNAL=
-MPI_C_PKG_VERSION:INTERNAL=
-MPI_C_PKG_mpi-c_INCLUDEDIR:INTERNAL=
-MPI_C_PKG_mpi-c_LIBDIR:INTERNAL=
-MPI_C_PKG_mpi-c_PREFIX:INTERNAL=
-MPI_C_PKG_mpi-c_VERSION:INTERNAL=
 //Result of TRY_COMPILE
-MPI_RESULT_CXX_test_mpi_normal:INTERNAL=FALSE
+MPI_RESULT_CXX_test_mpi_MPICXX:INTERNAL=TRUE
 //Result of TRY_COMPILE
-MPI_RESULT_C_test_mpi_normal:INTERNAL=FALSE
-//ADVANCED property for variable: MPI_event_core_LIBRARY
-MPI_event_core_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_event_pthreads_LIBRARY
-MPI_event_pthreads_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_hwloc_LIBRARY
-MPI_hwloc_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_m_LIBRARY
-MPI_m_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_mpi_LIBRARY
-MPI_mpi_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_open-pal_LIBRARY
-MPI_open-pal_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_open-rte_LIBRARY
-MPI_open-rte_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: MPI_z_LIBRARY
-MPI_z_LIBRARY-ADVANCED:INTERNAL=1
+MPI_RESULT_CXX_test_mpi_normal:INTERNAL=TRUE
+//Result of TRY_COMPILE
+MPI_RESULT_C_test_mpi_normal:INTERNAL=TRUE
 //ADVANCED property for variable: MV
 MV-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE
@@ -1546,39 +1453,51 @@ PARMETIS_LIBRARY-ADVANCED:INTERNAL=1
 PDFLATEX_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PDFTOPS_CONVERTER
 PDFTOPS_CONVERTER-ADVANCED:INTERNAL=1
-PKG_CFLAGS:INTERNAL=
+PKG_CFLAGS:INTERNAL=-I/usr/include
 PKG_CFLAGS_I:INTERNAL=
 PKG_CFLAGS_OTHER:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_ARGN
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
-PKG_FOUND:INTERNAL=
+PKG_FOUND:INTERNAL=1
 PKG_INCLUDEDIR:INTERNAL=
+PKG_INCLUDE_DIRS:INTERNAL=/usr/include
+PKG_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lgmpxx;-lgmp
+PKG_LDFLAGS_OTHER:INTERNAL=
 PKG_LIBDIR:INTERNAL=
+PKG_LIBRARIES:INTERNAL=gmpxx;gmp
+PKG_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
 PKG_LIBS:INTERNAL=
 PKG_LIBS_L:INTERNAL=
 PKG_LIBS_OTHER:INTERNAL=
 PKG_LIBS_PATHS:INTERNAL=
 PKG_MODULE_NAME:INTERNAL=
 PKG_PREFIX:INTERNAL=
-PKG_STATIC_CFLAGS:INTERNAL=
+PKG_STATIC_CFLAGS:INTERNAL=-I/usr/include
 PKG_STATIC_CFLAGS_I:INTERNAL=
 PKG_STATIC_CFLAGS_OTHER:INTERNAL=
+PKG_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include
+PKG_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lgmpxx;-lgmp
+PKG_STATIC_LDFLAGS_OTHER:INTERNAL=
 PKG_STATIC_LIBDIR:INTERNAL=
+PKG_STATIC_LIBRARIES:INTERNAL=gmpxx;gmp
+PKG_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
 PKG_STATIC_LIBS:INTERNAL=
 PKG_STATIC_LIBS_L:INTERNAL=
 PKG_STATIC_LIBS_OTHER:INTERNAL=
 PKG_STATIC_LIBS_PATHS:INTERNAL=
 PKG_VERSION:INTERNAL=
-PKG_gmp_INCLUDEDIR:INTERNAL=
-PKG_gmp_LIBDIR:INTERNAL=
-PKG_gmp_PREFIX:INTERNAL=
-PKG_gmp_VERSION:INTERNAL=
-PKG_gmpxx_INCLUDEDIR:INTERNAL=
-PKG_gmpxx_LIBDIR:INTERNAL=
-PKG_gmpxx_PREFIX:INTERNAL=
-PKG_gmpxx_VERSION:INTERNAL=
+PKG_gmp_INCLUDEDIR:INTERNAL=/usr/include
+PKG_gmp_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+PKG_gmp_MODULE_NAME:INTERNAL=gmp
+PKG_gmp_PREFIX:INTERNAL=/usr
+PKG_gmp_VERSION:INTERNAL=6.3.0
+PKG_gmpxx_INCLUDEDIR:INTERNAL=/usr/include
+PKG_gmpxx_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+PKG_gmpxx_MODULE_NAME:INTERNAL=gmpxx
+PKG_gmpxx_PREFIX:INTERNAL=/usr
+PKG_gmpxx_VERSION:INTERNAL=6.3.0
 //ADVANCED property for variable: PS2PDF_CONVERTER
 PS2PDF_CONVERTER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PTSCOTCHERR_LIBRARY
@@ -1671,11 +1590,15 @@ _Python3_Interpreter_REASON_FAILURE:INTERNAL=
 _Python3_LIBRARY_RELEASE:INTERNAL=/usr/lib/x86_64-linux-gnu/libpython3.12.so
 //NumPy reason failure
 _Python3_NumPy_REASON_FAILURE:INTERNAL=
+__pkg_config_arguments_PKG:INTERNAL=QUIET;gmp;gmpxx
 __pkg_config_checked_Alberta1D:INTERNAL=1
 __pkg_config_checked_Alberta2D:INTERNAL=1
 __pkg_config_checked_Alberta3D:INTERNAL=1
-__pkg_config_checked_MPI_CXX_PKG:INTERNAL=1
-__pkg_config_checked_MPI_C_PKG:INTERNAL=1
 __pkg_config_checked_PKG:INTERNAL=1
 __pkg_config_checked_PkgConfigTBB:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PKG_gmp
+pkgcfg_lib_PKG_gmp-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PKG_gmpxx
+pkgcfg_lib_PKG_gmpxx-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 

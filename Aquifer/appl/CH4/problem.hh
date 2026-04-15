@@ -142,26 +142,48 @@ namespace Dumux
                 std::cout << "problem uses mass-fractions" << std::endl;
 
             if (getParam<bool>("Problem.EnableGravity", true))
-                // gravity_        = {0, 0, -9.81};
-                gravity_ = {0, -9.81};
+                gravity_ = {0, 0, -9.81};
             name_ = getParam<std::string>("Problem.Name");
             enableGravity = getParam<bool>("Problem.EnableGravity", true);
             permeability_.resize(gridGeometry->numDofs());
             initializeOutput();
-            CELLS_VEC = getParam<Dimension_vector>("Grid.Cells");
-            Upper_Right = getParam<Dimension_vector>("Grid.UpperRight");
-            Lower_Left = getParam<Dimension_vector>("Grid.LowerLeft");
-            X_max = Upper_Right[0];
-            X_min = Lower_Left[0];
-            Y_max = Upper_Right[1];
-            Y_min = Lower_Left[1];
-            // Z_max=this->gridGeometry().bBoxMax()[2];
-            // Z_min=this->gridGeometry().bBoxMin()[2];
-            Delta_x = (X_max - X_min);
-            Delta_x = Delta_x / CELLS_VEC[0];
-            Delta_y = (Y_max - Y_min);
-            Delta_y = Delta_y / CELLS_VEC[1];
-            WELL_X = (X_max - X_min)/2;
+
+            // Read grid bounding box from actual grid geometry
+            X_min = this->gridGeometry().bBoxMin()[0];
+            X_max = this->gridGeometry().bBoxMax()[0];
+            Y_min = this->gridGeometry().bBoxMin()[1];
+            Y_max = this->gridGeometry().bBoxMax()[1];
+            Z_min = this->gridGeometry().bBoxMin()[2];
+            Z_max = this->gridGeometry().bBoxMax()[2];
+
+            // For cylindrical grid: outer radius from bounding box diagonal in x-y plane
+            outerRadius_ = std::max({std::abs(X_max), std::abs(X_min), std::abs(Y_max), std::abs(Y_min)});
+
+            // Well parameters for 3D central well source/sink
+            wellRadius_ = getParam<Scalar>("Well.Radius", 0.5);
+            wellPerfTop_ = getParam<Scalar>("Well.PerfTop", Z_max);
+            wellPerfBottom_ = getParam<Scalar>("Well.PerfBottom", Z_min);
+            wellCenterX_ = getParam<Scalar>("Well.CenterX", 0.0);
+            wellCenterY_ = getParam<Scalar>("Well.CenterY", 0.0);
+
+            // Precompute total well support volume (sum of cell volumes within well radius)
+            wellSupportVolume_ = 0.0;
+            for (const auto& element : elements(this->gridGeometry().gridView()))
+            {
+                auto fvGeometry = localView(this->gridGeometry());
+                fvGeometry.bindElement(element);
+                for (const auto& scv : scvs(fvGeometry))
+                {
+                    const auto& pos = scv.center();
+                    const Scalar r = std::sqrt((pos[0] - wellCenterX_)*(pos[0] - wellCenterX_)
+                                             + (pos[1] - wellCenterY_)*(pos[1] - wellCenterY_));
+                    if (r <= wellRadius_ && pos[2] >= wellPerfBottom_ && pos[2] <= wellPerfTop_)
+                        wellSupportVolume_ += scv.volume();
+                }
+            }
+            std::cout << "3D Central Well: radius=" << wellRadius_
+                      << " m, supportVolume=" << wellSupportVolume_
+                      << " m^3, perf=[" << wellPerfBottom_ << "," << wellPerfTop_ << "]" << std::endl;
              
         }
         const GridVariables& getGridVariables() const {
@@ -185,11 +207,7 @@ namespace Dumux
                             const SubControlVolume &scv,
                             const ElementSolution& elemSol) const
         {
-            // const auto eIdx = this->gridGeometry().elementMapper().index(element);
-            // auto globalPos = element.geometry().center();
-            auto globalPos_scv = scv.center();
-            // return 1;
-            return M_PI * globalPos_scv[0] * 2;
+            return 1; // No extrusion in 3D
         }
         /*!
          * \brief Evaluates the boundary conditions for a Neumann
@@ -211,163 +229,10 @@ namespace Dumux
                             const ElementVolumeVariables &elemVolVars,
                             const ElementFluxVariablesCache &elemFluxVarsCache,
                             const SubControlVolumeFace &scvf) const
-        {   
+        {
+            // In 3D, well injection/production is handled via source() term.
+            // Neumann boundaries are no-flow (zero flux).
             NumEqVector values(0.0);
-            // return values;
-
-            const auto &globalPos = scvf.ipGlobal();
-            const auto& volVars = elemVolVars[scvf.insideScvIdx()];
-            Scalar Time = this->time();
-            NumEqVector injectionComposition_(0.0);
-            DimWorldMatrix molardensity(0.0), MW(0.0), Mobility(0.0);
-            static const Scalar cylcesDev            = getParam<double>("BoundaryConditions.CyclesDev");
-            static const Scalar injectionDurationDev = getParam<double>("BoundaryConditions.InjectionDurationDev")*86400;
-            static const Scalar idleDurationDev     = getParam<double>("BoundaryConditions.IdleDurationDev")*86400;
-            static const Scalar developmentDuration = cylcesDev*(injectionDurationDev+idleDurationDev);
-            static const Scalar idleDurationOp     = getParam<double>("BoundaryConditions.IdleDurationOp")*86400;
-            static const Scalar injectionDurationOp = getParam<double>("BoundaryConditions.InjectionDurationOp")*86400;
-            static const Scalar extractionDurationOp = getParam<double>("BoundaryConditions.ExtractionDurationOp")*86400;
-            injectionComposition_[H2Idx]            = getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
-            injectionComposition_[CO2Idx]            = 1 - getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
-            double inj_rate_dev                     = getParam<double>("BoundaryConditions.InjectionRateDev");
-            const int cycleNumberOp                 = std::floor((Time - developmentDuration)/(injectionDurationOp+extractionDurationOp + idleDurationOp));
-            const Scalar localTimeInCycle           = Time - developmentDuration - cycleNumberOp*(injectionDurationOp + extractionDurationOp + idleDurationOp);
-            double inj_rate_Op = getParam<double>("BoundaryConditions.InjectionRateOp", 0.0);
-            double Extractionrate_ = getParam<double>("BoundaryConditions.ProductionRate", 0.0);
-            double inj_interval = getParam<double>("BoundaryConditions.Well_Height", 0.0);
-
-
-            if ((globalPos[0] < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time < localTimeInCycle))
-            // if ((globalPos[1] > Y_max - eps_)  && (Time < localTimeInCycle))
-            {
-                const int cycleNumber = std::floor(Time/(injectionDurationDev+idleDurationDev));
-                const Scalar localTimeInCycle = Time - cycleNumber*(injectionDurationDev+idleDurationDev);
-                if(localTimeInCycle <= injectionDurationDev){
-                    // values[CO2Idx] = (1-injectionComposition_[CO2Idx]) * inj_rate;
-                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        // values[compIdx] = injectionComposition_[compIdx] * inj_rate_dev / FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                        values[compIdx] = injectionComposition_[compIdx] * inj_rate_dev ;
-                    }   
-                }  
-            }
-            if ((globalPos[0] < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time >= developmentDuration))
-            // if ((globalPos[1] > Y_max - eps_) && (Time >= developmentDuration))
-            {
-                if(localTimeInCycle < injectionDurationOp){
-                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        // values[compIdx] = injectionComposition_[compIdx] * inj_rate_Op / FluidSystem::MixingFluidSystem::molarMass(compIdx); 
-                        values[compIdx] = injectionComposition_[compIdx] * inj_rate_Op;    
-                    }
-                }
-                if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
-                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        // Mobility_Gas [compIdx] = volVars.mobility(gasPhaseIdx)*volVars.moleFraction(gasPhaseIdx, compIdx);
-                        // Mobility_Liq [compIdx] = volVars.mobility(liquidPhaseIdx)*volVars.moleFraction(liquidPhaseIdx, compIdx);
-                        MW[liquidPhaseIdx] += volVars.moleFraction(liquidPhaseIdx, compIdx) * FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                        MW[gasPhaseIdx] += volVars.moleFraction(gasPhaseIdx, compIdx) * FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                    }
-                    // Scalar Total_Mobility_Gas = 0, Total_Mobility_Liq = 0;
-                    // for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                    // {
-                    //         Total_Mobility_Gas += Mobility_Gas[compIdx];
-                    //         Total_Mobility_Liq += Mobility_Liq[compIdx];
-                    // }
-
-                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
-                        Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
-                        Mobility [gasPhaseIdx] = volVars.mobility(gasPhaseIdx);
-                        Mobility [liquidPhaseIdx] = volVars.mobility(liquidPhaseIdx);
-                        // values[compIdx] = ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])));
-                        values[compIdx] = ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])));
-                        // values[compIdx] = (Extractionrate_/(MW[gasPhaseIdx]))*(Mobility_Gas[compIdx]/(Total_Mobility_Liq+Total_Mobility_Gas));
-                    }
-                }
-            }
-            // if ((globalPos[0] > X_max - eps_))
-            // {
-
-            //     // set a fixed pressure on the right side of the domain
-            //     auto init_val = initial_(globalPos);
-            //     Scalar phaseFlux = 0, phaseFluxn = 0;
-            //     static const Scalar dirichletPressure = init_val[0];
-            //     const auto& volVars = elemVolVars[scvf.insideScvIdx()];
-            //     const auto& ipGlobal = scvf.ipGlobal();
-            //     auto d = ipGlobal - element.geometry().center();
-            //     d /= d.two_norm2();
-            //     const auto tij = vtmv(scvf.unitOuterNormal(), volVars.permeability(), d);
-            //     for (int phaseIdx = 0; phaseIdx < 2; ++phaseIdx)
-            //     {
-            //         auto upwindTerm = useMoles ? volVars.molarDensity(phaseIdx) : volVars.density(phaseIdx);
-            //         upwindTerm *= volVars.mobility(phaseIdx);
-                    
-            //         if (phaseIdx == 0)
-            //         {
-            //             phaseFlux = -1.0*upwindTerm*tij*(dirichletPressure - volVars.pressure(phaseIdx));
-            //         }
-            //         else if (phaseIdx == 1)
-            //         {
-            //             phaseFluxn = -1.0*upwindTerm*tij*(dirichletPressure + volVars.capillaryPressure() - volVars.pressure(phaseIdx));
-            //         }
-            //     }
-            //     for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-            //     {
-            //         values[compIdx] = ((phaseFluxn * volVars.moleFraction(gasPhaseIdx, compIdx)) +
-            //                            (phaseFlux * volVars.moleFraction(liquidPhaseIdx, compIdx))) /
-            //                           (1);
-            //         // values[compIdx] = ((phaseFluxn*volVars.moleFraction(gasPhaseIdx, compIdx))+
-            //         // (phaseFlux*volVars.moleFraction(liquidPhaseIdx, compIdx))) / (volVars.mobility(0)+volVars.mobility(1));
-            //     }
-                
-            //     // // set a fixed pressure on the right side of the domain
-            //     // GlobalPosition dirichletPressure(0.0);
-            //     // auto init_val = initial_(globalPos);
-            //     // const auto &volVars = elemVolVars[scvf.insideScvIdx()];
-            //     // const auto &fluxVarsCache = elemFluxVarsCache[scvf];
-            //     // dirichletPressure[0] = init_val[0];
-            //     // dirichletPressure[1] = dirichletPressure[0] + volVars.capillaryPressure();
-            //     // // evaluate the pressure gradient
-            //     // GlobalPosition gradP(0.0), gradPn(0.0);
-            //     // for (int phaseIdx = 0; phaseIdx < 2; ++phaseIdx)
-            //     // {
-            //     //     for (const auto &scv : scvs(fvGeometry))
-            //     //     {
-            //     //         const auto xIp = scv.dofPosition()[0];
-            //     //         auto tmp = fluxVarsCache.gradN(scv.localDofIndex());
-            //     //         tmp *= xIp > X_max - eps_ ? dirichletPressure[phaseIdx]
-            //     //                                   : elemVolVars[scv].pressure(phaseIdx);
-            //     //         if (phaseIdx == 0)
-            //     //         {
-            //     //             gradP += tmp;
-            //     //         }
-            //     //         else if (phaseIdx == 1)
-            //     //         {
-            //     //             gradPn += tmp;
-            //     //         }
-            //     //     }
-            //     // }
-            //     // auto phaseFlux = vtmv(scvf.unitOuterNormal(), volVars.permeability(), gradP);
-            //     // auto phaseFluxn = vtmv(scvf.unitOuterNormal(), volVars.permeability(), gradPn);
-            
-            //     // phaseFlux *= volVars.mobility(0);
-            //     // phaseFluxn *= volVars.mobility(1);
-            //     // phaseFlux *= useMoles ? volVars.molarDensity(0) : volVars.density(0);
-            //     // phaseFluxn *= useMoles ? volVars.molarDensity(1) : volVars.density(1);
-
-            //     // for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-            //     // {
-            //     //     values[compIdx] = ((phaseFluxn * volVars.moleFraction(gasPhaseIdx, compIdx)) +
-            //     //                        (phaseFlux * volVars.moleFraction(liquidPhaseIdx, compIdx))) /
-            //     //                       (1);
-            //     //     // values[compIdx] = ((phaseFluxn*volVars.moleFraction(gasPhaseIdx, compIdx))+
-            //     //     // (phaseFlux*volVars.moleFraction(liquidPhaseIdx, compIdx))) / (volVars.mobility(0)+volVars.mobility(1));
-            //     // }
-            // }
-
             return values;
         }
         void postTimeStep(const SolutionVector &curSol,
@@ -375,58 +240,20 @@ namespace Dumux
                           const GridVariables &gridVariables,
                           const Scalar timeStepSize,
                           std::shared_ptr<const GridGeometry> fvGridGeometry)
-        {   
-            Scalar num_x = CELLS_VEC[0],num_grid = CELLS_VEC[0] * CELLS_VEC[1];
-            Scalar t, dt, volume(0.0), numberOfCells(0.0);
-            NumEqVector flow1(0.0);
+        {
+            // Simplified 3D postprocessing: compute inventories and material balance
+            Scalar t, dt, volume(0.0);
             NumEqVector inventory(0.0), inventoryPastSol(0.0), materialBalanceError(0.0), inventory_error(0.0);
             Scalar averageReservoirPressure(0.0);
-            GAS_MAT.resize(num_grid);LIQ_MAT.resize(num_grid);
-            GAS_MASS_MAT.resize(num_grid);LIQ_MASS_MAT.resize(num_grid);
-            MASS_MAT.resize(num_grid);
-            
-            Scalar X_ID = 0, Z_ID = 0, Grid_ID = 0;
-            for (auto& row : GAS_MAT){row.resize(5+numComponents);} 
-            for (auto& row : LIQ_MAT){row.resize(numComponents);} 
-            for (auto& row : GAS_MASS_MAT){row.resize(numComponents);}
-            for (auto& row : LIQ_MASS_MAT){row.resize(numComponents);}
-            for (auto& row : MASS_MAT){row.resize(numComponents);}
-            // fill(GAS_MAT.begin(), GAS_MAT.end(), 0);    
 
             t = this->time();
-            Scalar Time = t;
             dt = this->timeStepSize();
-            mobilityPostLiq = 0;
-            mobilityPostGas = 0;
-            NumEqVector values_inj(0.0), values_prod(0.0), outflow(0.0);
-            
+
             for (const auto &element : elements(this->gridGeometry().gridView(), Dune::Partitions::interior))
             {
                 auto fvGeometry = localView(*fvGridGeometry);
                 fvGeometry.bind(element);
 
-                // auto fvGeometry = localView(this->gridGeometry());
-                // fvGeometry.bindElement(element);
-                auto globalPos = element.geometry().center();
-                for (auto compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        if (compIdx < numComponents){
-                            MASS_MAT[Grid_ID][compIdx] = 0.0;
-                            GAS_MASS_MAT[Grid_ID][compIdx] = 0.0;
-                            LIQ_MASS_MAT[Grid_ID][ compIdx] = 0.0;
-                            GAS_MAT[Grid_ID][5 + compIdx] = 0.0;
-                            LIQ_MAT[Grid_ID][compIdx] = 0.0;
-                        }else{
-                            GAS_MAT[Grid_ID][5 + compIdx] = 0.0;
-                            LIQ_MAT[Grid_ID][compIdx] = 0.0;
-                            MASS_MAT[Grid_ID][compIdx] = 0.0;
-                        }                    
-                    }
-                GAS_MAT[Grid_ID][0] = globalPos[0];
-                GAS_MAT[Grid_ID][1] = globalPos[1];
-                GAS_MAT[Grid_ID][2] = Grid_ID;
-                GAS_MAT[Grid_ID][3] = X_ID;
-                GAS_MAT[Grid_ID][4] = Z_ID;
                 auto elemVolVars = localView(gridVariables.curGridVolVars());
                 elemVolVars.bindElement(element, fvGeometry, curSol);
                 auto prevElemVolVars = localView(gridVariables.prevGridVolVars());
@@ -434,194 +261,33 @@ namespace Dumux
 
                 const auto elemSol = elementSolution(element, curSol, this->gridGeometry());
                 const auto elemSolPast = elementSolution(element, pastSol, this->gridGeometry());
-                auto elemFluxVarsCache = localView(gridVariables.gridFluxVarsCache());
-                elemVolVars.bind(element, fvGeometry, curSol);
-                elemFluxVarsCache.bind(element, fvGeometry, elemVolVars);
 
                 for (auto &&scv : scvs(fvGeometry))
                 {
                     const FluidState &fs = elemVolVars[scv].fluidState();
                     const FluidState &fsOld = prevElemVolVars[scv].fluidState();
-                    // Scalar extrusion_  = extrusionFactor_sub(element, scv, elemSol);
-                    Scalar extrusion_ = Extrusion::volume(fvGeometry, scv);
-                    // Scalar extrusion_ = elemVolVars[scv].extrusionFactor();
+                    Scalar vol = scv.volume();
                     VolumeVariables volVars, volVarsPast;
                     volVars.update(elemSol, *this, element, scv);
                     volVarsPast.update(elemSolPast, *this, element, scv);
 
-                    for (auto compIdx = 0; compIdx < numComponents; ++compIdx)
-                    {
-                        if (compIdx < numComponents){
-                            MASS_MAT[Grid_ID][compIdx] += volVars.porosity() * extrusion_ * ((fs.saturation(gasPhaseIdx) * fs.molarDensity(gasPhaseIdx) * fs.moleFraction(gasPhaseIdx, compIdx) + fs.saturation(liquidPhaseIdx) * fs.molarDensity(liquidPhaseIdx) * fs.moleFraction(liquidPhaseIdx, compIdx)));   
-                            GAS_MASS_MAT[Grid_ID][compIdx] += fs.molarDensity(gasPhaseIdx) * fs.moleFraction(gasPhaseIdx, compIdx) * volVars.porosity() * scv.volume()* extrusion_ * fs.saturation(gasPhaseIdx) ;
-                            LIQ_MASS_MAT[Grid_ID][ compIdx] += fs.molarDensity(liquidPhaseIdx) * fs.moleFraction(liquidPhaseIdx, compIdx) * volVars.porosity() * scv.volume()* extrusion_ * fs.saturation(liquidPhaseIdx) ;
-                            GAS_MAT[Grid_ID][5 + compIdx] += fs.moleFraction(gasPhaseIdx, compIdx);
-                            LIQ_MAT[Grid_ID][compIdx] += fs.moleFraction(liquidPhaseIdx, compIdx);
-                        }                   
-                    }
                     for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                     {
-                        
-                    inventory[compIdx] += volVars.porosity() * extrusion_  * ((fs.saturation(gasPhaseIdx) * fs.molarDensity(gasPhaseIdx) * fs.moleFraction(gasPhaseIdx, compIdx) + fs.saturation(liquidPhaseIdx) * fs.molarDensity(liquidPhaseIdx) * fs.moleFraction(liquidPhaseIdx, compIdx)));
-                    inventoryPastSol[compIdx] += volVarsPast.porosity() * extrusion_  * ((fsOld.saturation(gasPhaseIdx) * fsOld.molarDensity(gasPhaseIdx) * fsOld.moleFraction(gasPhaseIdx, compIdx) + fsOld.saturation(liquidPhaseIdx) * fsOld.molarDensity(liquidPhaseIdx) * fsOld.moleFraction(liquidPhaseIdx, compIdx)));
+                        inventory[compIdx] += volVars.porosity() * vol * (
+                            fs.saturation(gasPhaseIdx) * fs.molarDensity(gasPhaseIdx) * fs.moleFraction(gasPhaseIdx, compIdx)
+                          + fs.saturation(liquidPhaseIdx) * fs.molarDensity(liquidPhaseIdx) * fs.moleFraction(liquidPhaseIdx, compIdx));
+                        inventoryPastSol[compIdx] += volVarsPast.porosity() * vol * (
+                            fsOld.saturation(gasPhaseIdx) * fsOld.molarDensity(gasPhaseIdx) * fsOld.moleFraction(gasPhaseIdx, compIdx)
+                          + fsOld.saturation(liquidPhaseIdx) * fsOld.molarDensity(liquidPhaseIdx) * fsOld.moleFraction(liquidPhaseIdx, compIdx));
                     }
-                    GAS_MAT[Grid_ID][5 + numComponents-1] = volVars.permeability()[0][0];
-                    averageReservoirPressure += fs.pressure(gasPhaseIdx) * scv.volume();
-                    numberOfCells += 1;
-                    volume += scv.volume();
+                    averageReservoirPressure += fs.pressure(gasPhaseIdx) * vol;
+                    volume += vol;
                 }
-                Grid_ID = Grid_ID +1;
-                if (X_ID < num_x - 1){
-                    X_ID = X_ID + 1;
-                }else{
-                    X_ID = 0;
-                    Z_ID = Z_ID + 1;
-                }
-                    
-
-                // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-                
-                NumEqVector injectionComposition_(0.0);
-                injectionComposition_[H2Idx] = 1.0;
-                injectionComposition_[CO2Idx] = 0.00;
-                DimWorldMatrix molardensity(0.0), MW(0.0),Mobility(0.0);
-                static const Scalar cylcesDev            = getParam<double>("BoundaryConditions.CyclesDev");
-                static const Scalar injectionDurationDev = getParam<double>("BoundaryConditions.InjectionDurationDev")*86400;
-                static const Scalar idleDurationDev     = getParam<double>("BoundaryConditions.IdleDurationDev")*86400;
-                static const Scalar developmentDuration = cylcesDev*(injectionDurationDev+idleDurationDev);
-                static const Scalar idleDurationOp     = getParam<double>("BoundaryConditions.IdleDurationOp")*86400;
-                static const Scalar injectionDurationOp = getParam<double>("BoundaryConditions.InjectionDurationOp")*86400;
-                static const Scalar extractionDurationOp = getParam<double>("BoundaryConditions.ExtractionDurationOp")*86400;
-                injectionComposition_[H2Idx]            = getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
-                injectionComposition_[CO2Idx]            = 1 - getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
-                double inj_rate_dev                     = getParam<double>("BoundaryConditions.InjectionRateDev");
-                const int cycleNumberOp                 = std::floor((Time - developmentDuration)/(injectionDurationOp+extractionDurationOp + idleDurationOp));
-                const Scalar localTimeInCycle           = Time - developmentDuration - cycleNumberOp*(injectionDurationOp + extractionDurationOp + idleDurationOp);
-                double inj_rate_Op = getParam<double>("BoundaryConditions.InjectionRateOp", 0.0);
-                double Extractionrate_ = getParam<double>("BoundaryConditions.ProductionRate", 0.0);
-                double inj_interval = getParam<double>("BoundaryConditions.Well_Height", 0.0);
-                for (auto&& scvf : scvfs(fvGeometry) )
-                {   
-                    const auto& scv = fvGeometry.scv(scvf.insideScvIdx());
-                    VolumeVariables volVars, volVarsPast;
-                    volVars.update(elemSol, *this, element, scv);
-                    volVarsPast.update(elemSolPast, *this, element, scv);
-                    Scalar extrusion_  = Extrusion::area(fvGeometry, scvf);
-                    // if (scvf.boundary() && scvf.area() == Delta_y/2 && scvf.corner(0)[0] == X_min && scvf.corner(1)[0] == X_min)
-                    if (scvf.boundary()  && scvf.area() == Delta_y/2 && scvf.center()[0] == X_min)
-                    {
-                        // const auto& globalPos = scvf.ipGlobal()[0];
-                        // if ((globalPos[0] - Delta_x/2 < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time < localTimeInCycle))
-                        if ((scvf.center()[1] - Y_min >= Y_max - inj_interval) && (Time < localTimeInCycle))
-                        {
-                            const int cycleNumber = std::floor(Time/(injectionDurationDev+idleDurationDev));
-                            const Scalar localTimeInCycle = Time - cycleNumber*(injectionDurationDev+idleDurationDev);
-                            if(localTimeInCycle <= injectionDurationDev){
-                                // values[CO2Idx] = (1-injectionComposition_[CO2Idx]) * inj_rate;
-                                for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                                {
-                                    
-                                    // values_inj[compIdx] += injectionComposition_[compIdx] * Delta_y* inj_rate_dev / FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                                    values_inj[compIdx] += injectionComposition_[compIdx] * extrusion_ * inj_rate_dev;
-                                }
-                            }
-                        }
-                        // if ((globalPos[0] - Delta_x/2 < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time >= developmentDuration))
-                        if ((scvf.center()[1] - Y_min >= Y_max - inj_interval) && (Time >= developmentDuration))
-                        {
-                            if(localTimeInCycle < injectionDurationOp){
-                                for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                                {
-                                    Scalar MW_check = FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                                    // values_inj[compIdx] += injectionComposition_[compIdx] * Delta_y* inj_rate_Op / MW_check;    
-                                    values_inj[compIdx] += injectionComposition_[compIdx] * extrusion_ * inj_rate_Op;  
-                                }
-                            }
-                            if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
-                                for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                                {
-                                    // Mobility_Gas [compIdx] = volVars.mobility(gasPhaseIdx)*volVars.moleFraction(gasPhaseIdx, compIdx);
-                                    // Mobility_Liq [compIdx] = volVars.mobility(liquidPhaseIdx)*volVars.moleFraction(liquidPhaseIdx, compIdx);
-                                    MW[liquidPhaseIdx] += volVars.moleFraction(liquidPhaseIdx, compIdx) * FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                                    MW[gasPhaseIdx] += volVars.moleFraction(gasPhaseIdx, compIdx) * FluidSystem::MixingFluidSystem::molarMass(compIdx);
-                                }
-                                // Scalar Total_Mobility_Gas = 0, Total_Mobility_Liq = 0;
-                                // for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                                // {
-                                //         Total_Mobility_Gas += Mobility_Gas[compIdx];
-                                //         Total_Mobility_Liq += Mobility_Liq[compIdx];
-                                // }
-
-                                for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                                {
-                                    Scalar X_GAS = volVars.moleFraction(gasPhaseIdx, compIdx);
-                                    Scalar X_LIQ = volVars.moleFraction(liquidPhaseIdx, compIdx);
-                                    Mobility [gasPhaseIdx] = volVars.mobility(gasPhaseIdx);
-                                    Mobility [liquidPhaseIdx] = volVars.mobility(liquidPhaseIdx);
-                                    // values_prod[compIdx] += Delta_y* ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(preMobility_[liquidPhaseIdx]+preMobility_[gasPhaseIdx])));
-                                    values_prod[compIdx] +=  extrusion_ * ((Extractionrate_)*(X_LIQ*Mobility[liquidPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])) + (Extractionrate_)*(X_GAS*Mobility[gasPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])));
-                                    // values_prod[compIdx] +=  Delta_y* 
-                                    //                         ((Extractionrate_/(MW[liquidPhaseIdx]))*(X_LIQ*Mobility[liquidPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])) + 
-                                    //                         (Extractionrate_/(MW[gasPhaseIdx]))*(X_GAS*Mobility[gasPhaseIdx]/(Mobility[liquidPhaseIdx]+Mobility[gasPhaseIdx])));
-                                }
-                            }
-                        }
-
-                        if ((globalPos[0] + Delta_x/2 > X_max - eps_))
-                        {
-                            // set a fixed pressure on the right side of the domain
-                            auto init_val = initial_(globalPos);
-                            Scalar phaseFlux = 0, phaseFluxn = 0;
-                            static const Scalar dirichletPressure = init_val[0];
-                            const auto& volVars = elemVolVars[scvf.insideScvIdx()];
-                            const auto& ipGlobal = scvf.ipGlobal();
-                            auto d = ipGlobal - element.geometry().center();
-                            d /= d.two_norm2();
-                            const auto tij = vtmv(scvf.unitOuterNormal(), volVars.permeability(), d);
-                            for (int phaseIdx = 0; phaseIdx < 2; ++phaseIdx)
-                            {
-                                auto upwindTerm = useMoles ? volVars.molarDensity(phaseIdx) : volVars.density(phaseIdx);
-                                upwindTerm *= volVars.mobility(phaseIdx);
-                                
-                                if (phaseIdx == 0)
-                                {
-                                    phaseFlux = -1.0*upwindTerm*tij*(dirichletPressure - volVars.pressure(phaseIdx));
-                                }
-                                else if (phaseIdx == 1)
-                                {
-                                    phaseFluxn = -1.0*upwindTerm*tij*(dirichletPressure + volVars.capillaryPressure() - volVars.pressure(phaseIdx));
-                                }
-                            }
-                            for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-                            {
-                                outflow[compIdx] += ((phaseFluxn * volVars.moleFraction(gasPhaseIdx, compIdx)) +
-                                                (phaseFlux * volVars.moleFraction(liquidPhaseIdx, compIdx))) *
-                                                Delta_y;
-                                // values[compIdx] = ((phaseFluxn*volVars.moleFraction(gasPhaseIdx, compIdx))+
-                                // (phaseFlux*volVars.moleFraction(liquidPhaseIdx, compIdx))) / (volVars.mobility(0)+volVars.mobility(1));
-                            }
-                        }
-                    }
-                }
-                // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             }
             const auto &comm = this->gridGeometry().gridView().comm();
-            // Scalar sum_inj = std::accumulate(values_inj.begin(), values_inj.end(), 0);
-            // Scalar sum_prod = std::accumulate(values_prod.begin(), values_prod.end(), 0);
 
-            materialBalanceError = inventoryPastSol - inventory - dt * values_inj + dt * values_prod;
-
-            // materialBalanceError = inventory + t * values_inj + t * values_prod;
             inventory_error = inventoryPastSol - inventory;
-            Scalar error_sum = 0, inventory_error_sum = 0;
-            for (int compIdx = 0; compIdx < numComponents; ++compIdx)
-             {
-                error_sum = error_sum + materialBalanceError[compIdx];
-                inventory_error_sum = inventory_error_sum + inventory_error[compIdx];
-            }
-            std::cout << "The material balance error is: " << materialBalanceError[2] <<  std::endl;
-            // std::cout << "The material balance error is: " << materialBalanceError[2] <<  std::endl;
-
+            std::cout << "Inventory change (comp 2): " << inventory_error[2] << std::endl;
             std::cout << "---------------------------------------------info end------------------------------------------------------------" << std::endl;
 
             Dumux::MetaData::Collector collector;
@@ -632,58 +298,103 @@ namespace Dumux
             for (auto compIdx = 0; compIdx < numComponents; ++compIdx)
             {
                 collector["inventory"][FluidSystem::componentName(compIdx)].push_back(comm.sum(inventory[compIdx]));
-                collector["materialBalanceError"][FluidSystem::componentName(compIdx)].push_back(comm.sum(materialBalanceError[compIdx]));
-                collector["InjectionValues"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_inj[compIdx]));
-                collector["ProductionValues"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_prod[compIdx]));
-                collector["outflow"][FluidSystem::componentName(compIdx)].push_back(comm.sum(outflow[compIdx]));
             }
-            
+
             Dumux::MetaData::writeJsonFile(collector, name());
-
-            // // Prepare the matrix data for JSON
-            // nlohmann::json timestepData;
-            // timestepData["Time"] = t;
-            // timestepData["GAS_MAT"] = GAS_MAT;
-            // timestepData["LIQ_MAT"] = LIQ_MAT;
-            // timestepData["GAS_MASS_MAT"] = GAS_MASS_MAT;
-            // timestepData["LIQ_MASS_MAT"] = LIQ_MASS_MAT;
-            // timestepData["MASS_MAT"] = MASS_MAT;
-            // std::string filename = "average_concentration.json";
-            // // JSON object for storing the full data
-            // nlohmann::json fullData;
-            // // Check if the JSON file already exists
-            // std::ifstream inputFile(filename);
-            // if (inputFile) {
-            //     // Read the existing data into fullData
-            //     inputFile >> fullData;
-            //     inputFile.close();
-            // }
-            // // Append new data
-            // fullData.push_back(timestepData);
-
-            // // Write the updated JSON data back to the file
-            // std::ofstream outputFile(filename);
-            // outputFile << std::setw(4) << fullData << std::endl;
-            // outputFile.close();
-
-
-
         }
 
         /*!
-         * \brief source term covering operation from well and geochemical reactions
+         * \brief source term: central well injection/production as volumetric source/sink.
+         *
+         * Well cells are identified by radial distance from (wellCenterX_, wellCenterY_)
+         * within wellRadius_ and vertical perforation interval [wellPerfBottom_, wellPerfTop_].
+         * Total well rate (mol/s) is distributed uniformly over wellSupportVolume_,
+         * so source returns rate per bulk volume [mol/(m^3 s)].
+         *
+         * Injection: positive source (CH4-focused composition).
+         * Production: negative source proportional to local composition.
          */
         NumEqVector source(const Element &element,
                            const FVElementGeometry &fvGeometry,
                            const ElementVolumeVariables &elemVolVars,
                            const SubControlVolume &scv) const
         {
-            NumEqVector sourceFlow(0.0), sourceG(0.0), sourceMG(0.0), sourceSR(0.0),sourceBioMG(0.0), sourceBioSRB(0.0);
-            const auto &volVars = elemVolVars[scv];
-            // sourceFlow = sourceflow(element, fvGeometry, prevElemVolVars, elemVolVars, scv); // source from wells
-
             NumEqVector values(0.0);
-            // values = sourceFlow + sourceG + sourceMG + sourceSR + sourceBioMG + sourceBioSRB;
+            const auto& pos = scv.center();
+            const Scalar r = std::sqrt((pos[0] - wellCenterX_)*(pos[0] - wellCenterX_)
+                                      + (pos[1] - wellCenterY_)*(pos[1] - wellCenterY_));
+
+            // Only apply source in well cells
+            if (r > wellRadius_ || pos[2] < wellPerfBottom_ || pos[2] > wellPerfTop_ || wellSupportVolume_ < 1e-20)
+                return values;
+
+            const auto &volVars = elemVolVars[scv];
+            Scalar Time = this->time();
+
+            // Operational schedule (same semantics as original code)
+            static const Scalar cylcesDev            = getParam<double>("BoundaryConditions.CyclesDev");
+            static const Scalar injectionDurationDev = getParam<double>("BoundaryConditions.InjectionDurationDev")*86400;
+            static const Scalar idleDurationDev      = getParam<double>("BoundaryConditions.IdleDurationDev")*86400;
+            static const Scalar developmentDuration   = cylcesDev*(injectionDurationDev+idleDurationDev);
+            static const Scalar idleDurationOp       = getParam<double>("BoundaryConditions.IdleDurationOp")*86400;
+            static const Scalar injectionDurationOp  = getParam<double>("BoundaryConditions.InjectionDurationOp")*86400;
+            static const Scalar extractionDurationOp = getParam<double>("BoundaryConditions.ExtractionDurationOp")*86400;
+            static const Scalar injConc              = getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
+            static const double totalInjRateOp       = getParam<double>("BoundaryConditions.InjectionRateOp", 0.0);
+            static const double totalProdRate        = getParam<double>("BoundaryConditions.ProductionRate", 0.0);
+
+            const int cycleNumberOp    = std::floor((Time - developmentDuration)/(injectionDurationOp+extractionDurationOp+idleDurationOp));
+            const Scalar localTimeInCycle = Time - developmentDuration - cycleNumberOp*(injectionDurationOp+extractionDurationOp+idleDurationOp);
+
+            // Development phase injection
+            if (Time < developmentDuration)
+            {
+                static const double totalInjRateDev = getParam<double>("BoundaryConditions.InjectionRateDev");
+                const int cycleNumber = std::floor(Time/(injectionDurationDev+idleDurationDev));
+                const Scalar localTime = Time - cycleNumber*(injectionDurationDev+idleDurationDev);
+                if (localTime <= injectionDurationDev)
+                {
+                    // Inject: positive source = injection into reservoir
+                    NumEqVector injComp(0.0);
+                    injComp[H2Idx] = injConc;
+                    injComp[CO2Idx] = 1.0 - injConc;
+                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
+                        values[compIdx] = injComp[compIdx] * std::abs(totalInjRateDev) / wellSupportVolume_;
+                }
+            }
+            // Operational phase
+            else
+            {
+                if (localTimeInCycle < injectionDurationOp)
+                {
+                    // Injection phase: positive source
+                    NumEqVector injComp(0.0);
+                    injComp[H2Idx] = injConc;
+                    injComp[CO2Idx] = 1.0 - injConc;
+                    for (int compIdx = 0; compIdx < numComponents; ++compIdx)
+                        values[compIdx] = injComp[compIdx] * std::abs(totalInjRateOp) / wellSupportVolume_;
+                }
+                else if (localTimeInCycle > injectionDurationOp + idleDurationOp)
+                {
+                    // Production phase: negative source proportional to local composition
+                    Scalar mobGas = volVars.mobility(gasPhaseIdx);
+                    Scalar mobLiq = volVars.mobility(liquidPhaseIdx);
+                    Scalar totalMob = mobGas + mobLiq;
+                    if (totalMob > 1e-20)
+                    {
+                        for (int compIdx = 0; compIdx < numComponents; ++compIdx)
+                        {
+                            Scalar xGas = volVars.moleFraction(gasPhaseIdx, compIdx);
+                            Scalar xLiq = volVars.moleFraction(liquidPhaseIdx, compIdx);
+                            // Negative = removal from reservoir
+                            values[compIdx] = -std::abs(totalProdRate) / wellSupportVolume_
+                                             * (xLiq*mobLiq/totalMob + xGas*mobGas/totalMob);
+                        }
+                    }
+                }
+                // else: idle phase, values remain zero
+            }
+
             return values;
         }
     
@@ -696,24 +407,9 @@ namespace Dumux
         BoundaryTypes boundaryTypesAtPos(const GlobalPosition &globalPos) const
         {
             BoundaryTypes bcTypes;
-            // Scalar Time = this->time();
-            // if (Time > 50.0 && Time < 51.0){
-            //     bcTypes.setAllDirichlet();
-            //     // set_time_check(1.0);
-            //     time_check = 1;
-            // }
-            // else if(Time > 50.0 && globalPos[0] > X_max - eps_){
-            //     bcTypes.setAllDirichlet();
-                
-            // } 
-            // else{
-            //     bcTypes.setAllNeumann();
-            // }  
-
-            // bcTypes.setAllNeumann();
-
-            // if (globalPos[0] > X_max - eps_ & globalPos[0] < X_min + eps_ && globalPos[1] < Y_min + eps_)
-            if ( globalPos[0] > X_max - eps_)
+            // Cylindrical grid: Dirichlet on outer radial boundary, Neumann elsewhere
+            const Scalar r = std::sqrt(globalPos[0]*globalPos[0] + globalPos[1]*globalPos[1]);
+            if (r > outerRadius_ - eps_)
                 bcTypes.setAllDirichlet();
             else
                 bcTypes.setAllNeumann();
@@ -938,41 +634,27 @@ namespace Dumux
         Scalar initalPyriteContent;
         bool enableMicrobes, enableGeochemistry, enableSulfateReduction;
         
-        Dimension_vector CELLS_VEC;
-        Dimension_vector Upper_Right, Lower_Left;
-        double Delta_z = 0.0;
-        double Delta_x = 0.0;
-        double Delta_y = 0.0;
         double X_max = 0.0;
-        double X_min = 0;
+        double X_min = 0.0;
         double Y_max = 0.0;
         double Y_min = 0.0;
         double Z_max = 0.0;
         double Z_min = 0.0;
-        Scalar WELL_X =0;
-        mutable Scalar well_loc = 0;
         static constexpr Scalar eps_ = 1e-6;
-        mutable Scalar time_check = 50.0;
         bool enableGravity = false;
-        // biomass parameters for source/sink calculations
-        Scalar ca1_;
-        Scalar ca2_;
-        Scalar cd1_;
-        Scalar dc0_;
-        Scalar kmue_ ;
-        Scalar f_;
-        Scalar ke_;
-        Scalar ks_;
-        Scalar yield_;
-        Scalar Initial_Biomass_fraction;
-        Scalar InihibitonConstant;
+
+        Scalar outerRadius_ = 0.0;
+
+        // 3D central well parameters
+        Scalar wellRadius_ = 0.5;
+        Scalar wellPerfTop_ = 0.0;
+        Scalar wellPerfBottom_ = 0.0;
+        Scalar wellCenterX_ = 0.0;
+        Scalar wellCenterY_ = 0.0;
+        Scalar wellSupportVolume_ = 0.0;
+
         // the permeability for output
         std::vector<Scalar> permeability_;
-        std::vector<std::vector<double>> GAS_MAT;
-        std::vector<std::vector<double>> LIQ_MAT;
-        std::vector<std::vector<double>> MASS_MAT;
-        std::vector<std::vector<double>> GAS_MASS_MAT;
-        std::vector<std::vector<double>> LIQ_MASS_MAT;      
 
         std::string name_;
 

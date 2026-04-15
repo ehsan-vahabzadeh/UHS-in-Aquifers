@@ -37,8 +37,8 @@ ReferencePorosity = 0.3
 ReferencePermeability = 100
 Material.Swr = 0.26
 Material.Snr = 0.0
-Material.BrooksCoreyPcEntry = 5e3
-Material.BrooksCoreyLambda = 2.0
+Material.BrooksCoreyPcEntry = 3e3
+Material.BrooksCoreyLambda = 1.0
 
 [Newton]
 MaxRelativeShift = 1e-6

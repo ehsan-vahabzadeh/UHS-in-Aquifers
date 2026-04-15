@@ -42,7 +42,7 @@
 // #include <dune/istl/paamg/amg.hh>
 #include <dumux/linear/istlsolvers.hh>
 #include <dumux/linear/istlsolverfactorybackend.hh>
-#include <dumux/linear/amgbackend.hh>
+
 #include <dumux/linear/linearsolvertraits.hh>
 #include <dumux/nonlinear/newtonsolver.hh>
 

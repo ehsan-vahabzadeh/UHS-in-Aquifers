@@ -1,7 +1,7 @@
 // -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
 // vi: set et ts=4 sw=4 sts=4:
 //
-// SPDX-FileCopyrightInfo: Copyright © DuMux Project contributors, see AUTHORS.md in root folder
+// SPDX-FileCopyrightInfo: Copyright ï¿½ DuMux Project contributors, see AUTHORS.md in root folder
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 /*!
@@ -33,6 +33,7 @@
 
 #include <dumux/io/vtkoutputmodule.hh>
 #include <dumux/io/grid/gridmanager_yasp.hh>
+#include <dumux/io/grid/cakegridmanager.hh>
 #include <dumux/io/grid/gridmanager_ug.hh>
 
 #include "properties.hh"
@@ -79,7 +80,7 @@ int main(int argc, char** argv)
     // try to create a grid (from the given grid file or the input file)
     /////////////////////////////////////////////////////////////////////
 
-    GridManager<GetPropType<TypeTag, Properties::Grid>> gridManager;
+    CakeGridManager<GetPropType<TypeTag, Properties::Grid>> gridManager;
     gridManager.init();
 
     ////////////////////////////////////////////////////////////
@@ -137,7 +138,7 @@ int main(int argc, char** argv)
     auto assembler = std::make_shared<Assembler>(problem, gridGeometry, gridVariables, timeLoop, xOld);
 
     // the linear solver
-    using LinearSolver = ILUBiCGSTABIstlSolver<LinearSolverTraits<GridGeometry>, LinearAlgebraTraitsFromAssembler<Assembler>>;
+    using LinearSolver = AMGBiCGSTABIstlSolver<LinearSolverTraits<GridGeometry>, LinearAlgebraTraitsFromAssembler<Assembler>>;
     auto linearSolver = std::make_shared<LinearSolver>(gridGeometry->gridView(), gridGeometry->dofMapper());
     
     // the non-linear solver
@@ -149,12 +150,12 @@ int main(int argc, char** argv)
         // solve the non-linear system with time step control
         nonLinearSolver.solve(x, *timeLoop);
 
-        if (timeLoop->time()- qq * PostFun_dt >= 0.0)
-        {
-            // post time step
-            problem->postTimeStep(x, xOld, *gridVariables, timeLoop->timeStepSize(),gridGeometry);
-            qq++;
-        }
+        // if (timeLoop->time()- qq * PostFun_dt >= 0.0)
+        // {
+        //     // post time step
+        //     problem->postTimeStep(x, xOld, *gridVariables, timeLoop->timeStepSize(),gridGeometry);
+        //     qq++;
+        // }
         // make the new solution the old solution
         xOld = x;
         gridVariables->advanceTimeStep();

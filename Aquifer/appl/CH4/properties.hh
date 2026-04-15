@@ -26,7 +26,7 @@
 #define DUMUX_BIOCHEMICAL_PROPERTIES_HH
 
 #include <dune/grid/yaspgrid.hh>
-// #include <dune/subgrid/subgrid.hh>
+#include <dune/grid/uggrid.hh>
 
 #include <dumux/discretization/ccmpfa.hh>
 #include <dumux/discretization/cctpfa.hh>
@@ -63,10 +63,10 @@ struct mixingtpfa { using InheritsFrom = std::tuple<mixing, CCTpfaModel>; };
 // // // struct Grid<TypeTag, TTag::mixing> { using type = Dune::YaspGrid<3>; };
 // struct Grid<TypeTag, TTag::mixing> { using type = Dune::YaspGrid<2>; };
 
+// 3D cylindrical (cake) grid via CakeGridManager + UGGrid
 template<class TypeTag>
 struct Grid<TypeTag, TTag::mixing>
-{ using type =  Dune::YaspGrid<2, Dune::EquidistantOffsetCoordinates<double, 2>>; };
-// { using type = Dune::YaspGrid<2, Dune::TensorProductCoordinates<GetPropType<TypeTag, Properties::Scalar>, 2>>; };
+{ using type = Dune::UGGrid<3>; };
 
 // template<class TypeTag>
 // // struct Grid<TypeTag, TTag::ExerciseFluidsystemTwoPTwoC> { using type = Dune::YaspGrid<2>; };
@@ -98,28 +98,6 @@ struct SpatialParams<TypeTag, TTag::mixing>
     using GridGeometry = GetPropType<TypeTag, Properties::GridGeometry>;
     using Scalar = GetPropType<TypeTag, Properties::Scalar>;
     using type = mixingSpatialParams<GridGeometry, Scalar>;
-};
-
-// rotation-symmetric grid geometry forming a cylinder channel
-template<class TypeTag>
-struct GridGeometry<TypeTag, TTag::mixing>
-{
-private:
-    static constexpr bool enableCache = getPropValue<TypeTag, Properties::EnableGridGeometryCache>();
-    using Scalar = GetPropType<TypeTag, Properties::Scalar>;
-    using GridView = typename GetPropType<TypeTag, Properties::Grid>::LeafGridView;
-
-    // We take the default traits as basis and exchange the extrusion type
-    // The first axis (x-axis) is the radial axis, hence the zero. That means we rotate about the second axis (y-axis).
-    // struct GGTraits : public CCTpfaDefaultGridGeometryTraits<GridView>
-    struct GGTraits : public BoxDefaultGridGeometryTraits<GridView>
-    { using Extrusion = RotationalExtrusion<0>; };
-
-public:
-    // Pass the above traits to the box grid geometry such that it uses the
-    // rotation-symmetric sub-control volumes and faces.
-    // using type = CCTpfaFVGridGeometry<GridView, enableCache, GGTraits>;
-    using type = BoxFVGridGeometry<Scalar, GridView, enableCache, GGTraits>;
 };
 
 // Define whether mole(true) or mass (false) fractions are used

@@ -73,15 +73,15 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: appl/1p/H2/CMakeFiles/ap
 appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc
 appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o"
-	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o -MF CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o.d -o CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o -c /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc
+	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /home/n71743ev/opt/openmpi-5/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o -MF CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o.d -o CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o -c /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc
 
 appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.i"
-	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc > CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.i
+	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /home/n71743ev/opt/openmpi-5/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc > CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.i
 
 appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.s"
-	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc -o CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.s
+	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && /home/n71743ev/opt/openmpi-5/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/n71743ev/DUMUX/dumux/Aquifer/appl/1p/H2/main.cc -o CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.s
 
 # Object files for target appl_1p2pnc_box_H2
 appl_1p2pnc_box_H2_OBJECTS = \
@@ -92,15 +92,21 @@ appl_1p2pnc_box_H2_EXTERNAL_OBJECTS =
 
 appl/1p/H2/appl_1p2pnc_box_H2: appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o
 appl/1p/H2/appl_1p2pnc_box_H2: appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/build.make
+appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
+appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dumux/build-cmake/lib/libdumux.so
 appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dumux/build-cmake/lib/libdumux_format.so
 appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/lib/libdunegrid.so
+appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/1p/H2/appl_1p2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
@@ -116,6 +122,7 @@ appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libcamd.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libccolamd.so
 appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libsuitesparseconfig.so
+appl/1p/H2/appl_1p2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmp.so
 appl/1p/H2/appl_1p2pnc_box_H2: appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable appl_1p2pnc_box_H2"
 	cd /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/appl/1p/H2 && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/appl_1p2pnc_box_H2.dir/link.txt --verbose=$(VERBOSE)

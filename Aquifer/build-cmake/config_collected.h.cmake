@@ -105,6 +105,53 @@
 
 
 
+#ifndef DUNE_UGGRID_CONFIG_HH
+#define DUNE_UGGRID_CONFIG_HH
+
+/* Define to 1 if you have module dune-uggrid available */
+#ifndef HAVE_DUNE_UGGRID
+#cmakedefine01 HAVE_DUNE_UGGRID
+#endif
+
+
+/* Define to the version of dune-common */
+#define DUNE_UGGRID_VERSION "${DUNE_UGGRID_VERSION}"
+
+/* Define to the major version of dune-common */
+#define DUNE_UGGRID_VERSION_MAJOR ${DUNE_UGGRID_VERSION_MAJOR}
+
+/* Define to the minor version of dune-common */
+#define DUNE_UGGRID_VERSION_MINOR ${DUNE_UGGRID_VERSION_MINOR}
+
+/* Define to the revision of dune-common */
+#define DUNE_UGGRID_VERSION_REVISION ${DUNE_UGGRID_VERSION_REVISION}
+
+/* begin private section */
+
+/* see parallel/ddd/dddi.h */
+#cmakedefine DDD_MAX_PROCBITS_IN_GID ${UG_DDD_MAX_MACROBITS}
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+#cmakedefine TIME_WITH_SYS_TIME 1
+
+/* Define to 1 if UGGrid should use the complete set of green refinement rules for tetrahedra */
+#cmakedefine DUNE_UGGRID_TET_RULESET 1
+
+/* end private section */
+
+
+
+
+
+#if __has_include(<dune-common-config.hh>)
+  #include <dune-common-config.hh>
+#endif
+
+
+#endif // DUNE_UGGRID_CONFIG_HH
+
+
+
 #ifndef DUNE_GRID_CONFIG_HH
 #define DUNE_GRID_CONFIG_HH
 
@@ -444,6 +491,15 @@
 
 
 #endif // DUNE_GEOMETRY_CONFIG_BOTTOM_HH
+
+
+
+#ifndef DUNE_UGGRID_CONFIG_BOTTOM_HH
+#define DUNE_UGGRID_CONFIG_BOTTOM_HH
+
+
+
+#endif // DUNE_UGGRID_CONFIG_BOTTOM_HH
 
 
 

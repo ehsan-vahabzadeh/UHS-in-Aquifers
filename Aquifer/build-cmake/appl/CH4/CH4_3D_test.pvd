@@ -1,0 +1,12 @@
+<?xml version="1.0"?> 
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian"> 
+<Collection> 
+<DataSet timestep="0" group="" part="0" name="" file="CH4_3D_test-00000.vtu"/> 
+<DataSet timestep="39.2727" group="" part="0" name="" file="CH4_3D_test-00001.vtu"/> 
+<DataSet timestep="78.5455" group="" part="0" name="" file="CH4_3D_test-00002.vtu"/> 
+<DataSet timestep="117.818" group="" part="0" name="" file="CH4_3D_test-00003.vtu"/> 
+<DataSet timestep="157.091" group="" part="0" name="" file="CH4_3D_test-00004.vtu"/> 
+<DataSet timestep="196.364" group="" part="0" name="" file="CH4_3D_test-00005.vtu"/> 
+<DataSet timestep="235.636" group="" part="0" name="" file="CH4_3D_test-00006.vtu"/> 
+</Collection> 
+</VTKFile> 

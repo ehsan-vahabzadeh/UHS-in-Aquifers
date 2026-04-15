@@ -16,5 +16,5 @@ dumux_add_test(NAME appl_1p2pnc_box_H2
               CMD_ARGS params.input)           
 set(CMAKE_BUILD_TYPE Debug)
 if(OpenMP_CXX_FOUND)
-    target_link_libraries(appl_1p2pnc_tpfa_H2 PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(appl_1p2pnc_box_H2 PUBLIC OpenMP::OpenMP_CXX)
 endif()

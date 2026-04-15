@@ -138,7 +138,7 @@ public:
                 if (DispersionMode == 1) {
                     // dispersivity = problem.spatialParams().dispersionTensor(globalpos1, phaseIdx, compIdx);
                     alphaL = 2 * (globalpos2[0] - globalpos1[0]);
-		    //alphaL = 1;
+                    // alphaL = 1;
                     alphaT = alphaL / 10.0;
                     // alphaT = 2 * (globalpos2[1] - globalpos1[1]);
                 }

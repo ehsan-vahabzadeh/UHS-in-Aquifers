@@ -1,39 +1,53 @@
 [TimeLoop]
 DtInitial = 250                    # [s] initial timestep size
-TEnd = 21600000                # [s] simulation end time 
+TEnd = 250                         # [days] simulation end time (converted to seconds in main.cc)
 MaxTimeStepSize = 172800           # [s] maximum timestep size
-VTK_dt = 0  
+VTK_dt = 0
 PostFun_dt = 0
 
+# 3D cylindrical (cake) grid built by CakeGridManager.
+# Axes: 0 = radial, 1 = angular, 2 = axial (vertical).
+# Radial grading: fine near well, coarser outward.
+# Angular: full 360 deg circle, coarse resolution.
+# Axial: uniform vertical layers.
 [Grid]
-LowerLeft = 0.2 0 
-UpperRight = 1000.2 22         # [m] grid dimension
-Cells = 1000 22                  # [-] number of cells in dimension
-
-#Positions0 = 0.2 300.2
-#Positions1 = 0 25 
-#Cells0 = 300
-#Cells1 = 10
-#Grading0 = 1.05
+Radial0 = 0.2 5 50 500             # [m] radial position breakpoints (well wall -> far field)
+Angular1 = 0 360                   # [deg] full circle
+Axial2 = 0 22                      # [m] vertical extent
+Cells0 = 4 6 6                     # radial cells per zone (fine near well, coarser outward)
+Cells1 = 20                         # angular sectors
+Cells2 = 4                         # vertical layers
+Grading0 = 1.0 1.3 1.3             # radial grading (>1 = cells grow outward)
+Grading1 = 1.0                     # uniform angular
+Grading2 = 1.0                     # uniform vertical
 
 [Problem]
-Name = CH4               # [-] the name of the output files
-EnableGravity = false                # Activate/deactivate gravity
+Name = CH4_3D           # [-] the name of the output files
+EnableGravity = true                # Activate/deactivate gravity
 InitialTemperature = 313.15        # [K] 80 initial temperature in the reservoir
 DepthBOR = 1200                     # [m] depth below ground surface
-DispersionMode = 1    # 0 = No Dispersion -- 1 = dx dispersion -- 2 = Farzaneh's equation
+DispersionMode = 0   # 0 = No Dispersion -- 1 = dx dispersion -- 2 = Farzaneh's equation
+
+# 3D central well parameters
+# Well is at radial center (r=0) and identified by cells within Well.Radius
+[Well]
+Radius = 0.5            # [m] well support radius (cells within this radius act as well)
+CenterX = 0.0            # [m] well center x-coordinate (always 0 for cylindrical grid)
+CenterY = 0.0            # [m] well center y-coordinate (always 0 for cylindrical grid)
+PerfBottom = 0.0          # [m] bottom of perforated interval
+PerfTop = 22.0            # [m] top of perforated interval
 
 [BoundaryConditions]
 CyclesDev = 0   		  # [-] number of cycles during development period
 InjectionDurationDev = 0	  # [days] injection time during development period
 IdleDurationDev = 0		  # [day] idle time during development period
-InjectionDurationOp = 100	  # [day] injection time during operational period
-ExtractionDurationOp = 150	  # [day] production time during operational period
+InjectionDurationOp = 50	  # [day] injection time during operational period
+ExtractionDurationOp = 50	  # [day] production time during operational period
 IdleDurationOp = 0.0	  # [day] idle time during operational period
 HydrogenInjectionConcentration = 1
-InjectionRateDev = 0	  # [mol.m-2.s] injection rate during development period
-InjectionRateOp = -47.2  # [mol.m-2.s] injection rate during operational period
-ProductionRate = 47.2   # [mol.m-2.s] production rate during operational period
+InjectionRateDev = 0	  # [mol/s] total injection rate during development period
+InjectionRateOp = 10.2   # [mol/s] total injection rate during operational period (positive = into reservoir)
+ProductionRate = 10.2     # [mol/s] total production rate during operational period (positive = out of reservoir)
 Well_Height = 22		  # [m] Height of the injection/withdrawal interval
 
 [SpatialParams]
@@ -50,8 +64,8 @@ DepthGWC = -10
 
 
 [Newton]
-MaxRelativeShift = 1e-6
-MaxSteps = 6
+MaxRelativeShift = 1e-4
+MaxSteps = 18
 MaxTimeStepDivisions = 20
 
 [Assembly]
@@ -59,4 +73,3 @@ Multithreading = true #activate this
 
 [Vtk]
 AddVelocity = true
-

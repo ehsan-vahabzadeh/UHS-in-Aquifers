@@ -1,14 +1,14 @@
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a0d6f/fast
-/usr/bin/gmake  -f CMakeFiles/cmTC_a0d6f.dir/build.make CMakeFiles/cmTC_a0d6f.dir/build
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7003c/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_7003c.dir/build.make CMakeFiles/cmTC_7003c.dir/build
 gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_a0d6f
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a0d6f.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_a0d6f 
+Building CXX object CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_7003c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7003c.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_7003c 
 gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 
@@ -20,14 +20,14 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a0d6f/fast
-/usr/bin/gmake  -f CMakeFiles/cmTC_a0d6f.dir/build.make CMakeFiles/cmTC_a0d6f.dir/build
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7003c/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_7003c.dir/build.make CMakeFiles/cmTC_7003c.dir/build
 gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_a0d6f
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a0d6f.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_a0d6f.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_a0d6f 
+Building CXX object CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_7003c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7003c.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_7003c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_7003c 
 gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 
@@ -39,17 +39,17 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_73409/fast
-/usr/bin/gmake  -f CMakeFiles/cmTC_73409.dir/build.make CMakeFiles/cmTC_73409.dir/build
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_24ae4/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_24ae4.dir/build.make CMakeFiles/cmTC_24ae4.dir/build
 gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_73409.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_73409.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+Building CXX object CMakeFiles/cmTC_24ae4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_24ae4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
     1 | using F = decltype([](){}); int main() {return 0;}
       |                    ^
-gmake[1]: *** [CMakeFiles/cmTC_73409.dir/build.make:78: CMakeFiles/cmTC_73409.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[1]: *** [CMakeFiles/cmTC_24ae4.dir/build.make:78: CMakeFiles/cmTC_24ae4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
 gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake: *** [Makefile:127: cmTC_73409/fast] Error 2
+gmake: *** [Makefile:127: cmTC_24ae4/fast] Error 2
 
 
 Source file was:
@@ -57,18 +57,18 @@ using F = decltype([](){}); int main() {return 0;}
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_27c6d/fast
-/usr/bin/gmake  -f CMakeFiles/cmTC_27c6d.dir/build.make CMakeFiles/cmTC_27c6d.dir/build
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_275c5/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_275c5.dir/build.make CMakeFiles/cmTC_275c5.dir/build
 gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_27c6d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_27c6d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+Building CXX object CMakeFiles/cmTC_275c5.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_275c5.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
     3 |   int main() { std::identity{}; }
       |                     ^~~~~~~~
-gmake[1]: *** [CMakeFiles/cmTC_27c6d.dir/build.make:78: CMakeFiles/cmTC_27c6d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[1]: *** [CMakeFiles/cmTC_275c5.dir/build.make:78: CMakeFiles/cmTC_275c5.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
 gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake: *** [Makefile:127: cmTC_27c6d/fast] Error 2
+gmake: *** [Makefile:127: cmTC_275c5/fast] Error 2
 
 
 Source file was:
@@ -79,15 +79,15 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_67696/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8cccb/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_67696.dir/build.make CMakeFiles/cmTC_67696.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_8cccb.dir/build.make CMakeFiles/cmTC_8cccb.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_67696
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67696.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_67696 
+Building CXX object CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_8cccb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8cccb.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_8cccb 
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
@@ -100,15 +100,15 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_67696/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8cccb/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_67696.dir/build.make CMakeFiles/cmTC_67696.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_8cccb.dir/build.make CMakeFiles/cmTC_8cccb.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_67696
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67696.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_67696.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_67696 
+Building CXX object CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_8cccb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8cccb.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_8cccb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_8cccb 
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
@@ -121,18 +121,18 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fc335/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9bb47/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_fc335.dir/build.make CMakeFiles/cmTC_fc335.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_9bb47.dir/build.make CMakeFiles/cmTC_9bb47.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_fc335.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_fc335.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+Building CXX object CMakeFiles/cmTC_9bb47.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9bb47.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
     1 | using F = decltype([](){}); int main() {return 0;}
       |                    ^
-gmake[3]: *** [CMakeFiles/cmTC_fc335.dir/build.make:78: CMakeFiles/cmTC_fc335.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: *** [CMakeFiles/cmTC_9bb47.dir/build.make:78: CMakeFiles/cmTC_9bb47.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_fc335/fast] Error 2
+gmake[2]: *** [Makefile:127: cmTC_9bb47/fast] Error 2
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 
@@ -141,19 +141,19 @@ using F = decltype([](){}); int main() {return 0;}
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1fda2/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9a4e3/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_1fda2.dir/build.make CMakeFiles/cmTC_1fda2.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_9a4e3.dir/build.make CMakeFiles/cmTC_9a4e3.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_1fda2.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_1fda2.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+Building CXX object CMakeFiles/cmTC_9a4e3.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9a4e3.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
     3 |   int main() { std::identity{}; }
       |                     ^~~~~~~~
-gmake[3]: *** [CMakeFiles/cmTC_1fda2.dir/build.make:78: CMakeFiles/cmTC_1fda2.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: *** [CMakeFiles/cmTC_9a4e3.dir/build.make:78: CMakeFiles/cmTC_9a4e3.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_1fda2/fast] Error 2
+gmake[2]: *** [Makefile:127: cmTC_9a4e3/fast] Error 2
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 
@@ -165,15 +165,421 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_39523/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_02956/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_02956.dir/build.make CMakeFiles/cmTC_02956.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_02956
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_02956.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_02956 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_02956/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_02956.dir/build.make CMakeFiles/cmTC_02956.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_02956
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_02956.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_02956.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_02956 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3ff14/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_3ff14.dir/build.make CMakeFiles/cmTC_3ff14.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3ff14.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_3ff14.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[1]: *** [CMakeFiles/cmTC_3ff14.dir/build.make:78: CMakeFiles/cmTC_3ff14.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_3ff14/fast] Error 2
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ee945/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_ee945.dir/build.make CMakeFiles/cmTC_ee945.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ee945.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_ee945.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_ee945.dir/build.make:78: CMakeFiles/cmTC_ee945.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ee945/fast] Error 2
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_93c18/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_93c18.dir/build.make CMakeFiles/cmTC_93c18.dir/build
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_39523.dir/build.make CMakeFiles/cmTC_39523.dir/build
+Building CXX object CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_93c18
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93c18.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_93c18 
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_93c18/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_93c18.dir/build.make CMakeFiles/cmTC_93c18.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_93c18
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93c18.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_93c18.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_93c18 
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8ab86/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_8ab86.dir/build.make CMakeFiles/cmTC_8ab86.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8ab86.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_8ab86.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[2]: *** [CMakeFiles/cmTC_8ab86.dir/build.make:78: CMakeFiles/cmTC_8ab86.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: *** [Makefile:127: cmTC_8ab86/fast] Error 2
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_046b0/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_046b0.dir/build.make CMakeFiles/cmTC_046b0.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_046b0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_046b0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[2]: *** [CMakeFiles/cmTC_046b0.dir/build.make:78: CMakeFiles/cmTC_046b0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: *** [Makefile:127: cmTC_046b0/fast] Error 2
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5879c/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_5879c.dir/build.make CMakeFiles/cmTC_5879c.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_5879c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5879c.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_5879c 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5879c/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_5879c.dir/build.make CMakeFiles/cmTC_5879c.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_5879c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5879c.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_5879c.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_5879c 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f4e55/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_f4e55.dir/build.make CMakeFiles/cmTC_f4e55.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_f4e55.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_f4e55.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[1]: *** [CMakeFiles/cmTC_f4e55.dir/build.make:78: CMakeFiles/cmTC_f4e55.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_f4e55/fast] Error 2
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5d77b/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_5d77b.dir/build.make CMakeFiles/cmTC_5d77b.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5d77b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_5d77b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_5d77b.dir/build.make:78: CMakeFiles/cmTC_5d77b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_5d77b/fast] Error 2
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9dfbb/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_9dfbb.dir/build.make CMakeFiles/cmTC_9dfbb.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_9dfbb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9dfbb.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_9dfbb 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9dfbb/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_9dfbb.dir/build.make CMakeFiles/cmTC_9dfbb.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_9dfbb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9dfbb.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_9dfbb.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_9dfbb 
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4b132/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_4b132.dir/build.make CMakeFiles/cmTC_4b132.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4b132.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_4b132.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[1]: *** [CMakeFiles/cmTC_4b132.dir/build.make:78: CMakeFiles/cmTC_4b132.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_4b132/fast] Error 2
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b847e/fast
+/usr/bin/gmake  -f CMakeFiles/cmTC_b847e.dir/build.make CMakeFiles/cmTC_b847e.dir/build
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b847e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_b847e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_b847e.dir/build.make:78: CMakeFiles/cmTC_b847e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b847e/fast] Error 2
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d07d9/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_d07d9.dir/build.make CMakeFiles/cmTC_d07d9.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_d07d9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d07d9.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_d07d9 
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d07d9/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_d07d9.dir/build.make CMakeFiles/cmTC_d07d9.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_d07d9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d07d9.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_d07d9.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_d07d9 
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <experimental/type_traits>
+  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cbd50/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_cbd50.dir/build.make CMakeFiles/cmTC_cbd50.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_cbd50.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_cbd50.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[2]: *** [CMakeFiles/cmTC_cbd50.dir/build.make:78: CMakeFiles/cmTC_cbd50.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: *** [Makefile:127: cmTC_cbd50/fast] Error 2
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_31a6b/fast
+gmake[1]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_31a6b.dir/build.make CMakeFiles/cmTC_31a6b.dir/build
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_31a6b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_31a6b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[2]: *** [CMakeFiles/cmTC_31a6b.dir/build.make:78: CMakeFiles/cmTC_31a6b.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[1]: *** [Makefile:127: cmTC_31a6b/fast] Error 2
+gmake[1]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0f413/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_0f413.dir/build.make CMakeFiles/cmTC_0f413.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_39523
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39523.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_39523 
+Building CXX object CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_0f413
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f413.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_0f413 
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
@@ -186,15 +592,15 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_39523/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0f413/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_39523.dir/build.make CMakeFiles/cmTC_39523.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_0f413.dir/build.make CMakeFiles/cmTC_0f413.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_39523
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39523.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_39523.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_39523 
+Building CXX object CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
+Linking CXX executable cmTC_0f413
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f413.dir/link.txt --verbose=1
+/home/n71743ev/opt/openmpi-5/bin/mpicxx CMakeFiles/cmTC_0f413.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_0f413 
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
@@ -207,18 +613,18 @@ Source file was:
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7d0e6/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cc257/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_7d0e6.dir/build.make CMakeFiles/cmTC_7d0e6.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_cc257.dir/build.make CMakeFiles/cmTC_cc257.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7d0e6.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_7d0e6.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+Building CXX object CMakeFiles/cmTC_cc257.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_cc257.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
     1 | using F = decltype([](){}); int main() {return 0;}
       |                    ^
-gmake[3]: *** [CMakeFiles/cmTC_7d0e6.dir/build.make:78: CMakeFiles/cmTC_7d0e6.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: *** [CMakeFiles/cmTC_cc257.dir/build.make:78: CMakeFiles/cmTC_cc257.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_7d0e6/fast] Error 2
+gmake[2]: *** [Makefile:127: cmTC_cc257/fast] Error 2
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 
@@ -227,277 +633,19 @@ using F = decltype([](){}); int main() {return 0;}
 Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
 Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cf24d/fast
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_eafb0/fast
 gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_cf24d.dir/build.make CMakeFiles/cmTC_cf24d.dir/build
+/usr/bin/gmake  -f CMakeFiles/cmTC_eafb0.dir/build.make CMakeFiles/cmTC_eafb0.dir/build
 gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_cf24d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_cf24d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+Building CXX object CMakeFiles/cmTC_eafb0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_eafb0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
     3 |   int main() { std::identity{}; }
       |                     ^~~~~~~~
-gmake[3]: *** [CMakeFiles/cmTC_cf24d.dir/build.make:78: CMakeFiles/cmTC_cf24d.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: *** [CMakeFiles/cmTC_eafb0.dir/build.make:78: CMakeFiles/cmTC_eafb0.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
 gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_cf24d/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <functional>
-  int main() { std::identity{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_58c30/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_58c30.dir/build.make CMakeFiles/cmTC_58c30.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_58c30
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58c30.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_58c30 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_58c30/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_58c30.dir/build.make CMakeFiles/cmTC_58c30.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_58c30
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58c30.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_58c30.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_58c30 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e5690/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_e5690.dir/build.make CMakeFiles/cmTC_e5690.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_e5690.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_e5690.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
-    1 | using F = decltype([](){}); int main() {return 0;}
-      |                    ^
-gmake[3]: *** [CMakeFiles/cmTC_e5690.dir/build.make:78: CMakeFiles/cmTC_e5690.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_e5690/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-using F = decltype([](){}); int main() {return 0;}
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_23003/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_23003.dir/build.make CMakeFiles/cmTC_23003.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_23003.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_23003.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
-    3 |   int main() { std::identity{}; }
-      |                     ^~~~~~~~
-gmake[3]: *** [CMakeFiles/cmTC_23003.dir/build.make:78: CMakeFiles/cmTC_23003.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_23003/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <functional>
-  int main() { std::identity{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b050b/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_b050b.dir/build.make CMakeFiles/cmTC_b050b.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_b050b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b050b.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_b050b 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b050b/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_b050b.dir/build.make CMakeFiles/cmTC_b050b.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_b050b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b050b.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_b050b.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_b050b 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7b263/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_7b263.dir/build.make CMakeFiles/cmTC_7b263.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7b263.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_7b263.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
-    1 | using F = decltype([](){}); int main() {return 0;}
-      |                    ^
-gmake[3]: *** [CMakeFiles/cmTC_7b263.dir/build.make:78: CMakeFiles/cmTC_7b263.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_7b263/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-using F = decltype([](){}); int main() {return 0;}
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3e5a7/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_3e5a7.dir/build.make CMakeFiles/cmTC_3e5a7.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_3e5a7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_3e5a7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
-    3 |   int main() { std::identity{}; }
-      |                     ^~~~~~~~
-gmake[3]: *** [CMakeFiles/cmTC_3e5a7.dir/build.make:78: CMakeFiles/cmTC_3e5a7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_3e5a7/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <functional>
-  int main() { std::identity{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_45b28/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_45b28.dir/build.make CMakeFiles/cmTC_45b28.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_45b28
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45b28.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_45b28 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_45b28/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_45b28.dir/build.make CMakeFiles/cmTC_45b28.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx
-Linking CXX executable cmTC_45b28
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45b28.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_45b28.dir/src_DUNE_HAVE_CXX_EXPERIMENTAL_IS_DETECTED.cxx.o -o cmTC_45b28 
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-
-  #include <experimental/type_traits>
-  int main() { std::experimental::detected_t<std::decay_t,int>{}; }
-
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_209d4/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_209d4.dir/build.make CMakeFiles/cmTC_209d4.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
-    1 | using F = decltype([](){}); int main() {return 0;}
-      |                    ^
-gmake[3]: *** [CMakeFiles/cmTC_209d4.dir/build.make:78: CMakeFiles/cmTC_209d4.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_209d4/fast] Error 2
-gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-using F = decltype([](){}); int main() {return 0;}
-Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY succeeded with the following output:
-Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-
-Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_28309/fast
-gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-/usr/bin/gmake  -f CMakeFiles/cmTC_28309.dir/build.make CMakeFiles/cmTC_28309.dir/build
-gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
-/usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
-/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
-    3 |   int main() { std::identity{}; }
-      |                     ^~~~~~~~
-gmake[3]: *** [CMakeFiles/cmTC_28309.dir/build.make:78: CMakeFiles/cmTC_28309.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
-gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
-gmake[2]: *** [Makefile:127: cmTC_28309/fast] Error 2
+gmake[2]: *** [Makefile:127: cmTC_eafb0/fast] Error 2
 gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
 
 

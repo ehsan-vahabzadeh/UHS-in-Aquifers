@@ -5,16 +5,14 @@ dumux_add_test(NAME appl_2pnc_tpfa_CH4
               SOURCES main.cc
               COMPILE_DEFINITIONS TYPETAG=mixingtpfa ENABLECACHING=0 SCHEIDEGGER=0
               CMD_ARGS params.input)
-# set(CMAKE_BUILD_TYPE Debug)
-
-
-
 
 dumux_add_test(NAME appl_2pnc_box_CH4
               SOURCES main.cc
               COMPILE_DEFINITIONS TYPETAG=mixingbox ENABLECACHING=0 SCHEIDEGGER=1
-              CMD_ARGS params.input)           
-# set(CMAKE_BUILD_TYPE Debug)
-#if(OpenMP_CXX_FOUND)
-  #  target_link_libraries(appl_2pnc_tpfa_CH4 PUBLIC OpenMP::OpenMP_CXX)
-#endif()
+              CMD_ARGS params.input)
+
+# Link UGGrid library (required for CakeGridManager with UGGrid<3>)
+if(HAVE_DUNE_UGGRID)
+  target_link_libraries(appl_2pnc_tpfa_CH4 PRIVATE Dune::UGGrid)
+  target_link_libraries(appl_2pnc_box_CH4 PRIVATE Dune::UGGrid)
+endif()

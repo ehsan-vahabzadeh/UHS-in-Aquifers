@@ -345,10 +345,14 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/future.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/indexset.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/indicessyncer.hh \
+  /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/interface.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/localindex.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpicommunication.hh \
+  /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpidata.hh \
+  /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpifuture.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpihelper.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpitraits.hh \
+  /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/plocalindex.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/remoteindices.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parameterizedobject.hh \
   /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parametertree.hh \
@@ -457,6 +461,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfexception.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfgridfactory.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfparser.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfug.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfyasp.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/entitykey.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/entitykey_inline.hh \
@@ -475,6 +480,25 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/vtksequencewriterbase.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/vtkwriter.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/vtuwriter.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ug_undefs.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridentity.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridentityseed.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridfactory.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridgeometry.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridhieriterator.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridindexsets.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridintersectioniterators.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridintersections.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridleafiterator.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridleveliterator.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridlocalgeometry.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridrenumberer.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridviews.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugincludes.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uglbgatherscatter.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugmessagebuffer.hh \
+  /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugwrapper.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/multiindex.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/persistentcontainer.hh \
   /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/persistentcontainermap.hh \
@@ -585,6 +609,38 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/rannacherturek/rannachertureklocalbasis.hh \
   /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/rannacherturek/rannachertureklocalcoefficients.hh \
   /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/rannacherturek/rannachertureklocalinterpolation.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/include/dune-uggrid-config.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/domain/domain.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/domain/std_domain.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/algebra.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/cw.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/dlmgr.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/elements.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/evm.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/gm.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/pargm.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/refine.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/rm.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/shapes.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/ugm.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/initug.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/debug.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/dimension.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/heaps.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/misc.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/namespace.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/ugenv.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/ugtypes.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddconstants.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddcontext.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddtypes.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddtypes_impl.hh \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/include/ddd.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/dddif/parallel.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ppif/ppif.h \
+  /home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ppif/ppiftypes.hh \
+  /home/n71743ev/opt/openmpi-5/include/mpi.h \
+  /home/n71743ev/opt/openmpi-5/include/mpi_portable_platform.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -730,6 +786,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/charconv \
   /usr/include/c++/13/chrono \
+  /usr/include/c++/13/cinttypes \
   /usr/include/c++/13/climits \
   /usr/include/c++/13/clocale \
   /usr/include/c++/13/cmath \
@@ -885,22 +942,13 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/syscall.h \
@@ -937,14 +985,10 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
@@ -971,6 +1015,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/float.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
@@ -1014,8 +1059,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/x86_64-linux-gnu/bits/unistd-decl.h:
-
 /usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
@@ -1048,14 +1091,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio2.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio2-decl.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
@@ -1064,17 +1099,11 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
-
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
@@ -1101,8 +1130,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
-
-/usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
@@ -1131,8 +1158,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/ctype.h:
 
 /usr/include/c++/13/vector:
-
-/usr/include/c++/13/typeinfo:
 
 /usr/include/c++/13/tr1/riemann_zeta.tcc:
 
@@ -1164,8 +1189,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/pstl/pstl_config.h:
 
-/usr/include/c++/13/pstl/glue_algorithm_defs.h:
-
 /usr/include/c++/13/pstl/execution_defs.h:
 
 /usr/include/c++/13/ostream:
@@ -1181,8 +1204,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/c++/13/tr1/exp_integral.tcc:
 
 /usr/include/c++/13/math.h:
-
-/usr/include/c++/13/map:
 
 /usr/include/c++/13/list:
 
@@ -1230,10 +1251,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/cstddef:
 
-/usr/include/c++/13/pstl/glue_numeric_defs.h:
-
-/usr/include/c++/13/concepts:
-
 /usr/include/c++/13/complex:
 
 /usr/include/c++/13/compare:
@@ -1245,6 +1262,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/c++/13/format:
 
 /usr/include/c++/13/clocale:
+
+/usr/include/c++/13/cinttypes:
 
 /usr/include/c++/13/chrono:
 
@@ -1282,8 +1301,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/bits/stream_iterator.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib.h:
-
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/c++/13/bits/stl_vector.h:
@@ -1293,8 +1310,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/c++/13/bits/stl_tree.h:
 
 /usr/include/c++/13/bits/stl_tempbuf.h:
-
-/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
 
 /usr/include/c++/13/initializer_list:
 
@@ -1326,8 +1341,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/bits/std_function.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2-decl.h:
-
 /usr/include/linux/errno.h:
 
 /usr/include/c++/13/bits/std_abs.h:
@@ -1356,8 +1369,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/bits/ostream.tcc:
 
-/usr/include/c++/13/bits/new_allocator.h:
-
 /usr/include/c++/13/bits/move.h:
 
 /usr/include/c++/13/bits/memoryfwd.h:
@@ -1369,8 +1380,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/c++/13/bits/locale_facets_nonio.h:
 
 /usr/include/c++/13/bits/locale_facets.tcc:
-
-/usr/include/c++/13/bits/locale_facets.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
@@ -1387,8 +1396,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/c++/13/bits/list.tcc:
 
 /usr/include/c++/13/bits/iterator_concepts.h:
-
-/usr/include/c++/13/bits/istream.tcc:
 
 /usr/include/c++/13/bits/invoke.h:
 
@@ -1450,6 +1457,66 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/asm-generic/errno-base.h:
 
+/home/n71743ev/opt/openmpi-5/include/mpi.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ppif/ppiftypes.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ppif/ppif.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/dddif/parallel.h:
+
+/usr/include/c++/13/pstl/glue_numeric_defs.h:
+
+/usr/include/c++/13/concepts:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/include/ddd.h:
+
+/usr/include/c++/13/map:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddtypes.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddcontext.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/ugtypes.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/ugenv.h:
+
+/usr/include/c++/13/pstl/glue_algorithm_defs.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/namespace.h:
+
+/usr/include/c++/13/bits/new_allocator.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/misc.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/debug.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/ugm.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/shapes.h:
+
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/rm.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/pargm.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/gm.h:
+
+/usr/include/c++/13/bits/locale_facets.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/dlmgr.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/evm.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/domain/std_domain.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/include/dune-uggrid-config.hh:
+
 /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/rannacherturek/rannacherturek3d/rannacherturek3dlocalbasis.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/rannacherturek/rannacherturek2d/rannacherturek2dlocalbasis.hh:
@@ -1510,13 +1577,45 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/solverfactory.hh:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2.h:
-
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/scalarproducts.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/preconditioners.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/preconditioner.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/pinfo.hh:
+
+/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
+
+/usr/include/math.h:
+
+/usr/include/c++/13/cstdio:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/parameters.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/hierarchy.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/graphcreator.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/globalaggregates.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/galerkin.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/combinedfunctor.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/amg.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/operators.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/novlpschwarz.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/multitypeblockvector.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/multitypeblockmatrix.hh:
+
+/usr/include/c++/13/bits/atomic_wait.h:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixutils.hh:
 
 /usr/include/c++/13/set:
 
@@ -1537,6 +1636,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dumux/dumux/linear/linearsolverparameters.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/components/co2.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridleveliterator.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/linear/solvercategory.hh:
 
@@ -1574,11 +1675,9 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/reservedblockvector.hh:
 
-/usr/include/c++/13/bits/atomic_wait.h:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixutils.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/vtkoutputmodule.hh:
+
+/home/n71743ev/opt/openmpi-5/include/mpi_portable_platform.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/vtk/precision.hh:
 
@@ -1587,8 +1686,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/inttypes.h:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/binaryfunctions.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/combinedfunctor.hh:
 
 /usr/include/c++/13/string_view:
 
@@ -1609,6 +1706,10 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/velocityoutput.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/darcyslaw_fwd.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/matrixhierarchy.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/io/grid/periodicgridtraits.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/facecentered/staggered/elementsolution.hh:
 
@@ -1648,8 +1749,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/entitykey_inline.hh:
 
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/construction.hh:
-
 /usr/include/c++/13/bits/sstream.tcc:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/maxwellstefanslaw.hh:
@@ -1661,6 +1760,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/fickiandiffusioncoefficients.hh:
 
 /usr/include/c++/13/bits/locale_classes.h:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/algebra.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/facetensoraverage.hh:
 
@@ -1676,6 +1777,10 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/darcyslaw.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/owneroverlapcopy.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/cvfe/darcyslaw.hh:
+
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/refinement/pyramidtriangulation.cc:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/yaspgrid/yaspgridhierarchiciterator.hh:
@@ -1684,11 +1789,17 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/cctpfa/fourierslaw.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/cctpfa/fickslaw.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/nonisothermal/volumevariables.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/dependency.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/iteratorrange.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/geometry/intersectspointgeometry.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/renumberer.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/2p/saturationreconstruction.hh:
 
 /usr/include/syscall.h:
 
@@ -1746,15 +1857,19 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/matvectraits.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfug.hh:
+
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/propertymap.hh:
 
 /usr/include/c++/13/bits/ranges_uninitialized.h:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/refinement/hcubetriangulation.cc:
 
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/graphcreator.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/localassemblerbase.hh:
+
+/usr/include/c++/13/bits/istream.tcc:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/interface.hh:
 
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
 
@@ -1775,8 +1890,6 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cvfe/elementsolution.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/evalgradients.hh:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/checkoverlapsize.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/components/solid.hh:
 
@@ -1810,6 +1923,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/defaultusagemessage.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugwrapper.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/grid/gridmanager_base.hh:
 
 /usr/include/c++/13/bits/ranges_util.h:
@@ -1825,6 +1940,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cvfe/elementboundarytypes.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/solvercategory.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridgeometry.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/rangeutilities.hh:
 
@@ -1857,6 +1974,10 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrix.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/2p/thermalconductivity/somerton.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/graph.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/dispersiontensors/fulltensor.hh:
 
 /usr/include/locale.h:
 
@@ -1892,11 +2013,11 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/path.hh:
 
-/usr/include/x86_64-linux-gnu/bits/unistd.h:
-
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfparser.hh:
 
 /home/n71743ev/DUMUX/dumux/Aquifer/dumux/porousmediumflow/2pnc/model.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/initug.h:
 
 /home/n71743ev/DUMUX/dumux/Aquifer/dumux/material/binarycoefficients/ch4_n2.hh:
 
@@ -1954,15 +2075,11 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/vtk/vtkreader.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/io/grid/periodicgridtraits.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/matrixhierarchy.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/constraintsolvers/misciblemultiphasecomposition.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/maxwellstefandiffusioncoefficients.hh:
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/heaps.h:
 
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/pinfo.hh:
+/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/maxwellstefandiffusioncoefficients.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/properties/grid.hh:
 
@@ -2056,6 +2173,10 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/gridfluxvariablescache.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/aggregates.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/assembly/numericepsilon.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cvfe/gridvolumevariables.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/geometry/geometricentityset.hh:
@@ -2138,6 +2259,8 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/format/fmt/ranges.h:
 
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddconstants.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/fvproblemwithspatialparams.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/evalsolution.hh:
@@ -2166,8 +2289,6 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpihelper.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/nonlinear/findscalarroot.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/build-cmake/include/dumux-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpicommunication.hh:
@@ -2187,8 +2308,6 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/parameters.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/indextraits.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/hierarchy.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/indices.hh:
 
@@ -2216,10 +2335,6 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/quadraturerules.hh:
 
-/usr/include/c++/13/bits/fstream.tcc:
-
-/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/common/exceptions.hh:
-
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/common.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/repartition.hh:
@@ -2231,6 +2346,8 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/balanceequationopts.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/assembly/entitycolor.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/parallel/ddd/dddtypes_impl.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/grid/gmshgriddatahandle.hh:
 
@@ -2252,8 +2369,6 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/tpfa/fvelementgeometry.hh:
 
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/operators.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/name.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/assembly/partialreassembler.hh:
@@ -2263,8 +2378,6 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/concept.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/immiscible/localresidual.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/novlpschwarz.hh:
 
 /home/n71743ev/DUMUX/dumux/Aquifer/dumux/material/components/simpleh2o.hh:
 
@@ -2279,8 +2392,6 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/float_cmp.cc:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
-
-/usr/include/x86_64-linux-gnu/bits/select-decl.h:
 
 /usr/include/c++/13/queue:
 
@@ -2303,6 +2414,10 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/shared_ptr.hh:
 
 /home/n71743ev/DUMUX/dumux/Aquifer/dumux/material/binarycoefficients/ch4_co2.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uglbgatherscatter.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/refine.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/connectivitymap.hh:
 
@@ -2336,8 +2451,6 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/omethod/localassembler.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/omethod/localsubcontrolentities.hh:
-
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fluxvariablescachefiller.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/elementvolumevariables.hh:
@@ -2345,6 +2458,8 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/common/virtualwrappers.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/ccmpfa/darcyslaw.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridleafiterator.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/gridvolumevariables.hh:
 
@@ -2404,6 +2519,8 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/solidstates/updatesolidvolumefractions.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/elements.h:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/nonlinear/newtonconvergencewriter.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/nonlinear/primaryvariableswitchadapter.hh:
@@ -2411,8 +2528,6 @@ config.h:
 /home/n71743ev/DUMUX/dumux/dumux/dumux/parallel/multithreading.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/2p/indices.hh:
-
-/usr/include/x86_64-linux-gnu/bits/stdio.h:
 
 /usr/include/x86_64-linux-gnu/asm/unistd.h:
 
@@ -2422,25 +2537,29 @@ config.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/2p/model.hh:
 
-/usr/include/x86_64-linux-gnu/bits/select2.h:
-
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/simd/standard.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/2p/volumevariables.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/compositional/switchableprimaryvariables.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/smoother.hh:
+
 include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/properties.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/smoother.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fluxvariables.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/vtuwriter.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fluxvariablescache.hh:
+
+/usr/include/c++/13/bits/cpp_type_traits.h:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixredistribute.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fvspatialparamsmp.hh:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
@@ -2562,6 +2681,16 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/indicessyncer.hh:
 
+/home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/omethod/localsubcontrolentities.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpidata.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/persistentcontainervector.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/checkoverlapsize.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpifuture.hh:
+
 /usr/include/c++/13/variant:
 
 /usr/include/c++/13/bits/atomic_base.h:
@@ -2614,6 +2743,14 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/simd/base.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/lagrange/p0/p0localbasis.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/material/components/liquid.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/foreach.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/simd/io.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/2p/brookscorey.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/yaspgrid/coordinates.hh:
@@ -2652,7 +2789,11 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/assembly/fvlocalassemblerbase.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridintersectioniterators.hh:
+
 /home/n71743ev/DUMUX/dumux/dumux/dumux/common/variablesbackend.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridrenumberer.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/unused.hh:
 
@@ -2668,14 +2809,6 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/axisalignedcubegeometry.hh:
 
-/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
-
-/usr/include/math.h:
-
-/usr/include/c++/13/cstdio:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/parameters.hh:
-
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/dimension.hh:
@@ -2683,6 +2816,10 @@ include/dumux-Mixing-config.hh:
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/mpitraits.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/quadraturerules/gaussquadrature.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/nonlinear/findscalarroot.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ug_undefs.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/quadraturerules/gaussradaurightquadrature.hh:
 
@@ -2726,15 +2863,13 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/referenceelementimplementation.hh:
 
-/home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/dispersiontensors/fulltensor.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/graph.hh:
-
 /usr/include/c++/13/numbers:
 
 /home/n71743ev/DUMUX/dumux/dune-common/dune/common/iteratorfacades.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/referenceelements.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/gm/cw.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/io/format/fmt/format.h:
 
@@ -2802,9 +2937,13 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/entitykey.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridentity.hh:
+
 /usr/include/c++/13/bits/ios_base.h:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/blocks/vertex.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/domain/domain.h:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/dgfparser/dgfexception.hh:
 
@@ -2820,11 +2959,15 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/gmshreader.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridlocalgeometry.hh:
+
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/b64enc.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/multiindex.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/dataarraywriter.hh:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/float.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/cellcentered/mpfa/omethod/interactionvolumeindexset.hh:
 
@@ -2834,17 +2977,39 @@ include/dumux-Mixing-config.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/io/file/vtk/streams.hh:
 
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid.hh:
+
+/usr/include/c++/13/bits/fstream.tcc:
+
+/home/n71743ev/DUMUX/dumux/dune-uggrid/dune/uggrid/low/dimension.h:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/common/exceptions.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridentityseed.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridfactory.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridhieriterator.hh:
+
+/usr/include/c++/13/typeinfo:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridindexsets.hh:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridintersections.hh:
+
+/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/cctpfa/fickslaw.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/uggridviews.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/construction.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugincludes.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/uggrid/ugmessagebuffer.hh:
+
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/persistentcontainermap.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/utility/persistentcontainervector.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-localfunctions/dune/localfunctions/lagrange/p0/p0localbasis.hh:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/material/components/liquid.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-common/dune/common/simd/io.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/foreach.hh:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/discretization/box/fvelementgeometry.hh:
 
@@ -2857,6 +3022,8 @@ include/dumux-Mixing-config.hh:
 /home/n71743ev/DUMUX/dumux/dune-geometry/dune/geometry/refinement/prismtriangulation.cc:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/yaspgrid.hh:
+
+/home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/plocalindex.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-grid/dune/grid/yaspgrid/backuprestore.hh:
 
@@ -2899,35 +3066,3 @@ include/dumux-Mixing-config.hh:
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/basearray.hh:
 
 /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixmarket.hh:
-
-/usr/include/c++/13/bits/cpp_type_traits.h:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fvspatialparamsmp.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixredistribute.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/multitypeblockmatrix.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/multitypeblockvector.hh:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/flux/cvfe/darcyslaw.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/owneroverlapcopy.hh:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/assembly/numericepsilon.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/aggregates.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/amg.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-common/dune/common/iteratorrange.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/dependency.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/galerkin.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/globalaggregates.hh:
-
-/home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/2p/saturationreconstruction.hh:
-
-/home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/renumberer.hh:

@@ -679,23 +679,32 @@ public:
                     }
                 }
 
-                Scalar pInjMonitored = (nInj > 0) ? pInjSum / nInj : 0.0;
-                Scalar pProdMonitored = (nProd > 0) ? pProdSum / nProd : 0.0;
+                const auto &comm = this->gridGeometry().gridView().comm();
+                const Scalar pInjSumGlobal = comm.sum(pInjSum);
+                const Scalar pProdSumGlobal = comm.sum(pProdSum);
+                const int nInjGlobal = comm.sum(nInj);
+                const int nProdGlobal = comm.sum(nProd);
+
+                Scalar pInjMonitored = (nInjGlobal > 0) ? pInjSumGlobal / nInjGlobal : 0.0;
+                Scalar pProdMonitored = (nProdGlobal > 0) ? pProdSumGlobal / nProdGlobal : 0.0;
 
                 const Scalar maxInjPressure = injPressureMultiplier_ * pressureInitRef_;
 
                 auto writeFailure = [&](const std::string& reason)
                 {
-                    Dumux::MetaData::Collector fc;
-                    if (Dumux::MetaData::jsonFileExists(name()))
-                        Dumux::MetaData::readJsonFile(fc, name());
-                    fc["runStatus"] = "failed_pressure_limit";
-                    fc["failureReason"] = reason;
-                    fc["failureTime"] = t;
-                    fc["pInjMonitored"] = pInjMonitored;
-                    fc["pProdMonitored"] = pProdMonitored;
-                    fc["pressureInitRef"] = pressureInitRef_;
-                    Dumux::MetaData::writeJsonFile(fc, name());
+                    if (comm.rank() == 0)
+                    {
+                        Dumux::MetaData::Collector fc;
+                        if (Dumux::MetaData::jsonFileExists(name()))
+                            Dumux::MetaData::readJsonFile(fc, name());
+                        fc["runStatus"] = "failed_pressure_limit";
+                        fc["failureReason"] = reason;
+                        fc["failureTime"] = t;
+                        fc["pInjMonitored"] = pInjMonitored;
+                        fc["pProdMonitored"] = pProdMonitored;
+                        fc["pressureInitRef"] = pressureInitRef_;
+                        Dumux::MetaData::writeJsonFile(fc, name());
+                    }
                 };
 
                 if (pInjMonitored > maxInjPressure)

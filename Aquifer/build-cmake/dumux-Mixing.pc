@@ -2,8 +2,8 @@ prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
-CXX=/usr/bin/c++ 
-CC=/usr/bin/cc
+CXX=/home/n71743ev/opt/openmpi-5/bin/mpicxx 
+CC=/home/n71743ev/opt/openmpi-5/bin/mpicc
 DEPENDENCIES=
 
 Name: dumux-Mixing

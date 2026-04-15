@@ -38,7 +38,9 @@
 #include "properties.hh"
 #include <dumux/common/metadata.hh>
 #include <filesystem>
-
+#if HAVE_MPI
+#include <mpi.h>
+#endif
 namespace fs = std::filesystem;
 
 int main(int argc, char** argv)
@@ -53,12 +55,17 @@ int main(int argc, char** argv)
     ////////////////////////////////////////////////////////////
 
     // maybe initialize MPI and/or multithreading backend
+    std::cerr << "A: before Dumux::initialize" << std::endl;
     Dumux::initialize(argc, argv);
+
+    std::cerr << "B: after Dumux::initialize" << std::endl;
     const auto& mpiHelper = Dune::MPIHelper::instance();
 
-    // print dumux start message
+    std::cerr << "C: after MPIHelper::instance, rank=" << mpiHelper.rank() << std::endl;
     if (mpiHelper.rank() == 0)
         DumuxMessage::print(/*firstCall=*/true);
+
+    std::cerr << "D: after DumuxMessage::print" << std::endl;
 
     // initialize parameter tree
     Parameters::init(argc, argv);
@@ -199,6 +206,10 @@ int main(int argc, char** argv)
             }
             DumuxMessage::print(/*firstCall=*/false);
         }
+    #if HAVE_MPI
+        // Ensure all MPI ranks terminate consistently if only a subset threw.
+        MPI_Abort(MPI_COMM_WORLD, e.exitCode);
+    #endif        
         return e.exitCode;
     }
 

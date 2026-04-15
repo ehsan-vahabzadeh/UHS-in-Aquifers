@@ -1,40 +1,72 @@
-# Biochemical - Case Description
-This simulation case allows testing the implemented model of bio-geo-reactive transport during UHS on a simple geometric structure. In the following, the implemented model is briefly explained.
+# CH4 3D Cylindrical Central-Well Case
 
-![image](assets/H2Fraction.gif)
+TwoPNC simulation of underground CH4 storage with a **true 3D cylindrical domain** (r, θ, z) and a central well modeled as a volumetric source/sink.
 
+## Domain
 
-## Fluid and solid system
-The fluidsystem comprises two phases (water and gas), which are composed of six components: water ($\mathrm{H_2O}$), methane ($\mathrm{CH_4}$), hydrogen ($\mathrm{H_2}$), carbon dioxide ($\mathrm{CO_2}$), nitrogen ($\mathrm{N_2}$), and hydrogen sulfur ($\mathrm{H_2S}$). Apart from the chemical components, the methanogenic archaea are implemented as an additional pseudo component, which does not affect the fluids' viscosity and density. The characteristic growth parameters are based on [recent literature values](https://www.earthdoc.org/content/papers/10.3997/2214-4609.202035171) and are defined as follows:
+- **Grid type:** `Dune::UGGrid<3>` created by `CakeGridManager` (DuMux built-in cylindrical mesh generator)
+- **Geometry:** 3D cylindrical mesh, axes: `r` (radial), `θ` (angular), `z` (axial/vertical)
+- **Radial grading:** Fine cells near the well (r = 0.2 m), progressively coarser outward to r = 500 m. Grading controlled by `Grid.Grading0`.
+- **Angular resolution:** 8 sectors (full 360°). Increase `Cells1` for finer angular resolution.
+- **Vertical spacing:** Uniform, 4 layers over 22 m height.
+- **Cell types:** Hexahedral cells away from center, prism (wedge) cells at the center axis.
 
+Grid parameters in `params.input`:
+```
+[Grid]
+Radial0 = 0.2 5 50 500    # radial breakpoints [m]
+Angular1 = 0 360           # full circle [deg]
+Axial2 = 0 22              # vertical extent [m]
+Cells0 = 4 6 6             # cells per radial zone
+Cells1 = 8                 # angular sectors
+Cells2 = 4                 # vertical layers
+Grading0 = 1.0 1.3 1.3     # radial grading factor (>1 = cells grow outward)
+```
 
-|Parameter| Symbol | Value |
-| :---      | :---:       | :---:   |
-|Maximal growth rate | $\psi^\mathrm{growth}_\mathrm{max}$ | $1.338\cdot 10^{-4} \mathrm{1/s}$ |
-|$\mathrm{H_2}$ half velocity constant | $\alpha_\mathrm{H_2}$ | $3.6\cdot 10^{-7}$ |
-|$\mathrm{CO_2}$ half velocity constant | $\alpha_\mathrm{CO_2}$ | $1.98\cdot 10^{-6}$ |
-|Yield coefficient | $Y$ | $3.9\cdot 10^{11}$ $\mathrm{1/mol}$ |
-|Initial number of bacteria | $n^*$ | $1\cdot 10^8$ $\mathrm{m^{-3}}$|
+## Central Well
 
-Regarding the solid system, three components are introduced: pyrite, pyrrhotite, and one inert component, quartz. At the current state, the geochemical reaction rate is defined artificially.
+- **Implementation:** Volumetric source/sink term in `source()` (not a boundary condition).
+- **Well identification:** Cells with `r = sqrt(x² + y²) ≤ Well.Radius` and `z ∈ [Well.PerfBottom, Well.PerfTop]`.
+- **Rate distribution:** Total well rate (`InjectionRateOp` / `ProductionRate`, mol/s) is uniformly distributed over `wellSupportVolume_` so each well cell gets rate per bulk volume `[mol/(m³·s)]`.
+- **Injection:** Positive source with prescribed composition (`HydrogenInjectionConcentration` for H₂, remainder CO₂).
+- **Production:** Negative source proportional to local composition (mobility-weighted).
+- **Schedule:** Same injection/idle/production cycle semantics as the original 2D case.
 
+## Boundary Conditions
 
-## Spatial discretization
-The grid composes of a cartesian (YASP) grid with the dimensions $\mathrm{1550m x 1550m x 50m}$. The discretization is defined with 31x31x10 cells. The distribution of petrophysical properties is homogeneous with $\phi = 0.2$, $k_x = k_y = 100\mathrm{mD}$, and $k_z = 10\mathrm{mD}$.
+- **Outer radial boundary (r = R_outer):** Dirichlet — fixed initial pressure.
+- **Top / Bottom / Inner well surface:** Neumann — no flow (well handled via source term).
 
-## Fluid-matrix interactions
-The fluid-matrix interactions regarding advective flux are defined by the model of Brooks & Corey with the following parameters:
+## Key Differences from H2 (2D Axisymmetric)
 
-| Parameter | Value |
-| :---:       | :---:   |
-| $S_{wc}$ | 0.2|
-| $S_{gr}$ | 0.1 |
-| $\lambda$ | 2 |
-| $p_{ce}$  | 0 |
+| Aspect | H2 (2D axisym) | CH4 (3D cylindrical) |
+|--------|----------------|----------------------|
+| Grid | 2D YaspGrid + RotationalExtrusion | 3D UGGrid via CakeGridManager |
+| Mesh in ParaView | Rectangle | Cylinder |
+| Well | Neumann BC on left boundary | Volumetric source/sink at r ≈ 0 |
+| Permeability | Kx, Ky | Kx = Ky (horizontal), Kz = Kx/10 |
+| Linear solver | ILU-BiCGSTAB | AMG-BiCGSTAB (required for UGGrid) |
 
-## Initialization
-The initialization is performed based on the hydrostatic equilibrium with $p_{\text{init}} = 100\mathrm{bar}$ at the top of the formation. The saturation is at connate water saturation, and the gas is composed of methane and a minor part of $\mathrm{H_2O}$ in thermodynamic equilibrium. The initial volume fraction of pyrite is initially set to 5%. The temperature is set to $T = 40{^\circ}C$.
+## Dependencies
 
-## Operation schedule
-A simplified storage operation is defined as 30 days of injection, 30 days idle, 30 days of production, and 15 days idle.  The operation is
-rate controlled with identical rates for injection and production ($1\cdot 10^6\mathrm{Sm^3/d}$ 95% $\mathrm{H_2}$, 5% $\mathrm{CO_2}$).
+- **dune-uggrid** must be installed and found by CMake (provides `Dune::UGGrid`).
+- The `CakeGridManager` is a built-in DuMux utility (`dumux/io/grid/cakegridmanager.hh`).
+
+## Building
+
+```bash
+make appl_2pnc_box_CH4     # Box discretization (recommended)
+make appl_2pnc_tpfa_CH4    # CCTpfa discretization
+```
+
+## Smoke Test
+
+```bash
+./appl_2pnc_box_CH4 params.input -TimeLoop.TEnd 1
+```
+
+## Assumptions & Limitations
+
+- Prism cells at the grid center axis may cause slower linear solver convergence; AMG preconditioner is used.
+- Well rate is distributed uniformly over support volume; no Peaceman-type well index correction.
+- Dispersion length scale is estimated as an average cell size (approximate for graded meshes).

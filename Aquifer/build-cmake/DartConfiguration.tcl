@@ -14,7 +14,7 @@ CostDataFile:
 Site: E-10DXXC1479FD2
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
-BuildName: Linux-c++
+BuildName: Linux-mpicxx
 
 # Subprojects
 LabelsForSubprojects: 
@@ -63,7 +63,7 @@ UpdateOptions:
 UpdateType: 
 
 # Compiler info
-Compiler: /usr/bin/c++
+Compiler: /home/n71743ev/opt/openmpi-5/bin/mpicxx
 CompilerVersion: 13.3.0
 
 # Dynamic analysis (MemCheck)

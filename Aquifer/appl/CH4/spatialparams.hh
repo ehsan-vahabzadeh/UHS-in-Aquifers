@@ -25,6 +25,7 @@
 
 
 
+#include <cmath>
 #include <dumux/porousmediumflow/fvspatialparamsmp.hh>
 #include <dumux/material/fluidmatrixinteractions/2p/brookscorey.hh>
 #include <dumux/material/fluidmatrixinteractions/porosityprecipitation.hh>
@@ -67,31 +68,23 @@ public:
         referencePermeability_ = getParam<Scalar>("SpatialParams.ReferencePermeability", 100 * 9.86923e-16);
         temperature_           = getParam<Scalar>("Problem.InitialTemperature");
         DispersionMode         = getParam<int>("Problem.EnableDispersion", 0);
-        CELLS_VEC = getParam<Dimension_vector>("Grid.Cells");
         X_max = this->gridGeometry().bBoxMax()[0];
         X_min = this->gridGeometry().bBoxMin()[0];
         Y_max = this->gridGeometry().bBoxMax()[1];
         Y_min = this->gridGeometry().bBoxMin()[1];
-            
+        Z_max = this->gridGeometry().bBoxMax()[2];
+        Z_min = this->gridGeometry().bBoxMin()[2];
 
-            // Z_max=this->gridGeometry().bBoxMax()[2];
-            // Z_min=this->gridGeometry().bBoxMin()[2];
-            Delta_x = (X_max - X_min);
-            Delta_x = Delta_x / CELLS_VEC[0];
-            Delta_y = (Y_max - Y_min);
-            Delta_y = Delta_y / CELLS_VEC[1];
-            if (DispersionMode == 1){
-                alphaL_ = Delta_x;
-                // alphaT_ = Delta_y;
-                alphaT_ = Delta_y;
-            }
-            
-            for (int i = 0; i < dimWorld; i++){
-                if(i == 0)
-                    dispersionTensor_[i][i] = alphaL_;
-                else
-                    dispersionTensor_[i][i] = alphaT_;
-            }
+        // Estimate average cell sizes from grid (approximate for graded grids)
+        const auto numElements = this->gridGeometry().gridView().size(0);
+        Delta_x = std::cbrt((X_max - X_min) * (Y_max - Y_min) * (Z_max - Z_min) / numElements);
+        Delta_y = Delta_x;
+        Delta_z = Delta_x;
+
+        if (DispersionMode == 1){
+            alphaL_ = Delta_x;
+            alphaT_ = Delta_y;
+        }
     }
 
     /*!
@@ -122,8 +115,8 @@ public:
     {
         PermeabilityType K(0.0);
         K[0][0] = referencePermeability_;
-        K[1][1] = referencePermeability_/10;
-        // K[2][2] = referencePermeability_/10;
+        K[1][1] = referencePermeability_;
+        K[2][2] = referencePermeability_/10;
         return K;
     }
 
@@ -198,27 +191,50 @@ public:
     
     
     /*!
-     * \brief Defines the dispersion tensor \f$\mathrm{[-]}\f$.
+     * \brief Returns (alphaL, alphaT) for Scheidegger's velocity-aligned dispersion.
      *
-     * \param globalPos The global position
+     * Scheidegger's model builds the full tensor from velocity direction:
+     *   D = (alphaL - alphaT) * v*v^T / |v|  +  alphaT * |v| * I
+     * This automatically aligns longitudinal dispersion with flow (radial on
+     * a cylindrical grid) — no manual coordinate rotation needed.
      */
-    std::array<Scalar, 2> dispersionAlphas(const GlobalPosition& globalPos1, const GlobalPosition& globalPos2, int compIdx = 0) const
-    { 
-        return { globalPos2[0]  - globalPos1[0], globalPos2[2]  - globalPos1[2] }; 
+    std::array<Scalar, 2> dispersionAlphas(const GlobalPosition& globalPos, int phaseIdx = 0, int compIdx = 0) const
+    {
+        return { alphaL_, alphaT_ };
     }
 
     /*!
-     * \brief Defines the dispersion tensor \f$\mathrm{[-]}\f$.
+     * \brief Returns a position-dependent dispersion tensor aligned with the
+     *        local radial direction for the FullDispersionTensor model.
      *
-     * \param globalPos The global position
+     * On a cylindrical grid the "longitudinal" direction at each point is
+     * along r = (x, y, 0)/|(x,y)|.  The tensor is rotated so that alphaL
+     * applies along r and alphaT in the two perpendicular directions (theta, z).
      */
-    const DimWorldMatrix &dispersionTensor(const GlobalPosition& globalPos, int phaseIdx = 0, int compIdx = 0) const
-    { 
-        return dispersionTensor_; 
+    DimWorldMatrix dispersionTensor(const GlobalPosition& globalPos, int phaseIdx = 0, int compIdx = 0) const
+    {
+        DimWorldMatrix D(0.0);
+        // Isotropic base: alphaT in every direction
+        for (int i = 0; i < dimWorld; ++i)
+            D[i][i] = alphaT_;
+
+        // Add (alphaL - alphaT) in the radial direction: D += (aL-aT) * e_r * e_r^T
+        const Scalar rr = std::sqrt(globalPos[0]*globalPos[0] + globalPos[1]*globalPos[1]);
+        if (rr > 1e-20)
+        {
+            const Scalar ex = globalPos[0] / rr;
+            const Scalar ey = globalPos[1] / rr;
+            const Scalar diff = alphaL_ - alphaT_;
+            D[0][0] += diff * ex * ex;
+            D[0][1] += diff * ex * ey;
+            D[1][0] += diff * ey * ex;
+            D[1][1] += diff * ey * ey;
+            // z-component of radial unit vector is 0, so no z contributions
+        }
+        return D;
     }
 
 private:
-    Dimension_vector CELLS_VEC;
     double Delta_z = 0.0;
     double Delta_x = 0.0;
     double Delta_y = 0.0;
@@ -240,8 +256,6 @@ private:
     Scalar initialPyrite_,initialBiofilmMG_,initialBiofilmSRB_;
     Scalar alphaL_ = 0.0;
     Scalar alphaT_ = 0.0;
-    std::vector<Scalar> dispersionTensorCoefficients_;
-    DimWorldMatrix dispersionTensor_;
     int DispersionMode;
 };
 

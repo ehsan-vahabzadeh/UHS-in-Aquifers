@@ -771,15 +771,33 @@ dumux/material/components/clean:
 
 # Recursive "all" directory target.
 dumux/material/fluidmatrixinteractions/all: dumux/material/fluidmatrixinteractions/dispersiontensors/all
+dumux/material/fluidmatrixinteractions/all: dumux/material/fluidmatrixinteractions/2p/all
 .PHONY : dumux/material/fluidmatrixinteractions/all
 
 # Recursive "preinstall" directory target.
 dumux/material/fluidmatrixinteractions/preinstall: dumux/material/fluidmatrixinteractions/dispersiontensors/preinstall
+dumux/material/fluidmatrixinteractions/preinstall: dumux/material/fluidmatrixinteractions/2p/preinstall
 .PHONY : dumux/material/fluidmatrixinteractions/preinstall
 
 # Recursive "clean" directory target.
 dumux/material/fluidmatrixinteractions/clean: dumux/material/fluidmatrixinteractions/dispersiontensors/clean
+dumux/material/fluidmatrixinteractions/clean: dumux/material/fluidmatrixinteractions/2p/clean
 .PHONY : dumux/material/fluidmatrixinteractions/clean
+
+#=============================================================================
+# Directory level rules for directory dumux/material/fluidmatrixinteractions/2p
+
+# Recursive "all" directory target.
+dumux/material/fluidmatrixinteractions/2p/all:
+.PHONY : dumux/material/fluidmatrixinteractions/2p/all
+
+# Recursive "preinstall" directory target.
+dumux/material/fluidmatrixinteractions/2p/preinstall:
+.PHONY : dumux/material/fluidmatrixinteractions/2p/preinstall
+
+# Recursive "clean" directory target.
+dumux/material/fluidmatrixinteractions/2p/clean:
+.PHONY : dumux/material/fluidmatrixinteractions/2p/clean
 
 #=============================================================================
 # Directory level rules for directory dumux/material/fluidmatrixinteractions/dispersiontensors

@@ -341,6 +341,13 @@
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/dispersiontensors/CMakeFiles/install.dir
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/dispersiontensors/CMakeFiles/install/local.dir
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/dispersiontensors/CMakeFiles/install/strip.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/test.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/edit_cache.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/rebuild_cache.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/list_install_components.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/install.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/install/local.dir
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/CMakeFiles/install/strip.dir
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/flux/CMakeFiles/test.dir
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/flux/CMakeFiles/edit_cache.dir
 /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/flux/CMakeFiles/rebuild_cache.dir

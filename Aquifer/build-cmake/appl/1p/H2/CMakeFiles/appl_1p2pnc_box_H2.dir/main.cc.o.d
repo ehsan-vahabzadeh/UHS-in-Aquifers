@@ -1000,7 +1000,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/common/fvspatialparams.hh \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/porousmediumflow/fvspatialparams.hh \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/common/fvporousmediumspatialparams.hh \
- /home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/2p/brookscorey.hh \
+ /home/n71743ev/DUMUX/dumux/Aquifer/dumux/material/fluidmatrixinteractions/2p/brookscorey.hh \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/common/optionalscalar.hh \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/2p/materiallaw.hh \
  /home/n71743ev/DUMUX/dumux/dumux/dumux/material/fluidmatrixinteractions/fluidmatrixinteraction.hh \

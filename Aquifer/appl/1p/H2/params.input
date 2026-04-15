@@ -35,10 +35,12 @@ DepthGWC = -10
 [SpatialParams]
 ReferencePorosity = 0.3
 ReferencePermeability = 100
-Material.Swr = 0.26
+Material.Swr = 0.15
 Material.Snr = 0.0
-Material.BrooksCoreyPcEntry = 3e3
-Material.BrooksCoreyLambda = 1.0
+Material.BrooksCoreyPcEntry = 5e3
+Material.BrooksCoreyLambda = 0.767133
+Material.n_w = 8
+Material.n_nw = 2.5
 
 [Newton]
 MaxRelativeShift = 1e-6

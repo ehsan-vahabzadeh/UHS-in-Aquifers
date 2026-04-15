@@ -49,6 +49,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/dispersiontensors/cmake_install.cmake")
+  include("/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/dumux/material/fluidmatrixinteractions/2p/cmake_install.cmake")
 
 endif()
 

@@ -414,3 +414,219 @@ Determining location of ARPACK++ failed:
 Include directory: 
 Libraries to link against: 
 
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8c70b/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_8c70b.dir/build.make CMakeFiles/cmTC_8c70b.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8c70b.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_8c70b.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[3]: *** [CMakeFiles/cmTC_8c70b.dir/build.make:78: CMakeFiles/cmTC_8c70b.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_8c70b/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0913e/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_0913e.dir/build.make CMakeFiles/cmTC_0913e.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0913e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_0913e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[3]: *** [CMakeFiles/cmTC_0913e.dir/build.make:78: CMakeFiles/cmTC_0913e.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_0913e/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Determining location of SuperLU failed:
+Include directory: SUPERLU_INCLUDE_DIR-NOTFOUND
+Library directory: SUPERLU_LIBRARY-NOTFOUND
+Determining location of ARPACK failed:
+Libraries to link against: 
+
+Determining location of ARPACK++ failed:
+Include directory: 
+Libraries to link against: 
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c2aa0/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_c2aa0.dir/build.make CMakeFiles/cmTC_c2aa0.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c2aa0.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_c2aa0.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[3]: *** [CMakeFiles/cmTC_c2aa0.dir/build.make:78: CMakeFiles/cmTC_c2aa0.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_c2aa0/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_19ae4/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_19ae4.dir/build.make CMakeFiles/cmTC_19ae4.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_19ae4.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_19ae4.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[3]: *** [CMakeFiles/cmTC_19ae4.dir/build.make:78: CMakeFiles/cmTC_19ae4.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_19ae4/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Determining location of SuperLU failed:
+Include directory: SUPERLU_INCLUDE_DIR-NOTFOUND
+Library directory: SUPERLU_LIBRARY-NOTFOUND
+Determining location of ARPACK failed:
+Libraries to link against: 
+
+Determining location of ARPACK++ failed:
+Include directory: 
+Libraries to link against: 
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_25722/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_25722.dir/build.make CMakeFiles/cmTC_25722.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_25722.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_25722.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[3]: *** [CMakeFiles/cmTC_25722.dir/build.make:78: CMakeFiles/cmTC_25722.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_25722/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_162b7/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_162b7.dir/build.make CMakeFiles/cmTC_162b7.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_162b7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_162b7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[3]: *** [CMakeFiles/cmTC_162b7.dir/build.make:78: CMakeFiles/cmTC_162b7.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_162b7/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Determining location of SuperLU failed:
+Include directory: SUPERLU_INCLUDE_DIR-NOTFOUND
+Library directory: SUPERLU_LIBRARY-NOTFOUND
+Determining location of ARPACK failed:
+Libraries to link against: 
+
+Determining location of ARPACK++ failed:
+Include directory: 
+Libraries to link against: 
+
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9fd53/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_9fd53.dir/build.make CMakeFiles/cmTC_9fd53.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9fd53.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9fd53.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx:1:20: error: lambda-expression in unevaluated context only available with ‘-std=c++20’ or ‘-std=gnu++20’
+    1 | using F = decltype([](){}); int main() {return 0;}
+      |                    ^
+gmake[3]: *** [CMakeFiles/cmTC_9fd53.dir/build.make:78: CMakeFiles/cmTC_9fd53.dir/src_DUNE_HAVE_CXX_UNEVALUATED_CONTEXT_LAMBDA.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_9fd53/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+using F = decltype([](){}); int main() {return 0;}
+Performing C++ SOURCE FILE Test DUNE_HAVE_CXX_STD_IDENTITY failed with the following output:
+Change Dir: '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_96c92/fast
+gmake[2]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/gmake  -f CMakeFiles/cmTC_96c92.dir/build.make CMakeFiles/cmTC_96c92.dir/build
+gmake[3]: Entering directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_96c92.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o
+/home/n71743ev/opt/openmpi-5/bin/mpicxx   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_96c92.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o -c /home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx: In function ‘int main()’:
+/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx:3:21: error: ‘identity’ is not a member of ‘std’
+    3 |   int main() { std::identity{}; }
+      |                     ^~~~~~~~
+gmake[3]: *** [CMakeFiles/cmTC_96c92.dir/build.make:78: CMakeFiles/cmTC_96c92.dir/src_DUNE_HAVE_CXX_STD_IDENTITY.cxx.o] Error 1
+gmake[3]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+gmake[2]: *** [Makefile:127: cmTC_96c92/fast] Error 2
+gmake[2]: Leaving directory '/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+
+  #include <functional>
+  int main() { std::identity{}; }
+
+Determining location of SuperLU failed:
+Include directory: SUPERLU_INCLUDE_DIR-NOTFOUND
+Library directory: SUPERLU_LIBRARY-NOTFOUND
+Determining location of ARPACK failed:
+Libraries to link against: 
+
+Determining location of ARPACK++ failed:
+Include directory: 
+Libraries to link against: 
+

@@ -6,5 +6,5 @@ CXX_DEFINES = -DDUMUX_HAVE_OPENMP=1 -DENABLECACHING=1 -DHAVE_CONFIG_H -DHAVE_GMP
 
 CXX_INCLUDES = -I/home/n71743ev/DUMUX/dumux/Aquifer -I/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake -I/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/include -I/home/n71743ev/DUMUX/dumux/Aquifer/build-cmake/include_private -I/usr/include/python3.12 -I/home/n71743ev/DUMUX/dumux/dune-common -I/home/n71743ev/DUMUX/dumux/dune-common/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dune-geometry -I/home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dune-uggrid -I/home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dune-grid -I/home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dune-localfunctions -I/home/n71743ev/DUMUX/dumux/dune-localfunctions/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dune-istl -I/home/n71743ev/DUMUX/dumux/dune-istl/build-cmake/include -I/home/n71743ev/DUMUX/dumux/dumux -I/home/n71743ev/DUMUX/dumux/dumux/build-cmake/include -isystem /usr/include/suitesparse
 
-CXX_FLAGS = -std=gnu++20 -fPIE -fopenmp -fext-numeric-literals
+CXX_FLAGS = -g -std=gnu++20 -fPIE -fopenmp -fext-numeric-literals
 

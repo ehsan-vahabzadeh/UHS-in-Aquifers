@@ -48,7 +48,7 @@ MaxTimeStepDivisions = 20
 UseLineSearch = true
 
 [Assembly]
-Multithreading = true 
+Multithreading = false 
 
 [Vtk]
 AddVelocity = true

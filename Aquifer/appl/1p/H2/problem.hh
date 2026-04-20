@@ -174,8 +174,7 @@ public:
         enablePressureCutoff_ = getParam<bool>("Safety.EnablePressureCutoff", true);
         injPressureMultiplier_ = getParam<Scalar>("Safety.InjectionPressureMultiplier", 1.7);
         minProdPressure_ = getParam<Scalar>("Safety.MinProductionPressure", 1e5);
-        pressureInitRef_ = getParam<Scalar>("BoundaryConditions.Pressure_TOP",
-                           getParam<Scalar>("Initialization.PressureGWC", 60e5));
+        pressureInitRef_ = getParam<Scalar>("Initialization.PressureGWC", 60e5);
     }
 
     const std::string &name() const
@@ -787,8 +786,7 @@ private:
     PrimaryVariables initial_(const GlobalPosition &globalPos) const
     {
         PrimaryVariables priVars(0.0);
-        Scalar pressure_TOP = getParam<Scalar>("BoundaryConditions.Pressure_TOP",
-                              getParam<Scalar>("Initialization.PressureGWC", 60e5));
+        Scalar pressure_TOP = getParam<Scalar>("Initialization.PressureGWC", 60e5);
 
         // Compute hydrostatic pressure from top using water density
         FluidState fs;

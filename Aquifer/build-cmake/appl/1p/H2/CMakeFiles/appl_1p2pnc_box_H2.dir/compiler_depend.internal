@@ -892,6 +892,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o
  /usr/include/linux/limits.h
  /usr/include/locale.h
  /usr/include/math.h
+ /usr/include/metis.h
+ /usr/include/parmetis.h
  /usr/include/pthread.h
  /usr/include/sched.h
  /usr/include/stdc-predef.h

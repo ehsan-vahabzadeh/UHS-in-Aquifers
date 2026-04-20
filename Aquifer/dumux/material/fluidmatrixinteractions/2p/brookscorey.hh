@@ -229,8 +229,9 @@ public:
 
         swe = clamp(swe, 0.0, 1.0); // the equation below is only defined for 0.0 <= sw <= 1.0
 
-        
+
         return pow(swe,params.n_w());
+        // return pow(swe, 2.0/params.lambda() + 3.0);
     }
 
     /*!
@@ -257,6 +258,7 @@ public:
         swe = clamp(swe, 0.0, 1.0); // the equation below is only defined for 0.0 <= sw <= 1.0
 
         return params.n_w()*pow(swe, params.n_w() - 1.0);
+        // return (2.0/params.lambda() + 3.0)*pow(swe, 2.0/params.lambda() + 2.0);
     }
 
     /*!

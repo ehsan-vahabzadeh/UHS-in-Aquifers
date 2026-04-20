@@ -93,10 +93,14 @@ appl_1pnc_tpfa_Test1_EXTERNAL_OBJECTS =
 appl/1p/Test1/appl_1pnc_tpfa_Test1: appl/1p/Test1/CMakeFiles/appl_1pnc_tpfa_Test1.dir/main.cc.o
 appl/1p/Test1/appl_1pnc_tpfa_Test1: appl/1p/Test1/CMakeFiles/appl_1pnc_tpfa_Test1.dir/build.make
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/libparmetis.so
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/libparmetis.so
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-grid/build-c
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/libparmetis.so
+appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/Test1/appl_1pnc_tpfa_Test1: /usr/lib/x86_64-linux-gnu/libblas.so

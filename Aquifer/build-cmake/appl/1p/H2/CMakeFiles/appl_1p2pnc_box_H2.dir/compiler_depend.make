@@ -891,6 +891,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
   /usr/include/math.h \
+  /usr/include/metis.h \
+  /usr/include/parmetis.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -1363,6 +1365,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 
 /usr/include/c++/13/bits/ptr_traits.h:
 
+/usr/include/parmetis.h:
+
 /usr/include/c++/13/bits/postypes.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
@@ -1812,6 +1816,8 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: /home/n71743ev/DUMUX/dum
 /usr/include/alloca.h:
 
 /home/n71743ev/DUMUX/dumux/dumux/dumux/flux/ccmpfa/fickslaw.hh:
+
+/usr/include/metis.h:
 
 /usr/include/c++/13/bits/specfun.h:
 

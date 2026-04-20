@@ -443,6 +443,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/transfer.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/matrixredistribute.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/repartition.hh \
+ /usr/include/parmetis.h /usr/include/metis.h /usr/include/inttypes.h \
  /home/n71743ev/DUMUX/dumux/dune-common/dune/common/parallel/indicessyncer.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/graph.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/paamg/pinfo.hh \
@@ -462,8 +463,7 @@ appl/1p/H2/CMakeFiles/appl_1p2pnc_box_H2.dir/main.cc.o: \
  /usr/include/suitesparse/umfpack.h \
  /usr/include/suitesparse/SuiteSparse_config.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
- /usr/include/inttypes.h /usr/include/c++/13/math.h \
- /usr/include/suitesparse/amd.h \
+ /usr/include/c++/13/math.h /usr/include/suitesparse/amd.h \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/bccsmatrixinitializer.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/bccsmatrix.hh \
  /home/n71743ev/DUMUX/dumux/dune-istl/dune/istl/foreach.hh \

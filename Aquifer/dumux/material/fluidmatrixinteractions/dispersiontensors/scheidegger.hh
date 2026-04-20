@@ -103,38 +103,7 @@ public:
                 
                 auto globalpos1 = fvGeometry.geometry(scv).corner(0);
                 auto globalpos2 = fvGeometry.geometry(scv).corner(3);
-                // if (DispersionMode == 2 ) {
-                //     alphaL = 2 * (globalpos2[0] - globalpos1[0]);
-                //     alphaT = 2 * (globalpos2[1] - globalpos1[1]);
-                //     // auto Phi = FluidSystem::MixingFluidSystem::Fugacity_Coefficient(fs);
-                //     auto Z = FluidSystem::MixingFluidSystem::Z_factor(fs);
-                //     auto DiffCoeff = FluidSystem::MixingFluidSystem::binaryDiffusionCoefficient(fs,phaseIdx,1,2);
-                //     // Phi_ratio = Phi[1]/Phi[2];
-                //     if (time <= injectionDurationOp)
-                //         Z_ratio = Z[2]/Z[1];
-                //     else if (time > injectionDurationOp)
-                //         Z_ratio = Z[1]/Z[2];
-                //     // Peclet = velocity_mag * 2*(globalpos2[0] - globalpos1[0]) / DiffCoeff; 
-                //     Scalar log_ux = log10(u_x); 
-                //     Scalar CF = 0;
-                //     // if (log_Pe <= 0 || Peclet < 5)
-                //     if (Z_ratio < 0.6)
-                //         Z_ratio = 0.6;
-                //     else if (Z_ratio > 1.6)
-                //         Z_ratio = 1.6;
 
-                //     CF = 132.069 * exp(-4.883 * Z_ratio);
-                //     // if (u_x == 0 || u_x< 5.5e-5 || u_x > 1.0e-2 || Z_ratio > 1.6 || Z_ratio < 0.6)
-                //     //     CF = 0;
-                //     // else  
-                //     //     CF = 132.069 * exp(-4.883 * Z_ratio);
-
-                //     // if(CF > 0)
-                //     alphaL = alphaL * CF;
-                //     alphaT = alphaL /10.0;
-                //     if(CF > 3)
-                //         Scalar AAAAA=1;
-                // }
                 if (DispersionMode == 1) {
                     // dispersivity = problem.spatialParams().dispersionTensor(globalpos1, phaseIdx, compIdx);
                     alphaL = 2 * (globalpos2[0] - globalpos1[0]);

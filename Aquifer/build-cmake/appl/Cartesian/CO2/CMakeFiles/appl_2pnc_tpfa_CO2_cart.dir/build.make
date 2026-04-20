@@ -93,10 +93,14 @@ appl_2pnc_tpfa_CO2_cart_EXTERNAL_OBJECTS =
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: appl/Cartesian/CO2/CMakeFiles/appl_2pnc_tpfa_CO2_cart.dir/main.cc.o
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: appl/Cartesian/CO2/CMakeFiles/appl_2pnc_tpfa_CO2_cart.dir/build.make
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/libparmetis.so
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/libparmetis.so
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-grid
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/libparmetis.so
+appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/CO2/appl_2pnc_tpfa_CO2_cart: /usr/lib/x86_64-linux-gnu/libblas.so

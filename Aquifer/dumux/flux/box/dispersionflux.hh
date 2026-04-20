@@ -107,7 +107,9 @@ public:
     static constexpr auto referenceSystemFormulation = Dumux::ReferenceSystemFormulation::molarAveraged;
         const auto& fluxVarsCache = elemFluxVarsCache[scvf];
         const auto& shapeValues = fluxVarsCache.shapeValues();
-
+        if (phaseIdx == 0)
+            return componentFlux;
+        
         // density interpolation
         Scalar rhoMassOrMole(0.0);
         for (auto&& scv : scvs(fvGeometry))

@@ -15,7 +15,7 @@ target_include_directories(appl_1p2pnc_tpfa_H2 BEFORE PRIVATE
 
 dumux_add_test(NAME appl_1p2pnc_box_H2
               SOURCES main.cc
-              COMPILE_DEFINITIONS TYPETAG=OnePTwoCTestBox ENABLECACHING=1 SCHEIDEGGER=0
+              COMPILE_DEFINITIONS TYPETAG=OnePTwoCTestBox ENABLECACHING=1 SCHEIDEGGER=1
               CMD_ARGS params.input)
 
 target_include_directories(appl_1p2pnc_box_H2 BEFORE PRIVATE

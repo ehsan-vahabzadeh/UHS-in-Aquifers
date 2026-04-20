@@ -625,10 +625,10 @@ MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 METIS_API_VERSION:STRING=0
 
 //Path to a file.
-METIS_INCLUDE_DIR:PATH=METIS_INCLUDE_DIR-NOTFOUND
+METIS_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-METIS_LIBRARY:FILEPATH=METIS_LIBRARY-NOTFOUND
+METIS_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libmetis.so
 
 //set the MINIMAL_DEBUG_LEVEL. Standard debug streams with level
 // below MINIMAL_DEBUG_LEVEL will collapse to doing nothing if
@@ -716,10 +716,10 @@ OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
 OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.a
 
 //Path to a file.
-PARMETIS_INCLUDE_DIR:PATH=PARMETIS_INCLUDE_DIR-NOTFOUND
+PARMETIS_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-PARMETIS_LIBRARY:FILEPATH=PARMETIS_LIBRARY-NOTFOUND
+PARMETIS_LIBRARY:FILEPATH=/usr/lib/libparmetis.so
 
 //Path to a program.
 PDFLATEX_COMPILER:FILEPATH=PDFLATEX_COMPILER-NOTFOUND
@@ -1281,6 +1281,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_BLAS:INTERNAL=[/usr/lib/x86_64-linux-gnu/libblas.so
 FIND_PACKAGE_MESSAGE_DETAILS_GMP:INTERNAL=[/usr/lib/x86_64-linux-gnu/libgmpxx.so][/usr/include][/usr/include/x86_64-linux-gnu][/usr/lib/x86_64-linux-gnu/libgmp.so][v()]
 //Details about finding LAPACK
 FIND_PACKAGE_MESSAGE_DETAILS_LAPACK:INTERNAL=[/usr/lib/x86_64-linux-gnu/liblapack.so;/usr/lib/x86_64-linux-gnu/libblas.so][v()]
+//Details about finding METIS
+FIND_PACKAGE_MESSAGE_DETAILS_METIS:INTERNAL=[/usr/lib/x86_64-linux-gnu/libmetis.so][/usr/include][5][v5.1(5.0)]
 //Details about finding MPI
 FIND_PACKAGE_MESSAGE_DETAILS_MPI:INTERNAL=[TRUE][cfound components: C ][v3.1()]
 //Details about finding MPI_C
@@ -1293,6 +1295,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v4.5()]
 FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
 //Details about finding OpenMP_CXX
 FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]
+//Details about finding ParMETIS
+FIND_PACKAGE_MESSAGE_DETAILS_ParMETIS:INTERNAL=[/usr/lib/libparmetis.so][/usr/include][TRUE][TRUE][v4.0()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 //Details about finding Python3

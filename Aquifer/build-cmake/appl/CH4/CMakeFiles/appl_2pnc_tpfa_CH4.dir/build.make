@@ -93,10 +93,14 @@ appl_2pnc_tpfa_CH4_EXTERNAL_OBJECTS =
 appl/CH4/appl_2pnc_tpfa_CH4: appl/CH4/CMakeFiles/appl_2pnc_tpfa_CH4.dir/main.cc.o
 appl/CH4/appl_2pnc_tpfa_CH4: appl/CH4/CMakeFiles/appl_2pnc_tpfa_CH4.dir/build.make
 appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/libparmetis.so
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/libparmetis.so
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -105,6 +109,8 @@ appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dumux/build-cmake/lib/li
 appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/lib/libdunegrid.so
 appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/CH4/appl_2pnc_tpfa_CH4: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/libparmetis.so
+appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CH4/appl_2pnc_tpfa_CH4: /usr/lib/x86_64-linux-gnu/libblas.so

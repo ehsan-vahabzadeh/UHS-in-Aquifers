@@ -93,10 +93,14 @@ appl_1p2pnc_tpfa_H2_EXTERNAL_OBJECTS =
 appl/1p/H2/appl_1p2pnc_tpfa_H2: appl/1p/H2/CMakeFiles/appl_1p2pnc_tpfa_H2.dir/main.cc.o
 appl/1p/H2/appl_1p2pnc_tpfa_H2: appl/1p/H2/CMakeFiles/appl_1p2pnc_tpfa_H2.dir/build.make
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/libparmetis.so
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/libparmetis.so
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/libparmetis.so
+appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/1p/H2/appl_1p2pnc_tpfa_H2: /usr/lib/x86_64-linux-gnu/libblas.so

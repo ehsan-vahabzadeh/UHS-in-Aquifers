@@ -766,16 +766,16 @@ public:
         }
 
         switch (compIdx) {
-            // case H2OIdx: return H2O::vaporPressure(temperature)/pressure;
-            case H2OIdx: return 1e-7;
-            // case CH4Idx: return BinaryCoeff::H2O_CH4::henry(temperature)/pressure;
-            case CH4Idx: return 1e7;
-            // case H2Idx: return BinaryCoeff::H2O_H2::henry(temperature)/pressure;
-            case H2Idx: return 1e7;
-            // case CO2Idx: return BinaryCoeff::H2O_CO2::henry(temperature)/pressure;
-            case CO2Idx: return 1e7;
-            // case N2Idx: return BinaryCoeff::H2O_N2::henry(temperature)/pressure;
-            case N2Idx: return 1e7;
+            case H2OIdx: return H2O::vaporPressure(temperature)/pressure;
+            // case H2OIdx: return 1e-7;
+            case CH4Idx: return BinaryCoeff::H2O_CH4::henry(temperature)/pressure;
+            // case CH4Idx: return 1e7;
+            case H2Idx: return BinaryCoeff::H2O_H2::henry(temperature)/pressure;
+            // case H2Idx: return 1e7;
+            case CO2Idx: return BinaryCoeff::H2O_CO2::henry(temperature)/pressure;
+            // case CO2Idx: return 1e7;
+            case N2Idx: return BinaryCoeff::H2O_N2::henry(temperature)/pressure;
+            // case N2Idx: return 1e7;
         };
 
         DUNE_THROW(Dune::InvalidStateException, "Invalid component index " << compIdx);

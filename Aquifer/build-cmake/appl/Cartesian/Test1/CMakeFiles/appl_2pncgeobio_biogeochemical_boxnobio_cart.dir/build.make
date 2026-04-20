@@ -93,10 +93,14 @@ appl_2pncgeobio_biogeochemical_boxnobio_cart_EXTERNAL_OBJECTS =
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: appl/Cartesian/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_boxnobio_cart.dir/main.cc.o
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: appl/Cartesian/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_boxnobio_cart.dir/build.make
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/libparmetis.so
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/libparmetis.so
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743e
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/libparmetis.so
+appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Cartesian/Test1/appl_2pncgeobio_biogeochemical_boxnobio_cart: /usr/lib/x86_64-linux-gnu/libblas.so

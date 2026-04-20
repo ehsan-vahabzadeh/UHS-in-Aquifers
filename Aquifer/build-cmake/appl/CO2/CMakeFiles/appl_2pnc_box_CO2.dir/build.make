@@ -93,10 +93,14 @@ appl_2pnc_box_CO2_EXTERNAL_OBJECTS =
 appl/CO2/appl_2pnc_box_CO2: appl/CO2/CMakeFiles/appl_2pnc_box_CO2.dir/main.cc.o
 appl/CO2/appl_2pnc_box_CO2: appl/CO2/CMakeFiles/appl_2pnc_box_CO2.dir/build.make
 appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/libparmetis.so
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/libparmetis.so
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/lib
 appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/CO2/appl_2pnc_box_CO2: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/libparmetis.so
+appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/CO2/appl_2pnc_box_CO2: /usr/lib/x86_64-linux-gnu/libblas.so

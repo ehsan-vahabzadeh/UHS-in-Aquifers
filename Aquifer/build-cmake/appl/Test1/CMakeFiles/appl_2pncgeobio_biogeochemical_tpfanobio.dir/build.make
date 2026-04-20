@@ -93,10 +93,14 @@ appl_2pncgeobio_biogeochemical_tpfanobio_EXTERNAL_OBJECTS =
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: appl/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_tpfanobio.dir/main.cc.o
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: appl/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_tpfanobio.dir/build.make
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_tpfanobio: /usr/lib/x86_64-linux-gnu/libblas.so

@@ -93,10 +93,14 @@ appl_2pnc_box_H2_EXTERNAL_OBJECTS =
 appl/H2/appl_2pnc_box_H2: appl/H2/CMakeFiles/appl_2pnc_box_H2.dir/main.cc.o
 appl/H2/appl_2pnc_box_H2: appl/H2/CMakeFiles/appl_2pnc_box_H2.dir/build.make
 appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/H2/appl_2pnc_box_H2: /usr/lib/libparmetis.so
+appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/H2/appl_2pnc_box_H2: /usr/lib/libparmetis.so
+appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/lib/l
 appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/H2/appl_2pnc_box_H2: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/H2/appl_2pnc_box_H2: /usr/lib/libparmetis.so
+appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/H2/appl_2pnc_box_H2: /usr/lib/x86_64-linux-gnu/libblas.so

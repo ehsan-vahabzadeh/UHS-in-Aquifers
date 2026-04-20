@@ -93,10 +93,14 @@ appl_2pnc_tpfa_N2_EXTERNAL_OBJECTS =
 appl/N2/appl_2pnc_tpfa_N2: appl/N2/CMakeFiles/appl_2pnc_tpfa_N2.dir/main.cc.o
 appl/N2/appl_2pnc_tpfa_N2: appl/N2/CMakeFiles/appl_2pnc_tpfa_N2.dir/build.make
 appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/libparmetis.so
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/libparmetis.so
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-grid/build-cmake/lib/
 appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/N2/appl_2pnc_tpfa_N2: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/libparmetis.so
+appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/N2/appl_2pnc_tpfa_N2: /usr/lib/x86_64-linux-gnu/libblas.so

@@ -93,10 +93,14 @@ appl_2pncgeobio_biogeochemical_boxnobio_EXTERNAL_OBJECTS =
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: appl/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_boxnobio.dir/main.cc.o
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: appl/Test1/CMakeFiles/appl_2pncgeobio_biogeochemical_boxnobio.dir/build.make
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libblas.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libblas.so
@@ -106,6 +110,8 @@ appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/d
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/dune-uggrid/build-cmake/lib/libduneuggrid.a
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/dune-geometry/build-cmake/lib/libdunegeometry.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /home/n71743ev/DUMUX/dumux/dune-common/build-cmake/lib/libdunecommon.so
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/libparmetis.so
+appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libmetis.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libgmpxx.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/liblapack.so
 appl/Test1/appl_2pncgeobio_biogeochemical_boxnobio: /usr/lib/x86_64-linux-gnu/libblas.so

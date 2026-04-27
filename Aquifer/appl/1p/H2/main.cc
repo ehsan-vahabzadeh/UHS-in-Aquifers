@@ -172,12 +172,12 @@ int main(int argc, char** argv)
         timeLoop->advanceTimeStep();
 
         // write vtk output
-        if (timeLoop->time()- vv * VTK_dt >= 0.0)
-        {
-            // post time step
-            vtkWriter.write(timeLoop->time());
-            vv++;
-        }
+        // if (timeLoop->time()- vv * VTK_dt >= 0.0)
+        // {
+        //     // post time step
+        //     vtkWriter.write(timeLoop->time());
+        //     vv++;
+        // }
         
 
         // report statistics of this time step

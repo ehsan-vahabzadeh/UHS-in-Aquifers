@@ -21,7 +21,7 @@ dumux_add_test(NAME appl_1p2pnc_box_H2
 target_include_directories(appl_1p2pnc_box_H2 BEFORE PRIVATE
                            ${PROJECT_SOURCE_DIR})
 
-set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_BUILD_TYPE Debug)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(appl_1p2pnc_box_H2 PUBLIC OpenMP::OpenMP_CXX)
 endif()

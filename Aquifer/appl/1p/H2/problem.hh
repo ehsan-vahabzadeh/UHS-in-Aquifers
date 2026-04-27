@@ -810,7 +810,9 @@ private:
 
         // Set phase presence state: both phases present (required by primary variable switch)
         priVars.setState(Indices::bothPhases);
-
+        Scalar xgH2O = (FluidSystem::fugacityCoefficient(fs,liquidPhaseIdx,H2OIdx)* priVars[pressureIdx]) / priVars[pressureIdx];
+        priVars[contiCH4EqIdx]  =  1*(1-xgH2O) * priVars[pressureIdx] / (FluidSystem::fugacityCoefficient(fs,liquidPhaseIdx,CH4Idx) * priVars[pressureIdx]);
+        // priVars[contiSO4EqIdx]  =  1.26e-4*(1-xgH2O);
         // Remaining primary variables (dissolved component mole fractions)
         // initialised to zero by the priVars(0.0) constructor - pure brine
         return priVars;

@@ -8,7 +8,7 @@ from pathlib import Path
 # -----------------------------
 # User settings
 # -----------------------------
-EXECUTABLE = "bin/appl_1pnc_box_CH4"   # adjust this
+EXECUTABLE = "appl_1p2pnc_box_H2"   # adjust this
 TEMPLATE_DIR = Path("templates")
 MANIFEST_DIR = Path("manifests")
 CASES_DIR = Path("cases")
@@ -88,19 +88,19 @@ def build_demo_cases():
     Units must match what your code expects.
     """
     raw = [
-        {"flow_rate": 20, "cycle_length_days": 60,  "cg_ratio": 0.5, "cg_type": "N2",  "perm": 1e-14, "poro": 0.10, "pressure_gwc": 1.8e7, "temp": 330.0},
-        {"flow_rate": 25, "cycle_length_days": 90,  "cg_ratio": 1.0, "cg_type": "N2",  "perm": 2e-14, "poro": 0.12, "pressure_gwc": 2.0e7, "temp": 335.0},
-        {"flow_rate": 30, "cycle_length_days": 120, "cg_ratio": 1.5, "cg_type": "CH4", "perm": 4e-14, "poro": 0.14, "pressure_gwc": 2.2e7, "temp": 340.0},
-        {"flow_rate": 35, "cycle_length_days": 180, "cg_ratio": 0.8, "cg_type": "H2",  "perm": 8e-15, "poro": 0.09, "pressure_gwc": 2.5e7, "temp": 345.0},
-        {"flow_rate": 40, "cycle_length_days": 240, "cg_ratio": 2.0, "cg_type": "CO2", "perm": 6e-14, "poro": 0.16, "pressure_gwc": 2.8e7, "temp": 350.0},
-        {"flow_rate": 22, "cycle_length_days": 75,  "cg_ratio": 1.2, "cg_type": "N2",  "perm": 3e-14, "poro": 0.11, "pressure_gwc": 1.9e7, "temp": 332.0},
+        {"flow_rate": 20, "cycle_length_days": 60,  "cg_ratio": 0.5, "cg_type": "N2",  "perm": 100, "poro": 0.10, "pressure_gwc": 1.8e7, "temp": 330.0},
+        {"flow_rate": 25, "cycle_length_days": 90,  "cg_ratio": 1.0, "cg_type": "N2",  "perm": 500, "poro": 0.12, "pressure_gwc": 2.0e7, "temp": 335.0},
+        {"flow_rate": 30, "cycle_length_days": 120, "cg_ratio": 1.5, "cg_type": "CH4", "perm": 500, "poro": 0.14, "pressure_gwc": 2.2e7, "temp": 340.0},
+        {"flow_rate": 35, "cycle_length_days": 180, "cg_ratio": 0.8, "cg_type": "H2",  "perm": 500, "poro": 0.09, "pressure_gwc": 2.5e7, "temp": 345.0},
+        {"flow_rate": 40, "cycle_length_days": 240, "cg_ratio": 2.0, "cg_type": "CO2", "perm": 500, "poro": 0.16, "pressure_gwc": 2.8e7, "temp": 350.0},
+        {"flow_rate": 22, "cycle_length_days": 75,  "cg_ratio": 1.2, "cg_type": "N2",  "perm": 500, "poro": 0.11, "pressure_gwc": 1.9e7, "temp": 332.0},
 
-        {"flow_rate": 28, "cycle_length_days": 110, "cg_ratio": 0.6, "cg_type": "CH4", "perm": 1.5e-14, "poro": 0.13, "pressure_gwc": 2.1e7, "temp": 337.0},
-        {"flow_rate": 32, "cycle_length_days": 150, "cg_ratio": 1.8, "cg_type": "H2",  "perm": 5e-14,   "poro": 0.18, "pressure_gwc": 3.0e7, "temp": 355.0},
-        {"flow_rate": 18, "cycle_length_days": 45,  "cg_ratio": 0.4, "cg_type": "N2",  "perm": 7e-15,   "poro": 0.08, "pressure_gwc": 1.7e7, "temp": 328.0},
-        {"flow_rate": 26, "cycle_length_days": 95,  "cg_ratio": 1.1, "cg_type": "CO2", "perm": 2.5e-14, "poro": 0.15, "pressure_gwc": 2.4e7, "temp": 342.0},
-        {"flow_rate": 38, "cycle_length_days": 210, "cg_ratio": 1.6, "cg_type": "CH4", "perm": 4.5e-14, "poro": 0.17, "pressure_gwc": 2.9e7, "temp": 348.0},
-        {"flow_rate": 24, "cycle_length_days": 80,  "cg_ratio": 0.9, "cg_type": "H2",  "perm": 1.2e-14, "poro": 0.105,"pressure_gwc": 2.05e7,"temp": 334.0},
+        {"flow_rate": 28, "cycle_length_days": 110, "cg_ratio": 0.6, "cg_type": "CH4", "perm": 500, "poro": 0.13, "pressure_gwc": 2.1e7, "temp": 337.0},
+        {"flow_rate": 32, "cycle_length_days": 150, "cg_ratio": 1.8, "cg_type": "H2",  "perm": 500,   "poro": 0.18, "pressure_gwc": 3.0e7, "temp": 355.0},
+        {"flow_rate": 18, "cycle_length_days": 45,  "cg_ratio": 0.4, "cg_type": "N2",  "perm": 500,   "poro": 0.08, "pressure_gwc": 1.7e7, "temp": 328.0},
+        {"flow_rate": 26, "cycle_length_days": 95,  "cg_ratio": 1.1, "cg_type": "CO2", "perm": 500, "poro": 0.15, "pressure_gwc": 2.4e7, "temp": 342.0},
+        {"flow_rate": 38, "cycle_length_days": 210, "cg_ratio": 1.6, "cg_type": "CH4", "perm": 500, "poro": 0.17, "pressure_gwc": 2.9e7, "temp": 348.0},
+        {"flow_rate": 24, "cycle_length_days": 80,  "cg_ratio": 0.9, "cg_type": "H2",  "perm": 500, "poro": 0.105,"pressure_gwc": 2.05e7,"temp": 334.0},
     ]
 
     cases = []
@@ -145,7 +145,7 @@ def submit_iteration(iter_id, manifest_path):
         "sbatch",
         "--parsable",
         "--array=0-2",
-        "scripts/run_chunk_array.sh",
+        "run_chunk_array.sh",
         str(manifest_path),
         iter_id,
         EXECUTABLE,
@@ -157,7 +157,7 @@ def submit_iteration(iter_id, manifest_path):
         "sbatch",
         "--parsable",
         f"--dependency=afterany:{array_jobid}",
-        "scripts/aggregate_iteration.sh",
+        "aggregate_iteration.sh",
         str(manifest_path),
         iter_id,
     ]

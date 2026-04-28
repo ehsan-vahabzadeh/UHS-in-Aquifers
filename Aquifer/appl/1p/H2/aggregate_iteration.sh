@@ -9,6 +9,6 @@
 MANIFEST=$1
 ITER_ID=$2
 
-python3 scripts/aggregate_iteration.py \
+python3 aggregate_iteration.py \
     --manifest "$MANIFEST" \
     --iter-id "$ITER_ID"

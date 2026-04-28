@@ -37,11 +37,60 @@
 
 #include "properties.hh"
 #include <dumux/common/metadata.hh>
+#include <cstddef>
 #include <filesystem>
+#include <system_error>
 #if HAVE_MPI
 #include <mpi.h>
 #endif
 namespace fs = std::filesystem;
+
+namespace {
+
+bool isOldOutputFile(const fs::path& path)
+{
+    const auto extension = path.extension().string();
+    return extension == ".vtu" || extension == ".pvtu" || extension == ".json";
+}
+
+std::size_t removeOldOutputFiles(const fs::path& directory)
+{
+    std::size_t removedFiles = 0;
+    std::error_code ec;
+    fs::directory_iterator it(directory, ec);
+    const fs::directory_iterator end;
+
+    if (ec)
+    {
+        std::cerr << "Could not scan output directory " << directory << ": " << ec.message() << std::endl;
+        return removedFiles;
+    }
+
+    while (it != end)
+    {
+        const auto& entry = *it;
+        std::error_code fileEc;
+        if (entry.is_regular_file(fileEc) && isOldOutputFile(entry.path()))
+        {
+            std::error_code removeEc;
+            if (fs::remove(entry.path(), removeEc))
+                ++removedFiles;
+            else if (removeEc)
+                std::cerr << "Could not delete old output file " << entry.path() << ": " << removeEc.message() << std::endl;
+        }
+
+        it.increment(ec);
+        if (ec)
+        {
+            std::cerr << "Could not continue scanning output directory " << directory << ": " << ec.message() << std::endl;
+            break;
+        }
+    }
+
+    return removedFiles;
+}
+
+} // end anonymous namespace
 
 int main(int argc, char** argv)
 {
@@ -66,6 +115,17 @@ int main(int argc, char** argv)
         DumuxMessage::print(/*firstCall=*/true);
 
     std::cerr << "D: after DumuxMessage::print" << std::endl;
+
+    if (mpiHelper.rank() == 0)
+    {
+        const auto removedFiles = removeOldOutputFiles(fs::current_path());
+        if (removedFiles > 0)
+            std::cerr << "Deleted " << removedFiles << " old .vtu/.pvtu/.json output file(s) from "
+                      << fs::current_path() << std::endl;
+    }
+#if HAVE_MPI
+    MPI_Barrier(MPI_COMM_WORLD);
+#endif
 
     // initialize parameter tree
     Parameters::init(argc, argv);
@@ -117,19 +177,6 @@ int main(int argc, char** argv)
     problem->setTimeLoop(timeLoop);
     auto problem_name = getParam<std::string>("Problem.Name");
 
-    // try {
-    //     for (const auto& entry : fs::directory_iterator(folderPath)) {
-    //         if (entry.is_regular_file()) {
-    //             std::string extension = entry.path().extension().string();
-    //             if (extension == ".vtu" || extension == ".pvtu" || extension == ".json") {
-    //                 fs::remove(entry.path());
-    //                 // std::cout << "Deleted: " << entry.path() << std::endl;
-    //             }
-    //         }
-    //     }
-    // } catch (const std::exception& e) {
-    //     std::cerr << "Error: " << e.what() << std::endl;
-    // }
     // initialize the vtk output module
     VtkOutputModule<GridVariables, SolutionVector> vtkWriter(*gridVariables, x, problem->name());
     using VelocityOutput = GetPropType<TypeTag, Properties::VelocityOutput>;

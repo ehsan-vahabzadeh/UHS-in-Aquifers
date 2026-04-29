@@ -38,6 +38,7 @@
 #include "properties.hh"
 #include <dumux/common/metadata.hh>
 #include <cstddef>
+#include <cstdlib>
 #include <filesystem>
 #include <system_error>
 #if HAVE_MPI
@@ -219,12 +220,12 @@ int main(int argc, char** argv)
         timeLoop->advanceTimeStep();
 
         // write vtk output
-        // if (timeLoop->time()- vv * VTK_dt >= 0.0)
-        // {
-        //     // post time step
-        //     vtkWriter.write(timeLoop->time());
-        //     vv++;
-        // }
+        if (timeLoop->time()- vv * VTK_dt >= 0.0)
+        {
+            // post time step
+            vtkWriter.write(timeLoop->time());
+            vv++;
+        }
         
 
         // report statistics of this time step
@@ -263,6 +264,18 @@ int main(int argc, char** argv)
     ////////////////////////////////////////////////////////////
     // finalize, print dumux message to say goodbye
     ////////////////////////////////////////////////////////////
+
+    // Merge VTK files from parallel runs on rank 0
+    if (mpiHelper.rank() == 0 && mpiHelper.size() > 1)
+    {
+        std::cout << "\n=== Merging VTK files from " << mpiHelper.size() << " processes ===" << std::endl;
+        std::string mergeCmd = "python3 vtk-merge-multi.py";
+        int ret = std::system(mergeCmd.c_str());
+        if (ret != 0)
+            std::cerr << "Warning: VTK merge script failed or not found." << std::endl;
+        else
+            std::cout << "VTK merge completed successfully." << std::endl;
+    }
 
     // print dumux end message
     if (mpiHelper.rank() == 0)

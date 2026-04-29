@@ -136,7 +136,8 @@ def main():
 
     rows = read_chunk_rows(args.manifest, args.chunk_id)
 
-    # 2 cases sequentially inside this 24-core job
+    # Each SLURM array task runs all manifest rows for its chunk sequentially.
+    # With the default controller settings that is 6 simulations per job.
     for row in rows:
         run_one_case(
             row=row,

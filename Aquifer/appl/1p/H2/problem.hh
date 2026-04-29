@@ -473,12 +473,14 @@ public:
                           const Scalar timeStepSize,
                           std::shared_ptr<const GridGeometry> fvGridGeometry)
     {   
-        // Scalar num_x = CELLS_VEC[0],num_grid = CELLS_VEC[0] * CELLS_VEC[1];
         Scalar t, dt, volume(0.0), numberOfCells(0.0);
         NumEqVector flow1(0.0);
         NumEqVector inventory(0.0), inventoryPastSol(0.0), materialBalanceError(0.0), inventory_error(0.0);
         Scalar averageReservoirPressure(0.0);
-        // Scalar X_ID = 0, Z_ID = 0, Grid_ID = 0;   
+        Scalar avgPressureGasBearing(0.0), volumeGasBearing(0.0);
+        Scalar wellH2MoleFraction(0.0), wellArea(0.0);
+        Scalar wellGasFlux(0.0), wellLiquidFlux(0.0);
+        Scalar opH2Inj(0.0), opH2Prod(0.0);  // operational-period-only H2 for RF
         t = this->time();
         Scalar Time = t;
         dt = this->timeStepSize();
@@ -489,9 +491,6 @@ public:
             auto fvGeometry = localView(*fvGridGeometry);
             fvGeometry.bind(element);
 
-            // auto fvGeometry = localView(this->gridGeometry());
-            // fvGeometry.bindElement(element);
-            // auto globalPos = element.geometry().center();
             auto elemVolVars = localView(gridVariables.curGridVolVars());
             elemVolVars.bindElement(element, fvGeometry, curSol);
             auto prevElemVolVars = localView(gridVariables.prevGridVolVars());
@@ -507,28 +506,30 @@ public:
             {
                 const FluidState &fs = elemVolVars[scv].fluidState();
                 const FluidState &fsOld = prevElemVolVars[scv].fluidState();
-                // Scalar extrusion_  = extrusionFactor_sub(element, scv, elemSol);
                 Scalar extrusion_ = Extrusion::volume(fvGeometry, scv);
-                // Scalar extrusion_ = elemVolVars[scv].extrusionFactor();
                 VolumeVariables volVars, volVarsPast;
                 volVars.update(elemSol, *this, element, scv);
                 volVarsPast.update(elemSolPast, *this, element, scv);
                 for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                 {
-                    
                 inventory[compIdx] += volVars.porosity() * extrusion_  * ((fs.saturation(gasPhaseIdx) * fs.molarDensity(gasPhaseIdx) * fs.moleFraction(gasPhaseIdx, compIdx) + fs.saturation(liquidPhaseIdx) * fs.molarDensity(liquidPhaseIdx) * fs.moleFraction(liquidPhaseIdx, compIdx)));
                 inventoryPastSol[compIdx] += volVarsPast.porosity() * extrusion_  * ((fsOld.saturation(gasPhaseIdx) * fsOld.molarDensity(gasPhaseIdx) * fsOld.moleFraction(gasPhaseIdx, compIdx) + fsOld.saturation(liquidPhaseIdx) * fsOld.molarDensity(liquidPhaseIdx) * fsOld.moleFraction(liquidPhaseIdx, compIdx)));
                 }
                 averageReservoirPressure += fs.pressure(gasPhaseIdx) * scv.volume();
                 numberOfCells += 1;
                 volume += scv.volume();
+
+                // Average pressure for gas-bearing cells (Sg > threshold — includes cushion + working gas)
+                if (fs.saturation(gasPhaseIdx) > 1e-6)
+                {
+                    avgPressureGasBearing += fs.pressure(gasPhaseIdx) * scv.volume();
+                    volumeGasBearing += scv.volume();
+                }
             }
 
             // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
             NumEqVector injectionComposition_(0.0);
-            // injectionComposition_[H2Idx] = 1.0;
-            // injectionComposition_[CO2Idx] = 0.00;
             DimWorldMatrix molardensity(0.0), MW(0.0),Mobility(0.0);
             static const Scalar cylcesDev            = getParam<double>("BoundaryConditions.CyclesDev");
             static const Scalar injectionDurationDev = getParam<double>("BoundaryConditions.InjectionDurationDev")*86400;
@@ -537,8 +538,6 @@ public:
             static const Scalar idleDurationOp     = getParam<double>("BoundaryConditions.IdleDurationOp")*86400;
             static const Scalar injectionDurationOp = getParam<double>("BoundaryConditions.InjectionDurationOp")*86400;
             static const Scalar extractionDurationOp = getParam<double>("BoundaryConditions.ExtractionDurationOp")*86400;
-            // injectionComposition_[H2Idx]            = getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
-            // injectionComposition_[CO2Idx]            = 1 - getParam<double>("BoundaryConditions.HydrogenInjectionConcentration");
             double inj_rate_dev                     = getParam<double>("BoundaryConditions.InjectionRateDev");
             const int cycleNumberOp                 = std::floor((Time - developmentDuration)/(injectionDurationOp+extractionDurationOp + idleDurationOp));
             const Scalar localTimeInCycle           = Time - developmentDuration - cycleNumberOp*(injectionDurationOp + extractionDurationOp + idleDurationOp);
@@ -563,32 +562,24 @@ public:
                 volVars.update(elemSol, *this, element, scv);
                 volVarsPast.update(elemSolPast, *this, element, scv);
                 Scalar extrusion_  = Extrusion::area(fvGeometry, scvf);
-                // if (scvf.boundary() && scvf.area() == Delta_y/2 && scvf.corner(0)[0] == X_min && scvf.corner(1)[0] == X_min)
                 if (scvf.boundary()  && scvf.area() == Delta_y/2 && scvf.center()[0] == X_min)
                 {
-                    // const auto& globalPos = scvf.ipGlobal()[0];
-                    // if ((globalPos[0] - Delta_x/2 < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time < localTimeInCycle))
                     if ((scvf.center()[1] - Y_min >= Y_max - inj_interval) && (Time < developmentDuration))
                     {
                         const int cycleNumber = std::floor(Time/(injectionDurationDev+idleDurationDev));
                         const Scalar localTimeInCycle = Time - cycleNumber*(injectionDurationDev+idleDurationDev);
                         if(localTimeInCycle <= injectionDurationDev){
-                            // values[CO2Idx] = (1-injectionComposition_[CO2Idx]) * inj_rate;
                             for (int compIdx = 0; compIdx < numComponents; ++compIdx)
                             {
-                                
-                                // values_inj[compIdx] += injectionComposition_[compIdx] * Delta_y* inj_rate_dev / FluidSystem::MixingFluidSystem::molarMass(compIdx);
                                 values_inj[compIdx] += injectionComposition_[compIdx] * extrusion_ * inj_rate_dev;
                             }
                         }
                     }
-                    // if ((globalPos[0] - Delta_x/2 < X_min + eps_) && (globalPos[1] - Y_min >= Y_max - inj_interval) && (Time >= developmentDuration))
                     if ((scvf.center()[1] - Y_min >= Y_max - inj_interval) && (Time >= developmentDuration))
                     {
                         if(localTimeInCycle < injectionDurationOp){
-
-                            values_inj[H2Idx] +=  extrusion_ * inj_rate_Op;  
-
+                            values_inj[H2Idx] +=  extrusion_ * inj_rate_Op;
+                            opH2Inj += extrusion_ * inj_rate_Op;  // operational H2 only (excludes CG)
                         }
                         if (localTimeInCycle > injectionDurationOp + idleDurationOp ){
                             // Two-phase production accounting
@@ -602,21 +593,31 @@ public:
                                 if (totalMob > 0.0)
                                     values_prod[compIdx] += extrusion_ * Extractionrate_ * (X_LIQ * mobLiq / totalMob + X_GAS * mobGas / totalMob);
                             }
+                            // Track only H2 produced during operational extraction (excludes CG period)
+                            if (totalMob > 0.0)
+                            {
+                                const Scalar X_LIQ_H2 = volVars.moleFraction(liquidPhaseIdx, H2Idx);
+                                const Scalar X_GAS_H2 = volVars.moleFraction(gasPhaseIdx, H2Idx);
+                                opH2Prod += extrusion_ * Extractionrate_ * (X_LIQ_H2 * mobLiq / totalMob + X_GAS_H2 * mobGas / totalMob);
+                            }
                         }
-                    }
 
-                
+                        // H2 purity at well surface (area-weighted H2 mole fraction in gas phase)
+                        const FluidState &fs = volVars.fluidState();
+                        wellH2MoleFraction += fs.moleFraction(gasPhaseIdx, H2Idx) * extrusion_;
+                        wellArea += extrusion_;
+
+                        // Water cut at the well: mobility-weighted phase fractions
+                        wellGasFlux += fs.saturation(gasPhaseIdx) * volVars.mobility(gasPhaseIdx) * extrusion_;
+                        wellLiquidFlux += fs.saturation(liquidPhaseIdx) * volVars.mobility(liquidPhaseIdx) * extrusion_;
+                    }
                 }
             }
             // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
         const auto &comm = this->gridGeometry().gridView().comm();
-            // Scalar sum_inj = std::accumulate(values_inj.begin(), values_inj.end(), 0);
-            // Scalar sum_prod = std::accumulate(values_prod.begin(), values_prod.end(), 0);
 
             materialBalanceError = inventoryPastSol - inventory - dt * values_inj + dt * values_prod;
-
-            // materialBalanceError = inventory + t * values_inj + t * values_prod;
             inventory_error = inventoryPastSol - inventory;
             Scalar error_sum = 0, inventory_error_sum = 0;
             for (int compIdx = 0; compIdx < numComponents; ++compIdx)
@@ -626,27 +627,108 @@ public:
                 values_inj_dt[compIdx] = values_inj[compIdx] * dt;
                 values_prod_dt[compIdx] = values_prod[compIdx] * dt;
             }
-            // std::cout << "The material balance error is: " << materialBalanceError[2] <<  std::endl;
-            // std::cout << "The material balance error is: " << materialBalanceError[2] <<  std::endl;
 
-            // std::cout << "---------------------------------------------info end------------------------------------------------------------" << std::endl;
+            // Gather parallel sums
+            Scalar globalVolume = comm.sum(volume);
+            Scalar globalAvgPressure = comm.sum(averageReservoirPressure) / globalVolume;
+            Scalar globalVolumeGasBearing = comm.sum(volumeGasBearing);
+            Scalar globalAvgPressureGasBearing = (globalVolumeGasBearing > 0.0) 
+                ? comm.sum(avgPressureGasBearing) / globalVolumeGasBearing : 0.0;
 
-            Dumux::MetaData::Collector collector;
-            if (Dumux::MetaData::jsonFileExists(name()))
-                Dumux::MetaData::readJsonFile(collector, name());
-            collector["time"].push_back(t);
-            collector["averageReservoirPressure"].push_back(comm.sum(averageReservoirPressure) / comm.sum(volume));
-            for (auto compIdx = 0; compIdx < numComponents; ++compIdx)
+            // H2 purity at well surface (area-weighted average H2 mole fraction in gas phase)
+            Scalar globalWellH2MoleFraction = comm.sum(wellH2MoleFraction);
+            Scalar globalWellArea = comm.sum(wellArea);
+            Scalar globalWellGasFlux = comm.sum(wellGasFlux);
+            Scalar globalWellLiquidFlux = comm.sum(wellLiquidFlux);
+            Scalar h2Purity = (globalWellArea > 0.0) ? globalWellH2MoleFraction / globalWellArea : 0.0;
+
+            // Water cut at the well
+            Scalar totalMobility = globalWellGasFlux + globalWellLiquidFlux;
+            Scalar waterCut = (totalMobility > 0.0) ? globalWellLiquidFlux / totalMobility : 0.0;
+
+            // Mass balance error (relative)
+            Scalar globalMassBalanceErrorAbsolute = comm.sum(error_sum);
+            Scalar totalInventory = 0.0;
+            NumEqVector globalInventory(0.0), globalMaterialBalanceError(0.0);
+            NumEqVector globalValuesInj(0.0), globalValuesProd(0.0);
+            NumEqVector globalValuesInjDt(0.0), globalValuesProdDt(0.0);
+            for (int compIdx = 0; compIdx < numComponents; ++compIdx)
             {
-                collector["inventory"][FluidSystem::componentName(compIdx)].push_back(comm.sum(inventory[compIdx]));
-                collector["materialBalanceError"][FluidSystem::componentName(compIdx)].push_back(comm.sum(materialBalanceError[compIdx]));
-                collector["InjectionValues"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_inj[compIdx]));
-                collector["ProductionValues"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_prod[compIdx]));
-                collector["InjectionValues_dt"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_inj_dt[compIdx]));
-                collector["ProductionValues_dt"][FluidSystem::componentName(compIdx)].push_back(comm.sum(values_prod_dt[compIdx]));
+                globalInventory[compIdx] = comm.sum(inventory[compIdx]);
+                globalMaterialBalanceError[compIdx] = comm.sum(materialBalanceError[compIdx]);
+                globalValuesInj[compIdx] = comm.sum(values_inj[compIdx]);
+                globalValuesProd[compIdx] = comm.sum(values_prod[compIdx]);
+                globalValuesInjDt[compIdx] = comm.sum(values_inj_dt[compIdx]);
+                globalValuesProdDt[compIdx] = comm.sum(values_prod_dt[compIdx]);
+                totalInventory += std::abs(globalInventory[compIdx]);
             }
-            
-            Dumux::MetaData::writeJsonFile(collector, name());
+            Scalar relativeMassBalanceError = (totalInventory > 0.0) ? globalMassBalanceErrorAbsolute / totalInventory : 0.0;
+
+            // Recovery factor calculations (operational period only — excludes cushion gas)
+            Scalar globalH2Inj = std::abs(comm.sum(opH2Inj)) * dt;
+            Scalar globalH2Prod = std::abs(comm.sum(opH2Prod)) * dt;
+
+            // Cycle parameters for RF tracking
+            static const Scalar cylcesDev_rf            = getParam<double>("BoundaryConditions.CyclesDev");
+            static const Scalar injectionDurationDev_rf = getParam<double>("BoundaryConditions.InjectionDurationDev")*86400;
+            static const Scalar idleDurationDev_rf     = getParam<double>("BoundaryConditions.IdleDurationDev")*86400;
+            static const Scalar developmentDuration_rf = cylcesDev_rf*(injectionDurationDev_rf+idleDurationDev_rf);
+            static const Scalar idleDurationOp_rf     = getParam<double>("BoundaryConditions.IdleDurationOp")*86400;
+            static const Scalar injectionDurationOp_rf = getParam<double>("BoundaryConditions.InjectionDurationOp")*86400;
+            static const Scalar extractionDurationOp_rf = getParam<double>("BoundaryConditions.ExtractionDurationOp")*86400;
+            const int currentCycleOp = (Time >= developmentDuration_rf) 
+                ? static_cast<int>(std::floor((Time - developmentDuration_rf)/(injectionDurationOp_rf+extractionDurationOp_rf+idleDurationOp_rf)))
+                : -1;
+
+            // Reset cycle accumulators when cycle changes
+            if (currentCycleOp != lastCycleNumber_)
+            {
+                cycleH2Injected_ = 0.0;
+                cycleH2Produced_ = 0.0;
+                lastCycleNumber_ = currentCycleOp;
+            }
+
+            // Accumulate
+            cumulativeH2Injected_ += globalH2Inj;
+            cumulativeH2Produced_ += globalH2Prod;
+            cycleH2Injected_ += globalH2Inj;
+            cycleH2Produced_ += globalH2Prod;
+
+            Scalar cycleRF = (cycleH2Injected_ > 0.0) ? cycleH2Produced_ / cycleH2Injected_ : 0.0;
+            Scalar cumulativeRF = (cumulativeH2Injected_ > 0.0) ? cumulativeH2Produced_ / cumulativeH2Injected_ : 0.0;
+
+            if (comm.rank() == 0)
+            {
+                Dumux::MetaData::Collector collector;
+                if (Dumux::MetaData::jsonFileExists(name()))
+                    Dumux::MetaData::readJsonFile(collector, name());
+                collector["time"].push_back(t);
+                collector["averageReservoirPressure"].push_back(globalAvgPressure);
+                collector["averageReservoirPressureGasBearing"].push_back(globalAvgPressureGasBearing);
+                collector["massBalanceError"]["absolute"].push_back(globalMassBalanceErrorAbsolute);
+                collector["massBalanceError"]["relative"].push_back(relativeMassBalanceError);
+                collector["recoveryFactor"]["perCycle"].push_back(cycleRF);
+                collector["recoveryFactor"]["cumulative"].push_back(cumulativeRF);
+                collector["recoveryFactor"]["cycleNumber"].push_back(currentCycleOp);
+                collector["recoveryFactor"]["cycleH2Injected"].push_back(cycleH2Injected_);
+                collector["recoveryFactor"]["cycleH2Produced"].push_back(cycleH2Produced_);
+                collector["recoveryFactor"]["cumulativeH2Injected"].push_back(cumulativeH2Injected_);
+                collector["recoveryFactor"]["cumulativeH2Produced"].push_back(cumulativeH2Produced_);
+                collector["wellPurity"]["H2MoleFraction"].push_back(h2Purity);
+                collector["wellWaterCut"].push_back(waterCut);
+                for (auto compIdx = 0; compIdx < numComponents; ++compIdx)
+                {
+                    collector["inventory"][FluidSystem::componentName(compIdx)].push_back(globalInventory[compIdx]);
+                    collector["materialBalanceError"][FluidSystem::componentName(compIdx)].push_back(globalMaterialBalanceError[compIdx]);
+                    collector["InjectionValues"][FluidSystem::componentName(compIdx)].push_back(globalValuesInj[compIdx]);
+                    collector["ProductionValues"][FluidSystem::componentName(compIdx)].push_back(globalValuesProd[compIdx]);
+                    collector["InjectionValues_dt"][FluidSystem::componentName(compIdx)].push_back(globalValuesInjDt[compIdx]);
+                    collector["ProductionValues_dt"][FluidSystem::componentName(compIdx)].push_back(globalValuesProdDt[compIdx]);
+                }
+                
+                Dumux::MetaData::writeJsonFile(collector, name());
+            }
+            comm.barrier();
 
             // ---- Pressure safety checks ----
             if (enablePressureCutoff_)
@@ -704,6 +786,7 @@ public:
                         fc["pressureInitRef"] = pressureInitRef_;
                         Dumux::MetaData::writeJsonFile(fc, name());
                     }
+                    comm.barrier();
                 };
 
                 if (pInjMonitored > maxInjPressure)
@@ -844,7 +927,13 @@ private:
         double Z_min = 0.0;
         bool enableGravity = false;
         std::string name_;
-        // std::string CushionGasType_;
+
+        // Cumulative tracking for recovery factor
+        mutable Scalar cumulativeH2Injected_ = 0.0;
+        mutable Scalar cumulativeH2Produced_ = 0.0;
+        mutable Scalar cycleH2Injected_ = 0.0;
+        mutable Scalar cycleH2Produced_ = 0.0;
+        mutable int lastCycleNumber_ = -1;
     };
 
 } // end namespace Dumux

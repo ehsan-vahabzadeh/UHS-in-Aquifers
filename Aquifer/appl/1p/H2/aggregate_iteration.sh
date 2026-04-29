@@ -6,6 +6,11 @@
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
 
+set -euo pipefail
+
+cd "$(dirname "$0")"
+mkdir -p logs results
+
 MANIFEST=$1
 ITER_ID=$2
 

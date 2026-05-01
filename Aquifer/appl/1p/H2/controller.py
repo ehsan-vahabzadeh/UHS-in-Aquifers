@@ -1,5 +1,6 @@
 import argparse
 import csv
+import shutil
 import subprocess
 import time
 from dataclasses import dataclass
@@ -10,20 +11,36 @@ from pathlib import Path
 # User settings
 # -----------------------------
 SCRIPT_DIR = Path(__file__).resolve().parent
+EXECUTABLE_NAME = "appl_1p2pnc_box_H2"
 
-EXECUTABLE = "appl_1p2pnc_box_H2"
+
+def default_build_dir() -> Path:
+    # If this controller has been copied by CMake into build-cmake/appl/1p/H2,
+    # use that folder directly. Otherwise fall back to the matching build folder
+    # for the source tree.
+    if (SCRIPT_DIR / EXECUTABLE_NAME).exists():
+        return SCRIPT_DIR
+    return SCRIPT_DIR.parents[2] / "build-cmake" / "appl" / "1p" / "H2"
+
+
+BUILD_DIR = default_build_dir()
+BUILD_EXECUTABLE = BUILD_DIR / EXECUTABLE_NAME
+
+EXECUTABLE = str(BUILD_EXECUTABLE)
+MPI_RUNNER = "/opt/software/RI/apps/OpenMPI/4.1.8-GCC-13.2.0/bin/mpirun"
 POOL_CSV = SCRIPT_DIR / "simulation_input_pool_500.csv"
 
-MANIFEST_DIR = SCRIPT_DIR / "manifests"
-CASES_DIR = SCRIPT_DIR / "cases"
-RESULTS_DIR = SCRIPT_DIR / "results"
-LOGS_DIR = SCRIPT_DIR / "logs"
+RUN_ROOT = BUILD_DIR
+MANIFEST_DIR = RUN_ROOT / "manifests"
+CASES_DIR = RUN_ROOT / "cases"
+RESULTS_DIR = RUN_ROOT / "results"
+LOGS_DIR = RUN_ROOT / "logs"
 
-BATCH_ID = "pool_top30"
-TOTAL_SIMULATIONS = 30
-POOL_ROWS_TO_READ = 40
-N_JOBS = 5
-CASES_PER_JOB = 6
+BATCH_ID = "pool_top70"
+TOTAL_SIMULATIONS = 60
+POOL_ROWS_TO_READ = 70
+N_JOBS = 6
+CASES_PER_JOB = 10
 
 # The pool stores operational flow in standard m3/day. The DuMuX boundary
 # condition currently expects mol/(m2 s). This factor matches the conversion
@@ -42,12 +59,13 @@ class ControllerConfig:
     n_jobs: int
     cases_per_job: int
     executable: str
+    mpi_runner: str
     submit: bool
     wait: bool
 
 
 def ensure_dirs():
-    for directory in [MANIFEST_DIR, CASES_DIR, RESULTS_DIR, LOGS_DIR]:
+    for directory in [RUN_ROOT, MANIFEST_DIR, CASES_DIR, RESULTS_DIR, LOGS_DIR]:
         directory.mkdir(parents=True, exist_ok=True)
 
 
@@ -55,7 +73,16 @@ def executable_path(executable: str) -> Path:
     path = Path(executable)
     if path.is_absolute():
         return path
-    return SCRIPT_DIR / path
+
+    candidates = [
+        SCRIPT_DIR / path,
+        BUILD_DIR / path.name,
+        RUN_ROOT / path,
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
 
 
 def require_float(row: dict, column: str, row_number: int) -> float:
@@ -227,31 +254,64 @@ def write_batch_manifest(config: ControllerConfig, cases: list[dict]) -> Path:
     return manifest_path
 
 
+def run_sbatch(command: list[str]) -> str:
+    result = subprocess.run(command, cwd=RUN_ROOT, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(
+            "sbatch failed before the job was accepted.\n"
+            f"Command: {' '.join(command)}\n"
+            f"stdout:\n{result.stdout}\n"
+            f"stderr:\n{result.stderr}"
+        )
+    return result.stdout.strip()
+
+
 def submit_batch(config: ControllerConfig, manifest_path: Path) -> tuple[str, str]:
     array_range = f"0-{config.n_jobs - 1}"
+    array_stdout = LOGS_DIR / f"{config.batch_id}_chunk_%A_%a.out"
+    array_stderr = LOGS_DIR / f"{config.batch_id}_chunk_%A_%a.err"
+    agg_stdout = LOGS_DIR / f"{config.batch_id}_aggregate_%j.out"
+    agg_stderr = LOGS_DIR / f"{config.batch_id}_aggregate_%j.err"
+    exported_paths = (
+        f"ALL,DUMUX_RUN_ROOT={RUN_ROOT},"
+        f"DUMUX_MPI_RUNNER={config.mpi_runner}"
+    )
+
     array_cmd = [
         "sbatch",
         "--parsable",
+        f"--chdir={RUN_ROOT}",
+        f"--export={exported_paths}",
+        f"--output={array_stdout}",
+        f"--error={array_stderr}",
         f"--array={array_range}",
-        str(SCRIPT_DIR / "run_chunk_array.sh"),
+        str(RUN_ROOT / "run_chunk_array.sh"),
         str(manifest_path.resolve()),
         config.batch_id,
         str(executable_path(config.executable).resolve()),
     ]
-    array_jobid = subprocess.check_output(array_cmd, cwd=SCRIPT_DIR, text=True).strip()
+    array_jobid = run_sbatch(array_cmd)
 
     agg_cmd = [
         "sbatch",
         "--parsable",
+        f"--chdir={RUN_ROOT}",
+        f"--export={exported_paths}",
+        f"--output={agg_stdout}",
+        f"--error={agg_stderr}",
         f"--dependency=afterany:{array_jobid}",
-        str(SCRIPT_DIR / "aggregate_iteration.sh"),
+        str(RUN_ROOT / "aggregate_iteration.sh"),
         str(manifest_path.resolve()),
         config.batch_id,
     ]
-    agg_jobid = subprocess.check_output(agg_cmd, cwd=SCRIPT_DIR, text=True).strip()
+    agg_jobid = run_sbatch(agg_cmd)
 
     print(f"[{config.batch_id}] array job id = {array_jobid} for tasks {array_range}")
     print(f"[{config.batch_id}] agg   job id = {agg_jobid}")
+    print(f"[{config.batch_id}] chunk stdout pattern: {array_stdout}")
+    print(f"[{config.batch_id}] chunk stderr pattern: {array_stderr}")
+    print(f"[{config.batch_id}] aggregate stdout pattern: {agg_stdout}")
+    print(f"[{config.batch_id}] aggregate stderr pattern: {agg_stderr}")
     return array_jobid, agg_jobid
 
 
@@ -259,7 +319,7 @@ def wait_for_job(jobid: str, poll_seconds: int = 20):
     while True:
         sq = subprocess.run(
             ["squeue", "-j", jobid, "-h"],
-            cwd=SCRIPT_DIR,
+            cwd=RUN_ROOT,
             capture_output=True,
             text=True,
         )
@@ -279,6 +339,7 @@ def parse_args() -> ControllerConfig:
     parser.add_argument("--jobs", type=int, default=N_JOBS)
     parser.add_argument("--cases-per-job", type=int, default=CASES_PER_JOB)
     parser.add_argument("--executable", default=EXECUTABLE)
+    parser.add_argument("--mpi-runner", default=MPI_RUNNER)
     parser.add_argument(
         "--manifest-only",
         action="store_true",
@@ -299,6 +360,7 @@ def parse_args() -> ControllerConfig:
         n_jobs=args.jobs,
         cases_per_job=args.cases_per_job,
         executable=args.executable,
+        mpi_runner=args.mpi_runner,
         submit=not args.manifest_only,
         wait=args.wait,
     )
@@ -315,6 +377,49 @@ def validate_config(config: ControllerConfig):
         raise ValueError("pool-head must be at least total-simulations")
 
 
+def preflight_check(config: ControllerConfig, manifest_path: Path):
+    errors = []
+    resolved_executable = executable_path(config.executable)
+
+    if not config.pool_csv.exists():
+        errors.append(f"Pool CSV not found: {config.pool_csv}")
+    if not RUN_ROOT.exists():
+        errors.append(f"Build/run folder not found: {RUN_ROOT}")
+    if not manifest_path.exists():
+        errors.append(f"Manifest not found: {manifest_path}")
+    if config.submit:
+        if shutil.which("sbatch") is None:
+            errors.append("Could not find 'sbatch' in PATH. Run this on the cluster login node.")
+        if not resolved_executable.exists():
+            errors.append(
+                "Executable not found. Build it first or pass --executable explicitly.\n"
+                f"Resolved executable path: {resolved_executable}"
+            )
+        if not (RUN_ROOT / "run_chunk_array.sh").exists():
+            errors.append(f"Missing run script in build folder: {RUN_ROOT / 'run_chunk_array.sh'}")
+        if not (RUN_ROOT / "run_chunk.py").exists():
+            errors.append(f"Missing run_chunk.py in build folder: {RUN_ROOT / 'run_chunk.py'}")
+        if not (RUN_ROOT / "aggregate_iteration.sh").exists():
+            errors.append(f"Missing aggregate script in build folder: {RUN_ROOT / 'aggregate_iteration.sh'}")
+        if not (RUN_ROOT / "aggregate_iteration.py").exists():
+            errors.append(f"Missing aggregate_iteration.py in build folder: {RUN_ROOT / 'aggregate_iteration.py'}")
+        mpi_runner = Path(config.mpi_runner)
+        if mpi_runner.parent != Path("."):
+            if not mpi_runner.exists():
+                errors.append(f"MPI runner not found: {mpi_runner}")
+        elif shutil.which(config.mpi_runner) is None:
+            errors.append(f"Could not find MPI runner in PATH: {config.mpi_runner}")
+
+    if errors:
+        raise RuntimeError("Preflight check failed:\n- " + "\n- ".join(errors))
+
+    print(f"Resolved executable: {resolved_executable}")
+    print(f"MPI runner: {config.mpi_runner}")
+    print(f"Run root: {RUN_ROOT}")
+    print(f"Logs directory: {LOGS_DIR}")
+    print(f"Case directories will be under: {CASES_DIR / config.batch_id}")
+
+
 def main():
     config = parse_args()
     validate_config(config)
@@ -322,6 +427,7 @@ def main():
 
     cases = read_pool_cases(config)
     manifest_path = write_batch_manifest(config, cases)
+    preflight_check(config, manifest_path)
 
     print(f"Wrote manifest: {manifest_path}")
     print(
@@ -341,4 +447,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as exc:
+        raise SystemExit(f"ERROR: {exc}")

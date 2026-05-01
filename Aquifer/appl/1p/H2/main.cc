@@ -91,6 +91,20 @@ std::size_t removeOldOutputFiles(const fs::path& directory)
     return removedFiles;
 }
 
+std::string shellQuote(const fs::path& path)
+{
+    std::string quoted = "'";
+    for (const char c : path.string())
+    {
+        if (c == '\'')
+            quoted += "'\\''";
+        else
+            quoted += c;
+    }
+    quoted += "'";
+    return quoted;
+}
+
 } // end anonymous namespace
 
 int main(int argc, char** argv)
@@ -269,10 +283,23 @@ int main(int argc, char** argv)
     if (mpiHelper.rank() == 0 && mpiHelper.size() > 1)
     {
         std::cout << "\n=== Merging VTK files from " << mpiHelper.size() << " processes ===" << std::endl;
-        std::string mergeCmd = "python3 vtk-merge-multi.py";
-        int ret = std::system(mergeCmd.c_str());
+        const auto executableDir = fs::absolute(fs::path(argv[0])).parent_path();
+        const auto mergeScript = executableDir / "vtk-merge-multi.py";
+
+        int ret = 1;
+        if (!fs::exists(mergeScript))
+        {
+            std::cerr << "Warning: VTK merge script not found at "
+                      << mergeScript << std::endl;
+        }
+        else
+        {
+            const std::string mergeCmd = "python3 " + shellQuote(mergeScript);
+            ret = std::system(mergeCmd.c_str());
+        }
+
         if (ret != 0)
-            std::cerr << "Warning: VTK merge script failed or not found." << std::endl;
+            std::cerr << "Warning: VTK merge script failed." << std::endl;
         else
             std::cout << "VTK merge completed successfully." << std::endl;
     }

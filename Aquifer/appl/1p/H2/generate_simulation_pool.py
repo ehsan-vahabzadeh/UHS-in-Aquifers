@@ -11,19 +11,24 @@ chance to appear in the final pool.
 from __future__ import annotations
 
 import argparse
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import cdist
 from scipy.stats import qmc
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+
+try:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -36,10 +41,12 @@ REQUIRED_COLUMN_ALIASES = {
     "porosity": ("Porosity [-]", "porosity"),
     "pressure_mpa": ("Pore Pressure [MPa]", "pressure_mpa", "pore_pressure_mpa", "pressure"),
     "temperature_c": ("Formation Temp [C]", "temperature_c", "formation_temp_c", "temperature"),
+    "top_depth_m": ("Top Depth [m]", "top_depth_m", "shallowestdepthml", "top_depth", "depth_top_m"),
 }
 
 OPTIONAL_COLUMN_ALIASES = {
     "field_name": ("Field Name", "field_name", "description", "reservoir_name"),
+    "mean_depth_m": ("Mean Depth [m]", "mean_depth_m", "meandepthml", "mean_depth"),
     "pore_volume": ("Pore Volume", "pore_volume", "porevolume"),
     "number_of_wells": ("Number of Wells", "number_of_wells", "totalwells"),
     "latitude": ("Latitude", "latitude", "lat"),
@@ -47,6 +54,7 @@ OPTIONAL_COLUMN_ALIASES = {
 }
 
 PROPERTY_COLUMNS = ["permeability_md", "porosity", "pressure_mpa", "temperature_c"]
+REQUIRED_CLEAN_COLUMNS = PROPERTY_COLUMNS + ["top_depth_m"]
 CG_TYPES = ["H2", "N2", "CO2", "CH4"]
 
 
@@ -60,6 +68,7 @@ class Config:
     random_seed: int
     n_permeability_strata: int
     density_power: float
+    max_top_depth_m: float
     flow_min: float
     flow_max: float
     cycle_min: float
@@ -93,20 +102,22 @@ def standardize_columns(raw: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def clean_reservoir_data(raw: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
+def clean_reservoir_data(raw: pd.DataFrame, max_top_depth_m: float) -> tuple[pd.DataFrame, dict[str, int]]:
     df = standardize_columns(raw)
     raw_rows = len(df)
 
-    for column in PROPERTY_COLUMNS:
+    for column in REQUIRED_CLEAN_COLUMNS:
         df[column] = pd.to_numeric(df[column], errors="coerce")
 
+    if "mean_depth_m" in df:
+        df["mean_depth_m"] = pd.to_numeric(df["mean_depth_m"], errors="coerce")
     if "number_of_wells" in df:
         df["number_of_wells"] = pd.to_numeric(df["number_of_wells"], errors="coerce")
     if "pore_volume" in df:
         df["pore_volume"] = pd.to_numeric(df["pore_volume"], errors="coerce")
 
     before_missing = len(df)
-    df = df.dropna(subset=PROPERTY_COLUMNS).copy()
+    df = df.dropna(subset=REQUIRED_CLEAN_COLUMNS).copy()
     dropped_missing = before_missing - len(df)
 
     sensible_mask = (
@@ -115,13 +126,20 @@ def clean_reservoir_data(raw: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int
         & (df["porosity"] < 1.0)
         & (df["pressure_mpa"] > 0.0)
         & (df["temperature_c"] > 0.0)
+        & (df["top_depth_m"] > 0.0)
     )
     before_sensible = len(df)
     df = df.loc[sensible_mask].copy()
     dropped_unphysical = before_sensible - len(df)
 
+    dropped_too_deep = 0
+    if max_top_depth_m > 0.0:
+        before_depth_filter = len(df)
+        df = df.loc[df["top_depth_m"] <= max_top_depth_m].copy()
+        dropped_too_deep = before_depth_filter - len(df)
+
     before_property_duplicates = len(df)
-    df = df.drop_duplicates(subset=PROPERTY_COLUMNS, keep="first").copy()
+    df = df.drop_duplicates(subset=REQUIRED_CLEAN_COLUMNS, keep="first").copy()
     dropped_property_duplicates = before_property_duplicates - len(df)
 
     dropped_name_duplicates = 0
@@ -136,6 +154,7 @@ def clean_reservoir_data(raw: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int
         "raw_rows": raw_rows,
         "dropped_missing_required": dropped_missing,
         "dropped_unphysical": dropped_unphysical,
+        "dropped_deeper_than_max_top_depth": dropped_too_deep,
         "dropped_duplicate_properties": dropped_property_duplicates,
         "dropped_duplicate_names": dropped_name_duplicates,
         "clean_rows": len(df),
@@ -343,21 +362,24 @@ def build_simulation_pool(
     operational = latin_hypercube_operational_samples(config, rng)
     assigned = representatives.iloc[rep_indices].reset_index(drop=True)
 
+    reservoir_columns = [
+        "permeability_md",
+        "porosity",
+        "pressure_mpa",
+        "temperature_c",
+        "top_depth_m",
+        "permeability_stratum",
+        "reservoir_cluster",
+        "representative_id",
+        "source_row_index",
+    ]
+    if "mean_depth_m" in assigned:
+        reservoir_columns.insert(5, "mean_depth_m")
+
     pool = pd.concat(
         [
             operational,
-            assigned[
-                [
-                    "permeability_md",
-                    "porosity",
-                    "pressure_mpa",
-                    "temperature_c",
-                    "permeability_stratum",
-                    "reservoir_cluster",
-                    "representative_id",
-                    "source_row_index",
-                ]
-            ].rename(columns={"permeability_stratum": "reservoir_stratum"}),
+            assigned[reservoir_columns].rename(columns={"permeability_stratum": "reservoir_stratum"}),
         ],
         axis=1,
     )
@@ -380,8 +402,9 @@ def diagnostic_histograms(real: pd.DataFrame, pool: pd.DataFrame, plot_dir: Path
         ("porosity", "Porosity [-]", False),
         ("pressure_mpa", "Pore Pressure [MPa]", False),
         ("temperature_c", "Formation Temp [C]", False),
+        ("top_depth_m", "Top Depth [m]", False),
     ]
-    fig, axes = plt.subplots(2, 2, figsize=(11, 8))
+    fig, axes = plt.subplots(3, 2, figsize=(11, 11))
 
     for ax, (column, label, log_x) in zip(axes.ravel(), columns):
         if log_x:
@@ -398,6 +421,9 @@ def diagnostic_histograms(real: pd.DataFrame, pool: pd.DataFrame, plot_dir: Path
         ax.set_ylabel("Density")
         ax.grid(True, alpha=0.25)
 
+    for ax in axes.ravel()[len(columns):]:
+        ax.axis("off")
+
     axes[0, 0].legend()
     fig.suptitle("Reservoir Property Distribution Comparison")
     fig.tight_layout()
@@ -411,8 +437,9 @@ def diagnostic_ecdf(real: pd.DataFrame, pool: pd.DataFrame, plot_dir: Path) -> N
         ("porosity", "Porosity [-]", False),
         ("pressure_mpa", "Pore Pressure [MPa]", False),
         ("temperature_c", "Formation Temp [C]", False),
+        ("top_depth_m", "Top Depth [m]", False),
     ]
-    fig, axes = plt.subplots(2, 2, figsize=(11, 8))
+    fig, axes = plt.subplots(3, 2, figsize=(11, 11))
 
     for ax, (column, label, log_x) in zip(axes.ravel(), columns):
         real_x, real_y = empirical_cdf(real[column].to_numpy())
@@ -424,6 +451,9 @@ def diagnostic_ecdf(real: pd.DataFrame, pool: pd.DataFrame, plot_dir: Path) -> N
         ax.set_title(label)
         ax.set_ylabel("Empirical CDF")
         ax.grid(True, alpha=0.25)
+
+    for ax in axes.ravel()[len(columns):]:
+        ax.axis("off")
 
     axes[0, 0].legend()
     fig.suptitle("Empirical CDF Comparison")
@@ -497,6 +527,10 @@ def make_diagnostic_plots(
     pool: pd.DataFrame,
     plot_dir: Path,
 ) -> None:
+    if plt is None:
+        print("Skipping diagnostic plots because matplotlib is not installed.", file=sys.stderr)
+        return
+
     plot_dir.mkdir(parents=True, exist_ok=True)
     diagnostic_histograms(real, pool, plot_dir)
     diagnostic_ecdf(real, pool, plot_dir)
@@ -540,6 +574,11 @@ def print_summary(
     print(f"Rows after cleaning: {cleaning_summary['clean_rows']}")
     print(f"  dropped missing required values: {cleaning_summary['dropped_missing_required']}")
     print(f"  dropped physically invalid rows: {cleaning_summary['dropped_unphysical']}")
+    if config.max_top_depth_m > 0.0:
+        print(
+            f"  dropped rows with top depth > {config.max_top_depth_m:g} m: "
+            f"{cleaning_summary['dropped_deeper_than_max_top_depth']}"
+        )
     print(f"  dropped duplicate property rows: {cleaning_summary['dropped_duplicate_properties']}")
     print(f"  dropped duplicate reservoir names: {cleaning_summary['dropped_duplicate_names']}")
     print(f"Representative reservoir tuples: {len(representatives)}")
@@ -573,6 +612,12 @@ def parse_args() -> Config:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--permeability-strata", type=int, default=5)
     parser.add_argument(
+        "--max-top-depth-m",
+        type=float,
+        default=2500.0,
+        help="Keep only reservoirs with Top Depth [m] <= this value. Use 0 to disable.",
+    )
+    parser.add_argument(
         "--density-power",
         type=float,
         default=0.5,
@@ -599,6 +644,7 @@ def parse_args() -> Config:
         random_seed=args.seed,
         n_permeability_strata=args.permeability_strata,
         density_power=args.density_power,
+        max_top_depth_m=args.max_top_depth_m,
         flow_min=args.flow_min,
         flow_max=args.flow_max,
         cycle_min=args.cycle_min,
@@ -611,7 +657,7 @@ def parse_args() -> Config:
 def main() -> int:
     config = parse_args()
     raw = pd.read_csv(config.input_csv)
-    clean, cleaning_summary = clean_reservoir_data(raw)
+    clean, cleaning_summary = clean_reservoir_data(raw, config.max_top_depth_m)
     if clean.empty:
         raise ValueError("No valid reservoir rows remain after cleaning")
 

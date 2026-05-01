@@ -15,7 +15,10 @@ import sys
 from pathlib import Path
 from typing import Iterable, Sequence
 
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -32,6 +35,7 @@ PARAMETER_MAP: dict[str, tuple[str, ...]] = {
     "Formation Temp [C]": ("formationtempml", "formationtempm1"),
     "Latitude": ("lat",),
     "Longitude": ("lon",),
+    "Mean Depth [m]": ("meandepthml", "meandepthm1"),
     "Number of Wells": ("totalwells",),
     "Permeability [mD]": ("storagepermeabilityml", "storagepermeabilitym1"),
     "Pore Pressure [MPa]": ("porepressureml", "porepressurem1"),
@@ -40,6 +44,7 @@ PARAMETER_MAP: dict[str, tuple[str, ...]] = {
     "Salinity [ppm]": ("salinity",),
     "Swr [-]": ("irreducible_water_saturationml", "irreducible_water_saturationm1"),
     "Temp Gradient": ("temperaturegradient",),
+    "Top Depth [m]": ("shallowestdepthml", "shallowestdepthm1"),
 }
 
 
@@ -54,6 +59,7 @@ REQUIRED_COLUMNS = (
     "Pore Volume",
     "Porosity [-]",
     "Formation Temp [C]",
+    "Top Depth [m]",
 )
 
 PLOT_FILES = {
@@ -237,6 +243,7 @@ def plot_scatter(
 
 def plot_density(rows: Sequence[dict[str, str]], output_path: Path) -> None:
     columns = [
+        "Top Depth [m]",
         "Number of Wells",
         "Permeability [mD]",
         "Porosity [-]",
@@ -245,7 +252,7 @@ def plot_density(rows: Sequence[dict[str, str]], output_path: Path) -> None:
         "Pore Volume",
     ]
 
-    fig, axes = plt.subplots(2, 3, figsize=(13, 8))
+    fig, axes = plt.subplots(3, 3, figsize=(13, 11))
     for ax, column in zip(axes.ravel(), columns):
         values = [to_float(row[column]) for row in rows]
         values = [value for value in values if value is not None]
@@ -263,6 +270,9 @@ def plot_density(rows: Sequence[dict[str, str]], output_path: Path) -> None:
         ax.set_ylabel("Count")
         ax.grid(True, alpha=0.25)
 
+    for ax in axes.ravel()[len(columns):]:
+        ax.axis("off")
+
     fig.suptitle("Reservoir Value Density", fontsize=14)
     fig.tight_layout()
     fig.savefig(output_path, dpi=200)
@@ -270,6 +280,10 @@ def plot_density(rows: Sequence[dict[str, str]], output_path: Path) -> None:
 
 
 def write_plots(rows: Sequence[dict[str, str]], plot_dir: Path) -> list[Path]:
+    if plt is None:
+        print("Skipping plots because matplotlib is not installed.", file=sys.stderr)
+        return []
+
     plot_paths = [
         plot_dir / PLOT_FILES["permeability_porosity"],
         plot_dir / PLOT_FILES["pressure_temperature"],

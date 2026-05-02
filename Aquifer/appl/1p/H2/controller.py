@@ -48,6 +48,7 @@ CASES_PER_JOB = 10
 FLOW_RATE_SM3_DAY_TO_MOL_M2_S = 3.77625e-5
 PRESSURE_MPA_TO_PA = 1.0e6
 CELSIUS_TO_KELVIN = 273.15
+MAX_TIME_STEP_SIZE_SECONDS = 43200.0
 
 
 @dataclass(frozen=True)
@@ -168,7 +169,7 @@ def derive_simulation_fields(case: dict) -> dict:
 
     # Ten operational cycles after the development injection. Time is in days.
     tend_days = injection_dev + (injection_op + extraction_op) * 10.0
-    max_dt_seconds = (tend_days * 86400.0) / 2200.0
+    max_dt_seconds = min((tend_days * 86400.0) / 2200.0, MAX_TIME_STEP_SIZE_SECONDS)
     boundary_rate = abs(float(case["flow_rate_mol_m2_s"]))
 
     return {

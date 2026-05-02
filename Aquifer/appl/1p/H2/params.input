@@ -1,39 +1,41 @@
 [TimeLoop]
-DtInitial = 10                   # [s] initial timestep size
-TEnd =  30              # [d] simulation end time 
-MaxTimeStepSize = 86400
+DtInitial = 10
+TEnd = 3196.207487827343
+MaxTimeStepSize = 43200.0
+
 [Grid]
-LowerLeft = 0.2 0 
-UpperRight = 1000.2 60        # [m] grid dimension
-Cells = 200 20               # [-] number of cells in dimension
+LowerLeft = 0.2 0
+UpperRight = 1000.2 60
+Cells = 300 30
 
 [Problem]
-Name = H2 # name passed to the output routines
+Name = case050_CGCH4_Q730281_CL271.7_CGR3.53_K330_Poro0.140
 EnableGravity = true
 UseNitscheTypeBc = true
 DispersionMode = 1
-InitialTemperature = 333.15
+InitialTemperature = 333.58
 
 [BoundaryConditions]
-CyclesDev = 1   		  # [-] number of cycles during development period
-InjectionDurationDev = 10	  # [days] injection time during development period
-IdleDurationDev = 0		  # [day] idle time during development period
-InjectionDurationOp = 10	  # [day] injection time during operational period
-ExtractionDurationOp = 10	  # [day] production time during operational period
-IdleDurationOp = 0.0	  # [day] idle time during operational period
-CushionGasType = H2
-InjectionRateDev = -80	  # [mol.m-2.s] injection rate during development period
-InjectionRateOp = -80 # [mol.m-2.s] injection rate during operational period
-ProductionRate = 80 # [mol.m-2.s] production rate during operational period
-Well_Height = 10		  # [m] Height of the injection/withdrawal interval
+CyclesDev = 1
+InjectionDurationDev = 479.1385364456582
+IdleDurationDev = 0
+InjectionDurationOp = 135.85344756908424
+ExtractionDurationOp = 135.85344756908424
+IdleDurationOp = 0.0
+CushionGasType = CH4
+InjectionRateDev = -27.577244226511446
+InjectionRateOp = -27.577244226511446
+ProductionRate = 27.577244226511446
+Well_Height = 10
 HydrogenInjectionConcentration = 1
+
 [Initialization]
-PressureGWC = 200e5
+PressureGWC = 17300000.0
 DepthGWC = -10
 
 [SpatialParams]
-ReferencePorosity = 0.3
-ReferencePermeability = 500
+ReferencePorosity = 0.14
+ReferencePermeability = 330.0
 Material.Swr = 0.15
 Material.Snr = 0.0
 Material.BrooksCoreyPcEntry = 5e3
@@ -47,13 +49,8 @@ MaxSteps = 9
 MaxTimeStepDivisions = 20
 UseLineSearch = true
 
-[LinearSolver]
-GMResRestart = 30
-MaxIterations = 500
-ResidualReduction = 1e-10
-
 [Assembly]
-Multithreading = false 
+Multithreading = true
 
 [Vtk]
 AddVelocity = true

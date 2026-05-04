@@ -132,7 +132,7 @@ AddVelocity = true
 
 [Safety]
 EnablePressureCutoff = true
-InjectionPressureMultiplier = 2
+InjectionPressureMultiplier = 1.5
 MinProductionPressure = 1e5
 """
     (case_dir / "params.input").write_text(text)

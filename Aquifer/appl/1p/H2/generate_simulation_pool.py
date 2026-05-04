@@ -69,6 +69,9 @@ class Config:
     n_permeability_strata: int
     density_power: float
     max_top_depth_m: float
+    min_permeability_md: float
+    low_perm_threshold_md: float
+    low_perm_flow_max: float
     flow_min: float
     flow_max: float
     cycle_min: float
@@ -102,7 +105,11 @@ def standardize_columns(raw: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def clean_reservoir_data(raw: pd.DataFrame, max_top_depth_m: float) -> tuple[pd.DataFrame, dict[str, int]]:
+def clean_reservoir_data(
+    raw: pd.DataFrame,
+    max_top_depth_m: float,
+    min_permeability_md: float,
+) -> tuple[pd.DataFrame, dict[str, int]]:
     df = standardize_columns(raw)
     raw_rows = len(df)
 
@@ -138,6 +145,12 @@ def clean_reservoir_data(raw: pd.DataFrame, max_top_depth_m: float) -> tuple[pd.
         df = df.loc[df["top_depth_m"] <= max_top_depth_m].copy()
         dropped_too_deep = before_depth_filter - len(df)
 
+    dropped_low_permeability = 0
+    if min_permeability_md > 0.0:
+        before_perm_filter = len(df)
+        df = df.loc[df["permeability_md"] >= min_permeability_md].copy()
+        dropped_low_permeability = before_perm_filter - len(df)
+
     before_property_duplicates = len(df)
     df = df.drop_duplicates(subset=REQUIRED_CLEAN_COLUMNS, keep="first").copy()
     dropped_property_duplicates = before_property_duplicates - len(df)
@@ -155,6 +168,7 @@ def clean_reservoir_data(raw: pd.DataFrame, max_top_depth_m: float) -> tuple[pd.
         "dropped_missing_required": dropped_missing,
         "dropped_unphysical": dropped_unphysical,
         "dropped_deeper_than_max_top_depth": dropped_too_deep,
+        "dropped_below_min_permeability": dropped_low_permeability,
         "dropped_duplicate_properties": dropped_property_duplicates,
         "dropped_duplicate_names": dropped_name_duplicates,
         "clean_rows": len(df),
@@ -325,15 +339,36 @@ def allocate_cases(
     return counts
 
 
-def latin_hypercube_operational_samples(config: Config, rng: np.random.Generator) -> pd.DataFrame:
+def flow_caps_for_permeability(permeability_md: np.ndarray, config: Config) -> tuple[np.ndarray, np.ndarray]:
+    flow_caps = np.full(len(permeability_md), config.flow_max, dtype=float)
+
+    low_perm_mask = permeability_md < config.low_perm_threshold_md
+    flow_caps[low_perm_mask] = np.minimum(flow_caps[low_perm_mask], config.low_perm_flow_max)
+
+    if np.any(flow_caps < config.flow_min):
+        raise ValueError(
+            "Flow cap is below flow-min for at least one case. "
+            "Lower --flow-min or increase --low-perm-flow-max."
+        )
+
+    return flow_caps, low_perm_mask
+
+
+def latin_hypercube_operational_samples(
+    config: Config,
+    rng: np.random.Generator,
+    assigned_permeability_md: np.ndarray,
+) -> pd.DataFrame:
     sampler = qmc.LatinHypercube(d=3, seed=config.random_seed)
     unit = sampler.random(config.n_cases)
 
     # Flow rate spans more than two orders of magnitude, so sample it uniformly
-    # in log-space for better coverage of both small and large rates.
+    # in log-space. The upper bound is conditioned on permeability so low-k
+    # reservoirs do not receive obviously excessive injection/production rates.
+    flow_caps, low_perm_mask = flow_caps_for_permeability(assigned_permeability_md, config)
     log_flow_min = np.log10(config.flow_min)
-    log_flow_max = np.log10(config.flow_max)
-    flow_rate = 10 ** (log_flow_min + unit[:, 0] * (log_flow_max - log_flow_min))
+    log_flow_caps = np.log10(flow_caps)
+    flow_rate = 10 ** (log_flow_min + unit[:, 0] * (log_flow_caps - log_flow_min))
     cycle_length = config.cycle_min + unit[:, 1] * (config.cycle_max - config.cycle_min)
     cg_ratio = config.cg_ratio_min + unit[:, 2] * (config.cg_ratio_max - config.cg_ratio_min)
 
@@ -343,6 +378,8 @@ def latin_hypercube_operational_samples(config: Config, rng: np.random.Generator
     return pd.DataFrame(
         {
             "flow_rate_sm3_day": flow_rate,
+            "flow_rate_cap_sm3_day": flow_caps,
+            "low_permeability_flow_cap": low_perm_mask,
             "cycle_length_days": cycle_length,
             "cg_ratio": cg_ratio,
             "cg_type": cg_types,
@@ -359,8 +396,12 @@ def build_simulation_pool(
     rep_indices = np.repeat(np.arange(len(representatives)), allocation)
     rng.shuffle(rep_indices)
 
-    operational = latin_hypercube_operational_samples(config, rng)
     assigned = representatives.iloc[rep_indices].reset_index(drop=True)
+    operational = latin_hypercube_operational_samples(
+        config,
+        rng,
+        assigned["permeability_md"].to_numpy(dtype=float),
+    )
 
     reservoir_columns = [
         "permeability_md",
@@ -520,11 +561,44 @@ def diagnostic_stratum_coverage(real: pd.DataFrame, pool: pd.DataFrame, plot_dir
     plt.close(fig)
 
 
+def diagnostic_flow_vs_permeability(pool: pd.DataFrame, config: Config, plot_dir: Path) -> None:
+    fig, ax = plt.subplots(figsize=(7, 5))
+    capped = pool["low_permeability_flow_cap"].astype(bool)
+
+    ax.scatter(
+        pool.loc[~capped, "permeability_md"],
+        pool.loc[~capped, "flow_rate_sm3_day"],
+        s=24,
+        alpha=0.65,
+        label="uncapped cases",
+    )
+    ax.scatter(
+        pool.loc[capped, "permeability_md"],
+        pool.loc[capped, "flow_rate_sm3_day"],
+        s=30,
+        alpha=0.85,
+        label="low-perm capped cases",
+    )
+    ax.axvline(config.low_perm_threshold_md, color="black", linestyle="--", linewidth=1.0)
+    ax.axhline(config.low_perm_flow_max, color="black", linestyle=":", linewidth=1.0)
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_xlabel("Permeability [mD]")
+    ax.set_ylabel("Flow rate [sm3/day]")
+    ax.set_title("Flow Rate vs Permeability")
+    ax.grid(True, alpha=0.25)
+    ax.legend(loc="best")
+    fig.tight_layout()
+    fig.savefig(plot_dir / "diagnostic_flow_vs_permeability.png", dpi=200)
+    plt.close(fig)
+
+
 def make_diagnostic_plots(
     real: pd.DataFrame,
     representatives: pd.DataFrame,
     allocation: np.ndarray,
     pool: pd.DataFrame,
+    config: Config,
     plot_dir: Path,
 ) -> None:
     if plt is None:
@@ -558,6 +632,7 @@ def make_diagnostic_plots(
         output_path=plot_dir / "diagnostic_pressure_vs_temperature.png",
     )
     diagnostic_stratum_coverage(real, pool, plot_dir)
+    diagnostic_flow_vs_permeability(pool, config, plot_dir)
 
 
 def print_summary(
@@ -579,6 +654,11 @@ def print_summary(
             f"  dropped rows with top depth > {config.max_top_depth_m:g} m: "
             f"{cleaning_summary['dropped_deeper_than_max_top_depth']}"
         )
+    if config.min_permeability_md > 0.0:
+        print(
+            f"  dropped rows with permeability < {config.min_permeability_md:g} mD: "
+            f"{cleaning_summary['dropped_below_min_permeability']}"
+        )
     print(f"  dropped duplicate property rows: {cleaning_summary['dropped_duplicate_properties']}")
     print(f"  dropped duplicate reservoir names: {cleaning_summary['dropped_duplicate_names']}")
     print(f"Representative reservoir tuples: {len(representatives)}")
@@ -589,6 +669,18 @@ def print_summary(
     )
     print("\nCG type counts:")
     print(pool["cg_type"].value_counts().sort_index().to_string())
+    print("\nFlow cap summary:")
+    print(
+        f"  low-perm threshold: k < {config.low_perm_threshold_md:g} mD, "
+        f"flow cap <= {config.low_perm_flow_max:g} sm3/day"
+    )
+    low_perm_cases = pool["low_permeability_flow_cap"].astype(bool)
+    print(f"  low-perm capped cases: {int(low_perm_cases.sum())}")
+    if low_perm_cases.any():
+        print(
+            "  max flow among low-perm capped cases: "
+            f"{pool.loc[low_perm_cases, 'flow_rate_sm3_day'].max():.0f} sm3/day"
+        )
     print("\nCluster size summary:")
     print(cluster_info["row_count"].describe().to_string())
     print(f"\nWrote pool CSV: {config.output_csv}")
@@ -618,6 +710,24 @@ def parse_args() -> Config:
         help="Keep only reservoirs with Top Depth [m] <= this value. Use 0 to disable.",
     )
     parser.add_argument(
+        "--min-permeability-md",
+        type=float,
+        default=50.0,
+        help="Keep only reservoirs with permeability >= this value. Use 0 to disable.",
+    )
+    parser.add_argument(
+        "--low-perm-threshold-md",
+        type=float,
+        default=100.0,
+        help="Reservoirs below this permeability receive the low-perm flow cap.",
+    )
+    parser.add_argument(
+        "--low-perm-flow-max",
+        type=float,
+        default=100_000.0,
+        help="Maximum flow rate for reservoirs below --low-perm-threshold-md.",
+    )
+    parser.add_argument(
         "--density-power",
         type=float,
         default=0.5,
@@ -645,6 +755,9 @@ def parse_args() -> Config:
         n_permeability_strata=args.permeability_strata,
         density_power=args.density_power,
         max_top_depth_m=args.max_top_depth_m,
+        min_permeability_md=args.min_permeability_md,
+        low_perm_threshold_md=args.low_perm_threshold_md,
+        low_perm_flow_max=args.low_perm_flow_max,
         flow_min=args.flow_min,
         flow_max=args.flow_max,
         cycle_min=args.cycle_min,
@@ -657,7 +770,11 @@ def parse_args() -> Config:
 def main() -> int:
     config = parse_args()
     raw = pd.read_csv(config.input_csv)
-    clean, cleaning_summary = clean_reservoir_data(raw, config.max_top_depth_m)
+    clean, cleaning_summary = clean_reservoir_data(
+        raw,
+        max_top_depth_m=config.max_top_depth_m,
+        min_permeability_md=config.min_permeability_md,
+    )
     if clean.empty:
         raise ValueError("No valid reservoir rows remain after cleaning")
 
@@ -683,7 +800,7 @@ def main() -> int:
 
     config.output_csv.parent.mkdir(parents=True, exist_ok=True)
     pool.to_csv(config.output_csv, index=False)
-    make_diagnostic_plots(clean, representatives, allocation, pool, config.plot_dir)
+    make_diagnostic_plots(clean, representatives, allocation, pool, config, config.plot_dir)
     print_summary(cleaning_summary, representatives, allocation, pool, cluster_info, config)
     return 0
 

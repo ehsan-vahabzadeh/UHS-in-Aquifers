@@ -3,7 +3,7 @@
 #SBATCH -p multicore
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=1
-#SBATCH --time=48:00:00
+
 #SBATCH --output=logs/%x_%A_%a.out
 #SBATCH --error=logs/%x_%A_%a.err
 

@@ -10,6 +10,7 @@
 set -euo pipefail
 
 RUN_ROOT="${DUMUX_RUN_ROOT:-$PWD}"
+SCRIPT_DIR="${DUMUX_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 MPI_RUNNER="${DUMUX_MPI_RUNNER:-mpirun}"
 if [[ "$MPI_RUNNER" == */* ]]; then
     export PATH="$(dirname "$MPI_RUNNER"):$PATH"
@@ -39,18 +40,20 @@ echo "SLURM_NTASKS=${SLURM_NTASKS:-}"
 echo "MANIFEST=$MANIFEST"
 echo "ITER_ID=$ITER_ID"
 echo "EXECUTABLE=$EXECUTABLE"
+echo "SCRIPT_DIR=$SCRIPT_DIR"
 echo "MPI_RUNNER=$MPI_RUNNER"
 echo "python3=$(command -v python3)"
 echo "mpirun_in_path=$(command -v mpirun || true)"
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 
-if [[ ! -f "$RUN_ROOT/run_chunk.py" ]]; then
-    echo "ERROR: cannot find run_chunk.py at: $RUN_ROOT/run_chunk.py" >&2
+if [[ ! -f "$SCRIPT_DIR/run_chunk.py" ]]; then
+    echo "ERROR: cannot find run_chunk.py at: $SCRIPT_DIR/run_chunk.py" >&2
     echo "DUMUX_RUN_ROOT=$RUN_ROOT" >&2
+    echo "DUMUX_SCRIPT_DIR=$SCRIPT_DIR" >&2
     exit 2
 fi
 
-python3 -u "$RUN_ROOT/run_chunk.py" \
+python3 -u "$SCRIPT_DIR/run_chunk.py" \
     --manifest "$MANIFEST" \
     --iter-id "$ITER_ID" \
     --chunk-id "$SLURM_ARRAY_TASK_ID" \

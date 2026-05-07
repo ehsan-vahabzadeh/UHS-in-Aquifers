@@ -36,11 +36,12 @@ CASES_DIR = RUN_ROOT / "cases"
 RESULTS_DIR = RUN_ROOT / "results"
 LOGS_DIR = RUN_ROOT / "logs"
 
-BATCH_ID = "pool_top70"
-TOTAL_SIMULATIONS = 60
-POOL_ROWS_TO_READ = 70
-N_JOBS = 6
-CASES_PER_JOB = 10
+BATCH_ID = "pool_051_150"
+TOTAL_SIMULATIONS = 100
+POOL_START_ROW = 51
+POOL_ROWS_TO_READ = 150
+N_JOBS = 5
+CASES_PER_JOB = 20
 
 # The pool stores operational flow in standard m3/day. The DuMuX boundary
 # condition currently expects mol/(m2 s). This factor matches the conversion
@@ -56,6 +57,7 @@ class ControllerConfig:
     pool_csv: Path
     batch_id: str
     total_simulations: int
+    pool_start_row: int
     pool_rows_to_read: int
     n_jobs: int
     cases_per_job: int
@@ -63,6 +65,7 @@ class ControllerConfig:
     mpi_runner: str
     submit: bool
     wait: bool
+    candidates_csv: Path | None = None
 
 
 def ensure_dirs():
@@ -113,32 +116,48 @@ def make_case_name(case: dict) -> str:
 
 
 def read_pool_cases(config: ControllerConfig) -> list[dict]:
-    with open(config.pool_csv, newline="") as f:
-        pool_rows = list(csv.DictReader(f))
-
-    candidate_rows = pool_rows[: config.pool_rows_to_read]
-    if len(candidate_rows) < config.total_simulations:
-        raise ValueError(
-            f"Need {config.total_simulations} simulations, but only found "
-            f"{len(candidate_rows)} rows after reading the top {config.pool_rows_to_read} pool rows."
-        )
+    if config.candidates_csv is not None:
+        with open(config.candidates_csv, newline="") as f:
+            candidate_rows = list(csv.DictReader(f))
+        if not candidate_rows:
+            raise ValueError(f"Candidates CSV is empty: {config.candidates_csv}")
+        # Each row is a physical case from the pool. We trust pool_row_index
+        # if present; otherwise fall back to the row order in the file.
+        indices = []
+        for local_idx, row in enumerate(candidate_rows):
+            raw = row.get("pool_row_index", "")
+            indices.append(int(raw) if raw not in ("", None) else local_idx)
+    else:
+        with open(config.pool_csv, newline="") as f:
+            pool_rows = list(csv.DictReader(f))
+        start_index = config.pool_start_row - 1
+        end_index = start_index + config.total_simulations
+        candidate_rows = pool_rows[start_index:end_index]
+        if len(candidate_rows) < config.total_simulations:
+            raise ValueError(
+                f"Need {config.total_simulations} simulations, but only found "
+                f"{len(candidate_rows)} pool rows from row {config.pool_start_row} "
+                f"through row {config.pool_start_row + config.total_simulations - 1}."
+            )
+        indices = [start_index + i for i in range(len(candidate_rows))]
 
     cases = []
-    for case_id, row in enumerate(candidate_rows[: config.total_simulations]):
-        flow_rate_sm3_day = require_float(row, "flow_rate_sm3_day", case_id)
-        pressure_mpa = require_float(row, "pressure_mpa", case_id)
-        temperature_c = require_float(row, "temperature_c", case_id)
+    for local_idx, row in enumerate(candidate_rows):
+        pool_row_index = indices[local_idx]
+        flow_rate_sm3_day = require_float(row, "flow_rate_sm3_day", pool_row_index)
+        pressure_mpa = require_float(row, "pressure_mpa", pool_row_index)
+        temperature_c = require_float(row, "temperature_c", pool_row_index)
 
         case = {
-            "case_id": case_id,
-            "pool_row_index": case_id,
+            "case_id": pool_row_index,
+            "pool_row_index": pool_row_index,
             "flow_rate_sm3_day": flow_rate_sm3_day,
             "flow_rate_mol_m2_s": flow_rate_sm3_day * FLOW_RATE_SM3_DAY_TO_MOL_M2_S,
-            "cycle_length_days": require_float(row, "cycle_length_days", case_id),
-            "cg_ratio": require_float(row, "cg_ratio", case_id),
-            "cg_type": require_text(row, "cg_type", case_id),
-            "permeability_md": require_float(row, "permeability_md", case_id),
-            "porosity": require_float(row, "porosity", case_id),
+            "cycle_length_days": require_float(row, "cycle_length_days", pool_row_index),
+            "cg_ratio": require_float(row, "cg_ratio", pool_row_index),
+            "cg_type": require_text(row, "cg_type", pool_row_index),
+            "permeability_md": require_float(row, "permeability_md", pool_row_index),
+            "porosity": require_float(row, "porosity", pool_row_index),
             "pressure_mpa": pressure_mpa,
             "pressure_pa": pressure_mpa * PRESSURE_MPA_TO_PA,
             "temperature_c": temperature_c,
@@ -275,6 +294,7 @@ def submit_batch(config: ControllerConfig, manifest_path: Path) -> tuple[str, st
     agg_stderr = LOGS_DIR / f"{config.batch_id}_aggregate_%j.err"
     exported_paths = (
         f"ALL,DUMUX_RUN_ROOT={RUN_ROOT},"
+        f"DUMUX_SCRIPT_DIR={SCRIPT_DIR},"
         f"DUMUX_MPI_RUNNER={config.mpi_runner}"
     )
 
@@ -286,7 +306,7 @@ def submit_batch(config: ControllerConfig, manifest_path: Path) -> tuple[str, st
         f"--output={array_stdout}",
         f"--error={array_stderr}",
         f"--array={array_range}",
-        str(RUN_ROOT / "run_chunk_array.sh"),
+        str(SCRIPT_DIR / "run_chunk_array.sh"),
         str(manifest_path.resolve()),
         config.batch_id,
         str(executable_path(config.executable).resolve()),
@@ -301,7 +321,7 @@ def submit_batch(config: ControllerConfig, manifest_path: Path) -> tuple[str, st
         f"--output={agg_stdout}",
         f"--error={agg_stderr}",
         f"--dependency=afterany:{array_jobid}",
-        str(RUN_ROOT / "aggregate_iteration.sh"),
+        str(SCRIPT_DIR / "aggregate_iteration.sh"),
         str(manifest_path.resolve()),
         config.batch_id,
     ]
@@ -331,11 +351,27 @@ def wait_for_job(jobid: str, poll_seconds: int = 20):
 
 def parse_args() -> ControllerConfig:
     parser = argparse.ArgumentParser(
-        description="Submit the first 30 simulation-pool cases as 5 SLURM jobs with 6 cases per job."
+        description="Submit a selected range of simulation-pool cases as SLURM array jobs."
     )
     parser.add_argument("--pool-csv", type=Path, default=POOL_CSV)
+    parser.add_argument(
+        "--candidates-csv",
+        type=Path,
+        default=None,
+        help=(
+            "Optional CSV produced by active_learning_driver.py. "
+            "When set, the controller runs exactly the cases listed here and "
+            "ignores --pool-start-row / --pool-head / --total-simulations counts."
+        ),
+    )
     parser.add_argument("--batch-id", default=BATCH_ID)
     parser.add_argument("--total-simulations", type=int, default=TOTAL_SIMULATIONS)
+    parser.add_argument(
+        "--pool-start-row",
+        type=int,
+        default=POOL_START_ROW,
+        help="1-based first row in the simulation pool to run.",
+    )
     parser.add_argument("--pool-head", type=int, default=POOL_ROWS_TO_READ)
     parser.add_argument("--jobs", type=int, default=N_JOBS)
     parser.add_argument("--cases-per-job", type=int, default=CASES_PER_JOB)
@@ -353,10 +389,17 @@ def parse_args() -> ControllerConfig:
     )
     args = parser.parse_args()
 
+    total_simulations = args.total_simulations
+    if args.candidates_csv is not None:
+        with open(args.candidates_csv, newline="") as f:
+            n_rows = sum(1 for _ in csv.DictReader(f))
+        total_simulations = n_rows
+
     return ControllerConfig(
         pool_csv=args.pool_csv,
         batch_id=args.batch_id,
-        total_simulations=args.total_simulations,
+        total_simulations=total_simulations,
+        pool_start_row=args.pool_start_row,
         pool_rows_to_read=args.pool_head,
         n_jobs=args.jobs,
         cases_per_job=args.cases_per_job,
@@ -364,6 +407,7 @@ def parse_args() -> ControllerConfig:
         mpi_runner=args.mpi_runner,
         submit=not args.manifest_only,
         wait=args.wait,
+        candidates_csv=args.candidates_csv,
     )
 
 
@@ -374,16 +418,30 @@ def validate_config(config: ControllerConfig):
             f"total_simulations must equal jobs * cases_per_job. "
             f"Got {config.total_simulations}, expected {expected_total}."
         )
-    if config.pool_rows_to_read < config.total_simulations:
-        raise ValueError("pool-head must be at least total-simulations")
+    if config.candidates_csv is not None:
+        # Pool-range checks do not apply when an explicit candidates list is used.
+        return
+    if config.pool_start_row < 1:
+        raise ValueError("pool-start-row is 1-based and must be at least 1")
+    last_required_row = config.pool_start_row + config.total_simulations - 1
+    if config.pool_rows_to_read < last_required_row:
+        raise ValueError(
+            f"pool-head must be at least {last_required_row} for "
+            f"{config.total_simulations} simulations starting at pool row "
+            f"{config.pool_start_row}"
+        )
 
 
 def preflight_check(config: ControllerConfig, manifest_path: Path):
     errors = []
     resolved_executable = executable_path(config.executable)
 
-    if not config.pool_csv.exists():
-        errors.append(f"Pool CSV not found: {config.pool_csv}")
+    if config.candidates_csv is None:
+        if not config.pool_csv.exists():
+            errors.append(f"Pool CSV not found: {config.pool_csv}")
+    else:
+        if not config.candidates_csv.exists():
+            errors.append(f"Candidates CSV not found: {config.candidates_csv}")
     if not RUN_ROOT.exists():
         errors.append(f"Build/run folder not found: {RUN_ROOT}")
     if not manifest_path.exists():
@@ -396,14 +454,14 @@ def preflight_check(config: ControllerConfig, manifest_path: Path):
                 "Executable not found. Build it first or pass --executable explicitly.\n"
                 f"Resolved executable path: {resolved_executable}"
             )
-        if not (RUN_ROOT / "run_chunk_array.sh").exists():
-            errors.append(f"Missing run script in build folder: {RUN_ROOT / 'run_chunk_array.sh'}")
-        if not (RUN_ROOT / "run_chunk.py").exists():
-            errors.append(f"Missing run_chunk.py in build folder: {RUN_ROOT / 'run_chunk.py'}")
-        if not (RUN_ROOT / "aggregate_iteration.sh").exists():
-            errors.append(f"Missing aggregate script in build folder: {RUN_ROOT / 'aggregate_iteration.sh'}")
-        if not (RUN_ROOT / "aggregate_iteration.py").exists():
-            errors.append(f"Missing aggregate_iteration.py in build folder: {RUN_ROOT / 'aggregate_iteration.py'}")
+        if not (SCRIPT_DIR / "run_chunk_array.sh").exists():
+            errors.append(f"Missing run script: {SCRIPT_DIR / 'run_chunk_array.sh'}")
+        if not (SCRIPT_DIR / "run_chunk.py").exists():
+            errors.append(f"Missing run_chunk.py: {SCRIPT_DIR / 'run_chunk.py'}")
+        if not (SCRIPT_DIR / "aggregate_iteration.sh").exists():
+            errors.append(f"Missing aggregate script: {SCRIPT_DIR / 'aggregate_iteration.sh'}")
+        if not (SCRIPT_DIR / "aggregate_iteration.py").exists():
+            errors.append(f"Missing aggregate_iteration.py: {SCRIPT_DIR / 'aggregate_iteration.py'}")
         mpi_runner = Path(config.mpi_runner)
         if mpi_runner.parent != Path("."):
             if not mpi_runner.exists():
@@ -431,11 +489,19 @@ def main():
     preflight_check(config, manifest_path)
 
     print(f"Wrote manifest: {manifest_path}")
-    print(
-        f"Prepared {len(cases)} simulations from the top {config.pool_rows_to_read} "
-        f"rows of {config.pool_csv.name}: {config.n_jobs} jobs x "
-        f"{config.cases_per_job} simulations/job."
-    )
+    if config.candidates_csv is not None:
+        print(
+            f"Prepared {len(cases)} simulations from candidates CSV "
+            f"{config.candidates_csv.name}: {config.n_jobs} jobs x "
+            f"{config.cases_per_job} simulations/job."
+        )
+    else:
+        print(
+            f"Prepared {len(cases)} simulations from pool rows "
+            f"{config.pool_start_row}-{config.pool_start_row + len(cases) - 1} "
+            f"of {config.pool_csv.name}: {config.n_jobs} jobs x "
+            f"{config.cases_per_job} simulations/job."
+        )
 
     if not config.submit:
         print("Manifest-only mode: not submitting SLURM jobs.")

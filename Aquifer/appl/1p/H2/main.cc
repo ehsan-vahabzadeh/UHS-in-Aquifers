@@ -38,8 +38,9 @@
 #include "properties.hh"
 #include <dumux/common/metadata.hh>
 #include <cstddef>
-#include <cstdlib>
 #include <filesystem>
+#include <stdexcept>
+#include <string>
 #include <system_error>
 #if HAVE_MPI
 #include <mpi.h>
@@ -91,18 +92,38 @@ std::size_t removeOldOutputFiles(const fs::path& directory)
     return removedFiles;
 }
 
-std::string shellQuote(const fs::path& path)
+struct TimeStepCollapseException : public std::runtime_error
 {
-    std::string quoted = "'";
-    for (const char c : path.string())
-    {
-        if (c == '\'')
-            quoted += "'\\''";
-        else
-            quoted += c;
-    }
-    quoted += "'";
-    return quoted;
+    int exitCode;
+    TimeStepCollapseException(const std::string& msg, int code = 5)
+        : std::runtime_error(msg), exitCode(code) {}
+};
+
+template<class Scalar>
+void writeTimeStepCollapseFailure(const std::string& problemName,
+                                  const Scalar failureTime,
+                                  const Scalar lastAcceptedDt,
+                                  const Scalar suggestedDt,
+                                  const Scalar minTimeStepSize,
+                                  const Scalar minTimeStepCheckTime,
+                                  const int consecutiveSmallSteps,
+                                  const int requiredConsecutiveSmallSteps)
+{
+    Dumux::MetaData::Collector fc;
+    if (Dumux::MetaData::jsonFileExists(problemName))
+        Dumux::MetaData::readJsonFile(fc, problemName);
+
+    fc["runStatus"] = "failed_timestep_too_small";
+    fc["failureReason"] = "dt_below_minimum";
+    fc["failureTime"] = failureTime;
+    fc["lastAcceptedTimeStepSize"] = lastAcceptedDt;
+    fc["suggestedTimeStepSize"] = suggestedDt;
+    fc["minTimeStepSize"] = minTimeStepSize;
+    fc["minTimeStepCheckTime"] = minTimeStepCheckTime;
+    fc["smallTimeStepConsecutiveCount"] = consecutiveSmallSteps;
+    fc["smallTimeStepRequiredConsecutiveCount"] = requiredConsecutiveSmallSteps;
+
+    Dumux::MetaData::writeJsonFile(fc, problemName);
 }
 
 } // end anonymous namespace
@@ -191,6 +212,11 @@ int main(int argc, char** argv)
     timeLoop->setMaxTimeStepSize(maxDt);
     problem->setTimeLoop(timeLoop);
     auto problem_name = getParam<std::string>("Problem.Name");
+    const bool enableTimeStepCutoff = getParam<bool>("Safety.EnableTimeStepCutoff", true);
+    const Scalar minTimeStepSize = getParam<Scalar>("Safety.MinTimeStepSize", 1e-4);
+    const Scalar minTimeStepCheckTime = getParam<Scalar>("Safety.MinTimeStepCheckTime", 86400.0);
+    const int minTimeStepConsecutiveSteps = getParam<int>("Safety.MinTimeStepConsecutiveSteps", 5);
+    const int requiredSmallTimeStepCount = minTimeStepConsecutiveSteps > 0 ? minTimeStepConsecutiveSteps : 1;
 
     // initialize the vtk output module
     VtkOutputModule<GridVariables, SolutionVector> vtkWriter(*gridVariables, x, problem->name());
@@ -213,6 +239,7 @@ int main(int argc, char** argv)
     // the non-linear solver
     NewtonSolver<Assembler, LinearSolver> nonLinearSolver(assembler, linearSolver);
     int qq = 1, vv = 1;
+    int smallTimeStepCount = 0;
     // time loop
     try {
     timeLoop->start(); do
@@ -246,12 +273,79 @@ int main(int argc, char** argv)
         timeLoop->reportTimeStep();
 
         // set new dt as suggested by the newton solver
-        timeLoop->setTimeStepSize(nonLinearSolver.suggestTimeStepSize(timeLoop->timeStepSize()));
+        const Scalar suggestedDt = nonLinearSolver.suggestTimeStepSize(timeLoop->timeStepSize());
+        if (enableTimeStepCutoff
+            && minTimeStepSize > 0.0
+            && !timeLoop->finished()
+            && timeLoop->time() >= minTimeStepCheckTime
+            && suggestedDt < minTimeStepSize)
+        {
+            ++smallTimeStepCount;
+        }
+        else
+        {
+            smallTimeStepCount = 0;
+        }
+
+    #if HAVE_MPI
+        int localTimeStepAbort = smallTimeStepCount >= requiredSmallTimeStepCount ? 1 : 0;
+        int globalTimeStepAbort = 0;
+        MPI_Allreduce(&localTimeStepAbort, &globalTimeStepAbort, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
+    #else
+        const int globalTimeStepAbort = smallTimeStepCount >= requiredSmallTimeStepCount ? 1 : 0;
+    #endif
+
+        if (globalTimeStepAbort != 0)
+        {
+            if (mpiHelper.rank() == 0)
+            {
+                std::cout << "\n*** TIME STEP SAFETY: suggested dt "
+                          << suggestedDt << " s is below minimum "
+                          << minTimeStepSize << " s for "
+                          << smallTimeStepCount << " consecutive step(s) at time "
+                          << timeLoop->time() << " s ***\n" << std::endl;
+
+                writeTimeStepCollapseFailure(problem_name,
+                                             timeLoop->time(),
+                                             timeLoop->timeStepSize(),
+                                             suggestedDt,
+                                             minTimeStepSize,
+                                             minTimeStepCheckTime,
+                                             smallTimeStepCount,
+                                             requiredSmallTimeStepCount);
+            }
+        #if HAVE_MPI
+            MPI_Barrier(MPI_COMM_WORLD);
+        #endif
+            throw TimeStepCollapseException("Time step collapsed below safety limit", 5);
+        }
+
+        timeLoop->setTimeStepSize(suggestedDt);
 
     } while (!timeLoop->finished());
 
     timeLoop->finalize(leafGridView.comm());
 
+    } catch (const TimeStepCollapseException& e) {
+        std::cerr << "\n[TimeStepCollapseAbort] " << e.what() << std::endl;
+        if (mpiHelper.rank() == 0)
+        {
+            Dumux::MetaData::Collector fc;
+            if (Dumux::MetaData::jsonFileExists(problem_name))
+                Dumux::MetaData::readJsonFile(fc, problem_name);
+            if (!fc.getTree().count("runStatus"))
+            {
+                fc["runStatus"] = "failed_timestep_too_small";
+                fc["failureReason"] = "unknown";
+                Dumux::MetaData::writeJsonFile(fc, problem_name);
+            }
+            DumuxMessage::print(/*firstCall=*/false);
+        }
+    #if HAVE_MPI
+        // Ensure all MPI ranks terminate consistently if only a subset threw.
+        MPI_Abort(MPI_COMM_WORLD, e.exitCode);
+    #endif
+        return e.exitCode;
     } catch (const PressureLimitException& e) {
         std::cerr << "\n[PressureLimitAbort] " << e.what() << std::endl;
         if (mpiHelper.rank() == 0)
@@ -278,31 +372,6 @@ int main(int argc, char** argv)
     ////////////////////////////////////////////////////////////
     // finalize, print dumux message to say goodbye
     ////////////////////////////////////////////////////////////
-
-    // Merge VTK files from parallel runs on rank 0
-    if (mpiHelper.rank() == 0 && mpiHelper.size() > 1)
-    {
-        std::cout << "\n=== Merging VTK files from " << mpiHelper.size() << " processes ===" << std::endl;
-        const auto executableDir = fs::absolute(fs::path(argv[0])).parent_path();
-        const auto mergeScript = executableDir / "vtk-merge-multi.py";
-
-        int ret = 1;
-        if (!fs::exists(mergeScript))
-        {
-            std::cerr << "Warning: VTK merge script not found at "
-                      << mergeScript << std::endl;
-        }
-        else
-        {
-            const std::string mergeCmd = "python3 " + shellQuote(mergeScript);
-            ret = std::system(mergeCmd.c_str());
-        }
-
-        if (ret != 0)
-            std::cerr << "Warning: VTK merge script failed." << std::endl;
-        else
-            std::cout << "VTK merge completed successfully." << std::endl;
-    }
 
     // print dumux end message
     if (mpiHelper.rank() == 0)

@@ -5,6 +5,7 @@ import os
 import signal
 import shutil
 import subprocess
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
@@ -134,6 +135,10 @@ AddVelocity = true
 EnablePressureCutoff = true
 InjectionPressureMultiplier = 1.5
 MinProductionPressure = 1e5
+EnableTimeStepCutoff = true
+MinTimeStepSize = 1e-4
+MinTimeStepCheckTime = 86400
+MinTimeStepConsecutiveSteps = 5
 """
     (case_dir / "params.input").write_text(text)
 
@@ -224,6 +229,16 @@ def write_summary(summary_path, summary):
         json.dump(summary, f, indent=2)
 
 
+def read_existing_summary_status(summary_path):
+    if not summary_path.exists():
+        return ""
+    try:
+        with open(summary_path) as f:
+            return json.load(f).get("status", "")
+    except (OSError, json.JSONDecodeError):
+        return ""
+
+
 def terminate_process_group(process, grace_seconds=30):
     try:
         os.killpg(process.pid, signal.SIGTERM)
@@ -238,6 +253,77 @@ def terminate_process_group(process, grace_seconds=30):
         except ProcessLookupError:
             pass
         return process.wait()
+
+
+def vtk_merge_script_path():
+    script_dir = Path(os.environ.get("DUMUX_SCRIPT_DIR", Path(__file__).resolve().parent)).resolve()
+    candidates = [
+        script_dir / "vtk-merge-multi.py",
+        Path(__file__).resolve().parent / "vtk-merge-multi.py",
+        Path.cwd() / "vtk-merge-multi.py",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
+
+
+def run_vtk_merge(case_dir, simulation_name, ntasks, stdout_path, stderr_path):
+    merge_script = vtk_merge_script_path()
+    started_at = now_iso()
+    result = {
+        "enabled": ntasks > 1,
+        "status": "skipped",
+        "started_at": started_at,
+        "ended_at": started_at,
+        "script": str(merge_script),
+        "input_dir": str(case_dir.resolve()),
+        "num_parts": ntasks,
+        "simulation_name": simulation_name,
+        "returncode": None,
+    }
+
+    if ntasks <= 1:
+        result["reason"] = "single_process_run"
+        return result
+
+    if not merge_script.exists():
+        result["status"] = "failed"
+        result["reason"] = "merge_script_missing"
+        result["ended_at"] = now_iso()
+        with open(stderr_path, "a", buffering=1) as stderr_file:
+            stderr_file.write(f"\nWarning: VTK merge script not found at {merge_script}\n")
+        return result
+
+    cmd = [
+        sys.executable,
+        str(merge_script),
+        "--input-dir", str(case_dir.resolve()),
+        "--num-parts", str(ntasks),
+        "--simulation-name", simulation_name,
+    ]
+    result["command"] = " ".join(cmd)
+
+    with open(stdout_path, "a", buffering=1) as stdout_file, open(stderr_path, "a", buffering=1) as stderr_file:
+        stdout_file.write(f"\n=== Post-processing VTK merge for {simulation_name} using {ntasks} parts ===\n")
+        stdout_file.flush()
+        completed = subprocess.run(
+            cmd,
+            cwd=case_dir,
+            stdout=stdout_file,
+            stderr=stderr_file,
+            text=True,
+        )
+
+    result["returncode"] = completed.returncode
+    result["ended_at"] = now_iso()
+    if completed.returncode == 0:
+        result["status"] = "success"
+    else:
+        result["status"] = "failed"
+        result["reason"] = "merge_command_failed"
+
+    return result
 
 
 def wait_with_watchdog(
@@ -378,12 +464,10 @@ def run_one_case(
     watchdog_check_seconds,
     hard_timeout_seconds,
     numerical_stall_timeout_seconds,
+    skip_existing_case_dirs,
 ):
     case_id = int(row["case_id"])
     case_dir = Path("cases") / iter_id / f"chunk_{chunk_id}" / f"case_{case_id:03d}_{row['name']}"
-    case_dir.mkdir(parents=True, exist_ok=True)
-
-    write_params_file(case_dir, row)
     executable_path = Path(executable).resolve()
     mpi_runner_cmd = resolve_mpi_runner(mpi_runner)
 
@@ -413,10 +497,30 @@ def run_one_case(
         },
     }
 
-    (case_dir / "runner_command.txt").write_text(" ".join(cmd) + "\n")
     stdout_path = case_dir / "stdout.txt"
     stderr_path = case_dir / "stderr.txt"
     summary_path = case_dir / "case_summary.json"
+
+    if skip_existing_case_dirs and case_dir.exists():
+        existing_status = read_existing_summary_status(summary_path)
+        print(
+            f"[chunk {chunk_id}] skipping case {case_id}: case folder already exists"
+            + (f" (existing status: {existing_status})" if existing_status else ""),
+            flush=True,
+        )
+        if not summary_path.exists():
+            summary["status"] = "skipped_existing_case_dir"
+            summary["simulation_status"] = "skipped"
+            summary["skip_reason"] = "case_directory_already_exists"
+            summary["skip_time"] = now_iso()
+            json_files = sorted(case_dir.glob("*.json"))
+            summary["json_outputs"] = [p.name for p in json_files]
+            write_summary(summary_path, summary)
+        return
+
+    case_dir.mkdir(parents=True, exist_ok=True)
+    write_params_file(case_dir, row)
+    (case_dir / "runner_command.txt").write_text(" ".join(cmd) + "\n")
 
     print(f"[chunk {chunk_id}] starting case {case_id}: {row['name']}", flush=True)
     print(f"[chunk {chunk_id}] command: {' '.join(cmd)}", flush=True)
@@ -479,17 +583,27 @@ def run_one_case(
             )
 
         summary["returncode"] = returncode
-        summary["end_time"] = now_iso()
+        summary["simulation_end_time"] = now_iso()
 
         if watchdog_status:
             summary["status"] = watchdog_status
         elif returncode == 0:
-            # If your code writes json files, keep them local to this case folder.
+            summary["simulation_status"] = "success"
+            summary["merge"] = run_vtk_merge(
+                case_dir=case_dir,
+                simulation_name=row["name"],
+                ntasks=ntasks,
+                stdout_path=stdout_path,
+                stderr_path=stderr_path,
+            )
             json_files = sorted(case_dir.glob("*.json"))
             summary["json_outputs"] = [p.name for p in json_files]
-            summary["status"] = "success"
+            summary["status"] = "success" if summary["merge"]["status"] in {"success", "skipped"} else "failed_merge"
         else:
+            summary["simulation_status"] = "failed"
             summary["status"] = "failed"
+
+        summary["end_time"] = now_iso()
 
     except Exception as e:
         summary["status"] = "failed"
@@ -541,6 +655,11 @@ def main():
             "simulation time does not advance for this many minutes. Use 0 to disable."
         ),
     )
+    parser.add_argument(
+        "--rerun-existing",
+        action="store_true",
+        help="Rerun cases even when their case directory already exists.",
+    )
     args = parser.parse_args()
     stall_timeout_seconds = max(1.0, args.stall_timeout_min * 60.0)
     startup_grace_seconds = max(0.0, args.startup_grace_min * 60.0)
@@ -563,12 +682,12 @@ def main():
     print(f"watchdog_check_sec: {args.watchdog_check_sec}", flush=True)
     print(f"case_timeout_hours: {args.case_timeout_hours}", flush=True)
     print(f"numerical_stall_timeout_min: {args.numerical_stall_timeout_min}", flush=True)
+    print(f"skip_existing_case_dirs: {not args.rerun_existing}", flush=True)
 
     if not rows:
         raise SystemExit(f"No manifest rows found for chunk_id={args.chunk_id}")
 
     # Each SLURM array task runs all manifest rows for its chunk sequentially.
-    # With the default controller settings that is 6 simulations per job.
     for row in rows:
         run_one_case(
             row=row,
@@ -582,6 +701,7 @@ def main():
             watchdog_check_seconds=watchdog_check_seconds,
             hard_timeout_seconds=hard_timeout_seconds,
             numerical_stall_timeout_seconds=numerical_stall_timeout_seconds,
+            skip_existing_case_dirs=not args.rerun_existing,
         )
 
 

@@ -436,6 +436,11 @@ for test_case in test_cases:
         '-BoundaryConditions.InjectionDurationOp', test_case["InjectionDurationOp"],
         '-BoundaryConditions.ExtractionDurationOp', test_case["ExtractionDurationOp"]
     ])
-    subprocess.call('python3 vtk-merge-multi.py', shell=True)
-    command = 'find . -maxdepth 1 -type f \\( -name "*.vtu" -o -name "*.pvtu" \\) -delete'
-    subprocess.run(command, shell=True, check=True)
+    merge_result = subprocess.call([
+        'python3', 'vtk-merge-multi.py',
+        '--num-parts', str(num_cores),
+        '--simulation-name', test_case["name"],
+    ])
+    if merge_result == 0:
+        command = 'find . -maxdepth 1 -type f \\( -name "*.vtu" -o -name "*.pvtu" \\) -delete'
+        subprocess.run(command, shell=True, check=True)

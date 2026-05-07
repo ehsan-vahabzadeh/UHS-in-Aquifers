@@ -59,3 +59,7 @@ AddVelocity = true
 EnablePressureCutoff = true
 InjectionPressureMultiplier = 2
 MinProductionPressure = 1e5
+EnableTimeStepCutoff = true
+MinTimeStepSize = 1e-4
+MinTimeStepCheckTime = 86400
+MinTimeStepConsecutiveSteps = 5

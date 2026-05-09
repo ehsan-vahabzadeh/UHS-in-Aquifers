@@ -43,15 +43,6 @@ class EnergyLocalResidualImplementation<TypeTag, false>
     using FluxVariables = GetPropType<TypeTag, Properties::FluxVariables>;
 
 public:
-    template <typename T = void>
-    static void fluidPhaseStorage(NumEqVector& storage,
-                                  const SubControlVolume& scv,
-                                  const VolumeVariables& volVars,
-                                  int phaseIdx)
-    {
-        static_assert(AlwaysFalse<T>::value, "Deprecated interface that has been removed! Use new interface with additional argument problem instead. Will be entirely removed after release 3.10.");
-    }
-
     /*!
      * \brief The energy storage in the fluid phase with index phaseIdx.
      */
@@ -150,15 +141,6 @@ public:
                                 * volVars.density(phaseIdx)
                                 * volVars.saturation(phaseIdx)
                                 * (volVars.internalEnergy(phaseIdx) - gravityPotential);
-    }
-
-    template <typename T = void>
-    static void fluidPhaseStorage(NumEqVector& storage,
-                                  const SubControlVolume& scv,
-                                  const VolumeVariables& volVars,
-                                  int phaseIdx)
-    {
-        static_assert(AlwaysFalse<T>::value, "Deprecated interface that has been removed! Use new interface with additional argument problem instead. Will be entirely removed after release 3.10.");
     }
 
     /*!

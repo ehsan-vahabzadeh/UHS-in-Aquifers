@@ -61,15 +61,6 @@ class EnergyLocalResidualNonEquilibrium<TypeTag, 1/*numEnergyEqFluid*/>
     static constexpr auto numComponents = ModelTraits::numFluidComponents();
 
 public:
-    template <typename T = void>
-    static void fluidPhaseStorage(NumEqVector& storage,
-                                  const SubControlVolume& scv,
-                                  const VolumeVariables& volVars,
-                                  int phaseIdx)
-    {
-        static_assert(AlwaysFalse<T>::value, "Deprecated interface that has been removed! Use new interface with additional argument problem instead. Will be entirely removed after release 3.10.");
-    }
-
     //! The energy storage in the fluid phase with index phaseIdx
     static void fluidPhaseStorage(NumEqVector& storage,
                                   const Problem&,
@@ -256,15 +247,6 @@ class EnergyLocalResidualNonEquilibrium<TypeTag, 2/*numEnergyEqFluid*/>
     static constexpr bool enableChemicalNonEquilibrium = ModelTraits::enableChemicalNonEquilibrium();
 
 public:
-    template <typename T = void>
-    static void fluidPhaseStorage(NumEqVector& storage,
-                                  const SubControlVolume& scv,
-                                  const VolumeVariables& volVars,
-                                  int phaseIdx)
-    {
-        static_assert(AlwaysFalse<T>::value, "Deprecated interface that has been removed! Use new interface with additional argument problem instead. Will be entirely removed after release 3.10.");
-    }
-
     //! The energy storage in the fluid phase with index phaseIdx
     static void fluidPhaseStorage(NumEqVector& storage,
                                   const Problem&,

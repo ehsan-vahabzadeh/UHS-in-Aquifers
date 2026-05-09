@@ -36,12 +36,12 @@ CASES_DIR = RUN_ROOT / "cases"
 RESULTS_DIR = RUN_ROOT / "results"
 LOGS_DIR = RUN_ROOT / "logs"
 
-BATCH_ID = "pool_051_150"
-TOTAL_SIMULATIONS = 100
-POOL_START_ROW = 51
-POOL_ROWS_TO_READ = 150
+BATCH_ID = "pool_151_350"
+TOTAL_SIMULATIONS = 200
+POOL_START_ROW = 151
+POOL_ROWS_TO_READ = 350
 N_JOBS = 5
-CASES_PER_JOB = 20
+CASES_PER_JOB = 40
 
 # The pool stores operational flow in standard m3/day. The DuMuX boundary
 # condition currently expects mol/(m2 s). This factor matches the conversion
